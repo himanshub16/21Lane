@@ -5,7 +5,7 @@ except NameError:
 	try:
 		import os, shelve
 	except ImportError as e:
-		print e," Cannot import required modules"
+		print (e," Cannot import required modules")
 
 
 ls = os.listdir
@@ -42,7 +42,6 @@ class User:
 
 class AnonymousUser:
 	"""Each instance of this class represents an anonymous user
-	* name		: 'anonymous'
 	* homedir	| 	* permission
 	* msg_login	| 	* msg_quit
 	* filepath : path to user configuration filepath
@@ -104,4 +103,4 @@ class Userbase:
 		if username in self.get_user_list():
 			os.remove(os.path.join(self.userdir, username))
 		else:
-			print "No such user exists!"
+			print ("No such user exists!")

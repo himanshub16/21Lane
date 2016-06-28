@@ -1,17 +1,14 @@
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
+import ftpserver as ftp
 
 class Form(QWidget):
     def __init__(self, parent=None):
         super(Form, self).__init__(parent)
 
-        nameLabel = QLabel("Name:")
-        self.nameLine = QLineEdit()
-        self.submitButton = QPushButton("Submit")
+        self.submitButton = QPushButton("Start server")
 
         buttonLayout1 = QVBoxLayout()
-        buttonLayout1.addWidget(nameLabel)
-        buttonLayout1.addWidget(self.nameLine)
         buttonLayout1.addWidget(self.submitButton)
 
         self.submitButton.clicked.connect(self.submitContact)
