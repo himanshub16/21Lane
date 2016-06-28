@@ -4,6 +4,7 @@ from pyftpdlib.handlers import ThrottledDTPHandler
 from pyftpdlib.servers import FTPServer
 
 # import additions
+import sys
 import auth
 import settings
 
@@ -44,12 +45,19 @@ def create_server():
 		del conf, authorizer
 
 
-# while True:
-# 	i = str(raw_input("Start server? "))
-# 	if (i == 'yes'):
-# 		create_server()
-# 	else:
-# 		break
+while True:
+	try:
+		if (sys.version_info.major == 3):
+			i = str(input("Start server? "))
+		else:
+			i = str(raw_input("Start server? "))
+		if (i.lower() == 'yes'):
+			create_server()
+		else:
+			break
+	except (EOFError, KeyboardInterrupt):
+		print("\rPlease enter yes or no")
+		continue
 
 
 # conf = load_settings()

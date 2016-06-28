@@ -6,7 +6,7 @@ except NameError:
 	try:
 		import os, shelve
 	except ImportError as e:
-		print e," Cannot import required modules"
+		print (e," Cannot import required modules")
 
 
 class FTPSettings:
@@ -34,7 +34,7 @@ class FTPSettings:
 			self.permit_outside_lan = f['permit_outside_lan']
 			f.close()
 		else:
-			print 'Settings file missing'
+			print ('Settings file missing')
 			# f = open('settings', 'w')
 			# f.close()
 			self.server_name = 'Unnamed server'
@@ -45,19 +45,19 @@ class FTPSettings:
 			self.max_download_speed = 1	# to resrtict uploads from public on server,
 											# when write permission is allowed
 			self.permit_outside_lan = False
-			print 'Blank file created in lieu with default settings.'
+			print ('Blank file created in lieu with default settings.')
 			self.save_settings()
-			print 'Default setttings saved'
+			print ('Default setttings saved')
 
 	def reload_settings(self):
 		self.__init__()
 
 	def save_settings(self):
 		"""save settings to settings file"""
-		print 'saving settings '
+		print ('saving settings ')
 		# os.remove('settings')
 		f = shelve.open('settings')
-		print 'file opened'
+		print ('file opened')
 		f['server_name'] = self.server_name
 		f['server_banner'] = self.server_banner
 		f['max_cons'] = self.max_cons
