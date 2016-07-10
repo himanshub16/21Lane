@@ -130,8 +130,8 @@ class ListUserUI(QWidget):
 
 		# remove the widgets from the row
 		for wid in row[1:]:
-			# self.grid.removeWidget(wid)
-			wid.hide()
+			self.grid.removeWidget(wid)
+			# wid.hide()
 		# removing widgets from the grid
 		# for i in range(self.userRows)
 
