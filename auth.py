@@ -42,6 +42,7 @@ class User:
 
 class AnonymousUser:
 	"""Each instance of this class represents an anonymous user
+	* name 		: anonymous (as both kinds of users are in same database)
 	* homedir	| 	* permission
 	* msg_login	| 	* msg_quit
 	* filepath : path to user configuration filepath
@@ -71,7 +72,7 @@ class Userbase:
 	* userdir : path to directory where user configuration files are located
 	* userlist : list of available userlist
 	* get_user_list : refresh userlist variable
-	* get_user_info : get user object for a user in userlist
+	* get_user_info : get user object for a user in userlist (AnonymousUser for anonymous and User for normal user)
 	* remove_user : remove a user
 	"""
 
@@ -82,6 +83,8 @@ class Userbase:
 	def get_user_list(self):
 		"""Refresh the user list"""
 		self.userlist = ls(self.userdir)
+		for i in range(len(self.userlist)):
+			self.userlist[i] = self.userlist[i][:-3]
 		return self.userlist
 
 	def get_user_info(self, username):
@@ -101,6 +104,7 @@ class Userbase:
 
 	def remove_user(self, username):
 		if username in self.get_user_list():
+			username += '.db'
 			os.remove(os.path.join(self.userdir, username))
 		else:
 			print ("No such user exists!")
