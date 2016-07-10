@@ -117,20 +117,20 @@ class ListUserUI(QWidget):
 	def removeUser(self):
 		username = QApplication.sender(self).objectName()
 		self.userdb.remove_user(username)
-		# restart_program()
-		snd = QApplication.sender(self)
-		row = 0
-		# get the row
-		for r in (self.userRows):
-			if snd in r:
-				row = r
+		restart_program()
+		# snd = QApplication.sender(self)
+		# row = 0
+		# # get the row
+		# for r in (self.userRows):
+		# 	if snd in r:
+		# 		row = r
 
 		# manage addition and removal using userrow variable
 		# remove all widgets and repopulate all rows in userrows
 
 		# remove the widgets from the row
-		for wid in row[1:]:
-			self.grid.removeWidget(wid)
+		# for wid in row[1:]:
+		# 	self.grid.removeWidget(wid)
 			# wid.hide()
 		# removing widgets from the grid
 		# for i in range(self.userRows)
@@ -158,8 +158,8 @@ def restart_program():
 
 
 if __name__ == "__main__":
-	# th = mythread()
-	# th.start()
-	app = QApplication([])
-	ex = ListUserUI()
-	sys.exit(app.exec_())
+	th = mythread()
+	th.start()
+	# app = QApplication([])
+	# ex = ListUserUI()
+	# sys.exit(app.exec_())
