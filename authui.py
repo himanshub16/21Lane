@@ -1,3 +1,5 @@
+# restart_program method : credits : https://www.daniweb.com/programming/software-development/code/260268/restart-your-python-program
+
 import sys
 import auth
 import os
@@ -9,6 +11,14 @@ from PyQt5.QtWidgets import (QWidget, QAction, qApp, QPushButton, QApplication,
 from PyQt5.QtGui import QIcon, QFont, QPainter, QPen
 from PyQt5.QtCore import Qt, QCoreApplication
 
+
+class dummyUI(QWidget):
+	def __init__(self):
+		print("dummyUI initiated")
+		super().__init__()
+		self.move(200, 100)
+		self.setWindowTitle("another window")
+		self.show()
 
 class ListUserUI(QWidget):
 	def __init__(self):
@@ -110,8 +120,12 @@ class ListUserUI(QWidget):
 
 
 
+
 	def editUser(self):
 		username = QApplication.sender(self).objectName()
+		a = dummyUI()
+		p = QApplication([])
+		p.exec_()
 
 
 	def removeUser(self):
