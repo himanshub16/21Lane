@@ -15,6 +15,7 @@ import threading
 import subprocess
 
 userbase = auth.Userbase()
+sys.stdout = open('log.txt', 'a')
 
 def load_settings():
 	return settings.FTPSettings()
@@ -67,7 +68,7 @@ def is_port_available(port=2121):
 	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	port = int(port)
 	try:
-		result = socket.create_connection(('127.0.0.1', port))
+		result = socket.create_connection(('0.0.0.0', port))
 	except OverflowError:
 		print ("Socket out of range")
 	except ConnectionError:
@@ -97,11 +98,11 @@ class myserver(threading.Thread):
 
 		port = conf.port
 		if is_port_available(port):
-			server = FTPServer(('127.0.0.1', port), FTPHandler)
+			server = FTPServer(('0.0.0.0', port), FTPHandler)
 		else:
 			# port = int(input("Enter some other port"))
 			port += 100
-			server = FTPServer(('127.0.0.1', port), FTPHandler)
+			server = FTPServer(('0.0.0.0', port), FTPHandler)
 
 		print (port)
 		server.serve_forever()
@@ -266,7 +267,7 @@ class MainUI(QMainWindow, QWidget):
 				self.statusBar().showMessage("Cleaning up")
 				server.close_all()
 				del self.srv
-				print("cleaned up")
+				print("Cleaned up")
 		except:
 			pass
 		finally:
