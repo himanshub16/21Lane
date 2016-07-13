@@ -3,6 +3,7 @@
 import sys
 import auth
 import os
+import subprocess
 import threading
 
 from PyQt5.QtWidgets import (QWidget, QAction, qApp, QPushButton, QApplication,
@@ -11,14 +12,6 @@ from PyQt5.QtWidgets import (QWidget, QAction, qApp, QPushButton, QApplication,
 from PyQt5.QtGui import QIcon, QFont, QPainter, QPen
 from PyQt5.QtCore import Qt, QCoreApplication
 
-
-class dummyUI(QWidget):
-	def __init__(self):
-		print("dummyUI initiated")
-		super().__init__()
-		self.move(200, 100)
-		self.setWindowTitle("another window")
-		self.show()
 
 class ListUserUI(QWidget):
 	def __init__(self):
@@ -39,13 +32,17 @@ class ListUserUI(QWidget):
 		self.anonLabel = QLabel(self); self.anonLabel.setText("Allow Anonymous Login")
 		self.anonLabel.setToolTip("Any general user can login to anyone without password")
 
-		self.anonCheck = QCheckBox("", self); self.anonCheck.toggle() # unchecked by default
+		self.anonCheck = QCheckBox("", self);
+		if 'anonymous.db' in self.userdb.userlist:
+			self.anonCheck.toggle() # unchecked by default
 		self.anonCheck.setObjectName("anonymous")
 		self.anonCheck.setToolTip("Enable/Disable anonymous users")
 		self.anonSettings = QPushButton('', self)
 		self.anonSettings.setIcon(QIcon("icons/ic_create_black_24dp_1x.png"))
 		self.anonSettings.setFlat(True)
 		self.anonSettings.setToolTip("Modify anonymous user settings")
+		self.anonSettings.setObjectName("anonymous")
+		self.anonSettings.clicked.connect(self.modify_user)
 
 		self.usersHeading = QLabel(self); self.usersHeading.setText("Verified users : ")
 		self.usersHeading.setStyleSheet("font-weight: bold")
@@ -54,6 +51,7 @@ class ListUserUI(QWidget):
 		self.addUserButton.setIcon(QIcon("icons/ic_add_circle_outline_black_24dp_2x.png"))
 		self.addUserButton.setFlat(True)
 		self.addUserButton.setToolTip("Add user")
+		self.addUserButton.clicked.connect(self.add_user)
 
 		self.grid.addWidget(self.anonLabel, 0, 0, 1, 2)
 		self.grid.addWidget(blankLabel, 0, 2)
@@ -83,7 +81,7 @@ class ListUserUI(QWidget):
 		# created a QPen object, black, 2px wide, black
 
 		qp.setPen(pen)
-		qp.drawLine(10, 40, 240, 40)
+		qp.drawLine(10, 40, 280, 40)
 
 
 	def addUsers(self):
@@ -107,7 +105,7 @@ class ListUserUI(QWidget):
 				userremoveBtn.setObjectName(l[i])
 				userremoveBtn.setToolTip("Remove user")
 
-				usereditBtn.clicked.connect(self.editUser)
+				usereditBtn.clicked.connect(self.modify_user)
 				userremoveBtn.clicked.connect(self.removeUser)
 
 				self.userRows.append([i, indexLabel, usernameLabel, usereditBtn, userremoveBtn])
@@ -119,13 +117,18 @@ class ListUserUI(QWidget):
 				self.gridRow += 1
 
 
+	def add_user(self):
+		# cmd = sys.executable + ' get_user_data.py'
+		subprocess.call([sys.executable, 'get_user_data.py'])
 
-
-	def editUser(self):
+	def modify_user(self):
 		username = QApplication.sender(self).objectName()
-		a = dummyUI()
-		p = QApplication([])
-		p.exec_()
+		# cmd = sys.executable + ' get_user_data.py ' + username
+		subprocess.call([sys.executable, 'get_user_data.py', username])
+		# tmpstr = # call another script get_user_data.py
+		# a = dummyUI()
+		# p = QApplication([])
+		# p.exec_()
 
 
 	def removeUser(self):
