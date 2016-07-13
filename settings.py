@@ -246,7 +246,7 @@ class SettingsUI(QWidget):
 			self.sett.max_download_speed = self.downloadInput.value() * 1024
 
 		self.sett.save_settings()
-		QMessageBox.information(self, 'Message', "Settings Saved.", QMessageBox.Ok, QMessageBox.Ok)
+		QMessageBox.information(self, 'Settings saved', "Restart sharing to load new settings.", QMessageBox.Ok, QMessageBox.Ok)
 
 
 	def restoreDefaults(self):

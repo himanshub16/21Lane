@@ -70,6 +70,9 @@ class ListUserUI(QWidget):
 		self.show()
 
 
+	def closeEvent(self, e):
+		QMessageBox.information(self, "Message", "Restart server for changes to be effective.", QMessageBox.Ok, QMessageBox.Ok)
+
 	def paintEvent(self, e):
 		qp = QPainter()
 		qp.begin(self)

@@ -82,6 +82,8 @@ def is_port_available(port=2121):
 
 	return result==0
 
+port = 2121
+server = None
 
 
 class myserver(threading.Thread):
@@ -89,6 +91,7 @@ class myserver(threading.Thread):
 		threading.Thread.__init__(self)
 
 	def run(self):
+		global server, port
 		conf = load_settings()
 		authorizer = load_users()
 		ThrottledDTPHandler.write_limit = conf.max_upload_speed
@@ -99,15 +102,12 @@ class myserver(threading.Thread):
 		FTPServer.max_cons_per_ip = conf.max_cons_per_ip
 		FTPHandler.authorizer = authorizer
 		# FTPHandler.permit_foreign_addresses = conf.permit_outside_lan
-		global server, port
 
 		port = conf.port
 		if is_port_available(port):
 			server = FTPServer(('0.0.0.0', port), FTPHandler)
 		else:
-			# port = int(input("Enter some other port"))
-			port += 100
-			server = FTPServer(('0.0.0.0', port), FTPHandler)
+			return
 
 		server.serve_forever()
 
@@ -167,7 +167,6 @@ from PyQt5.QtGui import QIcon, QFont
 # 		self.show()
 #
 
-
 class MainUI(QMainWindow, QWidget):
 	def __init__(self):
 		super().__init__()
@@ -175,7 +174,7 @@ class MainUI(QMainWindow, QWidget):
 		self.initUI()
 
 	def initUI(self):
-		print ("Creating ui")
+		mylog ("Creating ui")
 		self.mainbtn = QPushButton("Start server", self)
 		self.mainbtn.setStyleSheet("background-color: blue; color: white; border: none")
 		# self.mainbtn.setCheckable(True)
@@ -231,7 +230,7 @@ class MainUI(QMainWindow, QWidget):
 
 		self.setGeometry(200, 100, 280, 170)
 		self.setWindowTitle("FTP server")
-		self.statusBar().showMessage("Initialising...")
+		self.statusBar().showMessage("Welcome")
 		self.show()
 
 
@@ -245,10 +244,13 @@ class MainUI(QMainWindow, QWidget):
 	def check_server(self, pressed):
 		global server
 		if not server:
-			# server.serve_forever()
-			self.srv = myserver()
 			global port
-			# print ('port is ', port)
+			port = load_settings().port
+			if not is_port_available(port):
+				mylog("\nPort : " + str(port) + " is not available\n")
+				QMessageBox.critical(self, "Port error", "The port requested is not available.\nPlease change the port in settings.\n", QMessageBox.Ok, QMessageBox.Ok)
+				return
+			self.srv = myserver()
 			self.srv.start()
 			msg = "Running on port " + str(self.srv.getport())
 			self.mainbtn.setText("Stop Server")
@@ -307,13 +309,14 @@ class MainUI(QMainWindow, QWidget):
 		th.start()
 
 
-server = None
-app = QApplication([])
-app.setWindowIcon(QIcon('icons/1468025361_cmyk-03.png'))
-ex = MainUI()
-# sa = SettingsUI()
-# ex2 = portCheckUI()
-sys.exit(app.exec_())
+if __name__ == "__main__":
+	# server = None
+	app = QApplication([])
+	app.setWindowIcon(QIcon('icons/1468025361_cmyk-03.png'))
+	ex = MainUI()
+	# sa = SettingsUI()
+	# ex2 = portCheckUI()
+	sys.exit(app.exec_())
 
 # sys.exit()
 
