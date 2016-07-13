@@ -15,7 +15,8 @@ import threading
 import subprocess
 
 userbase = auth.Userbase()
-sys.stdout = open('log.txt', 'a')
+python = sys.executable
+
 
 def load_settings():
 	return settings.FTPSettings()
@@ -104,7 +105,6 @@ class myserver(threading.Thread):
 			port += 100
 			server = FTPServer(('0.0.0.0', port), FTPHandler)
 
-		print (port)
 		server.serve_forever()
 
 	def getport(self):
@@ -117,7 +117,7 @@ class settings_ui_thread(threading.Thread):
 		threading.Thread.__init__(self)
 
 	def run(self):
-		subprocess.call(["python3", "settings.py"])
+		subprocess.call([python, "settings.py"])
 
 
 class userui_thread(threading.Thread):
