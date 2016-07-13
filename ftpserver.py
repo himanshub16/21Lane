@@ -17,6 +17,11 @@ import subprocess
 userbase = auth.Userbase()
 python = sys.executable
 
+def mylog(str):
+	f = open('log.txt', 'a')
+	f.write(str)
+	f.close()
+
 
 def load_settings():
 	return settings.FTPSettings()
@@ -78,7 +83,6 @@ def is_port_available(port=2121):
 	return result==0
 
 
-port = 21
 
 class myserver(threading.Thread):
 	def __init__(self):
