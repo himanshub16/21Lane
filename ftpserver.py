@@ -125,7 +125,7 @@ class userui_thread(threading.Thread):
 		threading.Thread.__init__(self)
 
 	def run(self):
-		subprocess.call(["python3", "authui.py"])
+		subprocess.call([python, "authui.py"])
 
 # while True:
 # 	try:
