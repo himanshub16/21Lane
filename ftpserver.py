@@ -33,7 +33,7 @@ def load_users():
 		if username == 'anonymous':
 			authorizer.add_anonymous(userobj.homedir, perm=userobj.permission, msg_login=userobj.msg_login, msg_quit=userobj.msg_quit)
 		else:
-			authorizer.add_user(userobj.name, userobj.password, userobj.homedir, perm=userobj.perm, msg_login=userobj.msg_login, msg_quit=userobj.msg_quit)
+			authorizer.add_user(userobj.name, userobj.password, userobj.homedir, perm=userobj.permission, msg_login=userobj.msg_login, msg_quit=userobj.msg_quit)
 	return authorizer
 
 
@@ -107,7 +107,7 @@ class myserver(threading.Thread):
 		server.serve_forever()
 
 	def getport(self):
-		print ("port is inside : ", port)
+		# print ("port is inside : ", port)
 		return str(port)
 
 
@@ -243,7 +243,7 @@ class MainUI(QMainWindow, QWidget):
 			# server.serve_forever()
 			self.srv = myserver()
 			global port
-			print ('port is ', port)
+			# print ('port is ', port)
 			self.srv.start()
 			msg = "Running on port " + str(self.srv.getport())
 			self.mainbtn.setText("Stop Server")
