@@ -90,7 +90,7 @@ class userconfigUI(QWidget):
 
 		# starting the main application
 		self.move(200, 100)
-		self.setWindowTitle("FTP Settings")
+		self.setWindowTitle("User Configuration")
 		self.show()
 
 	def set_perms(self):
