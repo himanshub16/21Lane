@@ -6,12 +6,19 @@ import os
 import subprocess
 import threading
 
+from datetime import datetime
+
 from PyQt5.QtWidgets import (QWidget, QAction, qApp, QPushButton, QApplication,
 	QMainWindow, QTextEdit, QMessageBox, QInputDialog, QLabel, QLineEdit,
 	QGridLayout, QSpinBox, QSlider, QCheckBox)
 from PyQt5.QtGui import QIcon, QFont, QPainter, QPen
 from PyQt5.QtCore import Qt, QCoreApplication
 
+
+def mylog(ar):
+	f = open('log.txt', 'a')
+	f.write(str(datetime.now()) + " " + ar + "\n")
+	f.close()
 
 class ListUserUI(QWidget):
 	def __init__(self):
@@ -121,45 +128,17 @@ class ListUserUI(QWidget):
 
 
 	def add_user(self):
-		# cmd = sys.executable + ' get_user_data.py'
 		subprocess.call([sys.executable, 'get_user_data.py'])
 
 	def modify_user(self):
 		username = QApplication.sender(self).objectName()
-		# cmd = sys.executable + ' get_user_data.py ' + username
 		subprocess.call([sys.executable, 'get_user_data.py', username])
-		# tmpstr = # call another script get_user_data.py
-		# a = dummyUI()
-		# p = QApplication([])
-		# p.exec_()
 
 
 	def removeUser(self):
 		username = QApplication.sender(self).objectName()
 		self.userdb.remove_user(username)
 		restart_program()
-		# snd = QApplication.sender(self)
-		# row = 0
-		# # get the row
-		# for r in (self.userRows):
-		# 	if snd in r:
-		# 		row = r
-
-		# manage addition and removal using userrow variable
-		# remove all widgets and repopulate all rows in userrows
-
-		# remove the widgets from the row
-		# for wid in row[1:]:
-		# 	self.grid.removeWidget(wid)
-			# wid.hide()
-		# removing widgets from the grid
-		# for i in range(self.userRows)
-
-		# removing all widgets
-		# for r in self.userRows:
-		# 	for wid in r[1:]:
-		# 		self.grid.removeWidget(wid)
-		# self.addUsers()
 
 
 class mythread(threading.Thread):
@@ -180,6 +159,3 @@ def restart_program():
 if __name__ == "__main__":
 	th = mythread()
 	th.start()
-	# app = QApplication([])
-	# ex = ListUserUI()
-	# sys.exit(app.exec_())

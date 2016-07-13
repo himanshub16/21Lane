@@ -14,12 +14,14 @@ import socket
 import threading
 import subprocess
 
+from datetime import datetime
+
 userbase = auth.Userbase()
 python = sys.executable
 
-def mylog(str):
+def mylog(ar):
 	f = open('log.txt', 'a')
-	f.write(str)
+	f.write(str(datetime.now()) + " " + ar + "\n")
 	f.close()
 
 
@@ -43,25 +45,6 @@ def load_users():
 			authorizer.add_user(userobj.name, userobj.password, userobj.homedir, perm=userobj.permission, msg_login=userobj.msg_login, msg_quit=userobj.msg_quit)
 	return authorizer
 
-
-# def create_server():
-# 	conf = load_settings()
-# 	authorizer = load_users()
-# 	ThrottledDTPHandler.write_limit = conf.max_upload_speed
-# 	ThrottledDTPHandler.read_limit = conf.max_download_speed
-# 	FTPHandler.dtp_handler = ThrottledDTPHandler
-# 	FTPHandler.banner = conf.server_banner
-# 	FTPServer.max_cons = conf.max_cons
-# 	FTPServer.max_cons_per_ip = conf.max_cons_per_ip
-# 	FTPHandler.authorizer = authorizer
-# 	FTPHandler.permit_foreign_addresses = conf.permit_outside_lan
-# 	global server
-# 	server = FTPServer(('127.0.0.1', 2121), FTPHandler)
-# 	# try:
-# 	# 	server.serve_forever()
-# 	# finally:
-# 	# 	server.close_all()
-# 	# 	del conf, authorizer
 
 def start_server():
 	server.serve_forever()
@@ -112,7 +95,6 @@ class myserver(threading.Thread):
 		server.serve_forever()
 
 	def getport(self):
-		# print ("port is inside : ", port)
 		return str(port)
 
 
@@ -131,19 +113,6 @@ class userui_thread(threading.Thread):
 	def run(self):
 		subprocess.call([python, "authui.py"])
 
-# while True:
-# 	try:
-# 		if (sys.version_info.major == 3):
-# 			i = str(input("Start server? "))
-# 		else:
-# 			i = str(raw_input("Start server? "))
-# 		if (i.lower() == 'yes'):
-# 			create_server()
-# 		else:
-# 			break
-# 	except (EOFError, KeyboardInterrupt):
-# 		print("\rPlease enter yes or no")
-# 		continue
 
 
 # handling with GUI
@@ -151,21 +120,6 @@ from PyQt5.QtWidgets import (QWidget, QAction, qApp, QPushButton, QApplication,
 	QMainWindow, QTextEdit, QMessageBox, QInputDialog, QLineEdit)
 from PyQt5.QtGui import QIcon, QFont
 
-
-# class SettingsUI(QMainWindow, QWidget):
-# 	def __init__(self):
-# 		super().__init__()
-# 		self.initUI()
-#
-# 	def initUI(self):
-# 		btn = QPushButton("Click me", self)
-# 		btn.setCheckable(True)
-# 		btn.move(50, 100)
-#
-# 		self.setGeometry(200, 200, 280, 170)
-# 		self.setWindowTitle("Settings UI")
-# 		self.show()
-#
 
 class MainUI(QMainWindow, QWidget):
 	def __init__(self):
@@ -264,7 +218,6 @@ class MainUI(QMainWindow, QWidget):
 			self.statusBar().showMessage("Stopped")
 			self.mainbtn.setText("Start Server")
 			self.mainbtn.setStyleSheet("background-color: #40e0d0; color: black; border: none")
-			# self.srv.terminate()
 
 
 	def closeEvent(self, event):
@@ -310,31 +263,7 @@ class MainUI(QMainWindow, QWidget):
 
 
 if __name__ == "__main__":
-	# server = None
 	app = QApplication([])
 	app.setWindowIcon(QIcon('icons/1468025361_cmyk-03.png'))
 	ex = MainUI()
-	# sa = SettingsUI()
-	# ex2 = portCheckUI()
 	sys.exit(app.exec_())
-
-# sys.exit()
-
-# conf = load_settings()
-
-# authorizer = DummyAuthorizer()
-# authorizer.add_user("user", "12345", "/home/himanshu", perm="elradfmw")
-# authorizer.add_anonymous("/media/himanshu/himanshu")
-#
-# tdtp = ThrottledDTPHandler
-# tdtp.write_limit = 1000000	# maximum download speed from server
-# FTPHandler.dtp_handler = ThrottledDTPHandler
-# FTPHandler.banner = "Welcome to python powered service"
-# handler = FTPHandler
-# handler.authorizer = authorizer
-# server = FTPServer(("127.0.0.1", 2121), handler)
-#
-# try:
-# 	server.serve_forever()
-# finally:
-# 	server.close_all()

@@ -12,6 +12,14 @@ from PyQt5.QtCore import Qt, QCoreApplication
 import sys, os
 import auth
 
+from datetime import datetime
+
+
+def mylog(ar):
+	f = open('log.txt', 'a')
+	f.write(str(datetime.now()) + " " + ar + "\n")
+	f.close()
+
 
 class userconfigUI(QWidget):
 	def __init__(self):
@@ -29,7 +37,6 @@ class userconfigUI(QWidget):
 				self.isanonuser = True
 
 		self.usernameLabel = QLabel(self); self.usernameLabel.setText("Username")
-		# self.homedirLabel = QLabel(self); self.homedirLabel.setText("Home directory")
 		self.permissionsLabel = QLabel(self); self.permissionsLabel.setText("Permissions")
 		self.loginmsgLabel = QLabel(self); self.loginmsgLabel.setText("Login message")
 		self.logoutmsgLabel = QLabel(self); self.logoutmsgLabel.setText("Logout message")
@@ -119,7 +126,6 @@ class userconfigUI(QWidget):
 
 
 	def handle_perm(self, state):
-		# print(self.permissions)
 		if QApplication.sender(self) == self.readPerm:
 			if state == Qt.Checked:
 				if not "elr" in self.permissions:
@@ -162,15 +168,12 @@ class userconfigUI(QWidget):
 # QCheckBox.isChecked() gives check value
 
 	def populateForm(self, usr):
-		# return
-		# print('populating form ', usr)
 		usrobj = auth.Userbase().get_user_info(usr)
 		if not self.isanonuser:
 			self.passwordInput.setText(usrobj.password)
 		self.usernameInput.setText(usrobj.name)
 		self.usernameInput.setReadOnly(True)
 		self.homedirInput.setText(usrobj.homedir)
-		# print(usrobj.msg_login, ' and ', usrobj.msg_quit)
 		self.loginmsgInput.setText(usrobj.msg_login)
 		self.logoutmsgInput.setText(usrobj.msg_quit)
 		self.permissions = usrobj.permission
@@ -200,10 +203,6 @@ class userconfigUI(QWidget):
 			userobj.save_details()
 		QMessageBox.information(self, 'Message', "Settings Saved.", QMessageBox.Ok, QMessageBox.Ok)
 		qApp.quit()
-
-
-	# def restoreDefaults(self):
-	# 	QMessageBox.information(self, 'Message', "Default settings are displayed\nEdit if you want.\nClick Save to save them.", QMessageBox.Ok, QMessageBox.Ok)
 
 
 if __name__=="__main__":

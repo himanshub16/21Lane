@@ -2,14 +2,20 @@
 try:
 	os
 	shelve
+	sys
 except NameError:
 	try:
-		import os, shelve
+		import os, shelve, sys
 	except ImportError as e:
 		print (e," Cannot import required modules")
 
+from datetime import datetime
 
-import sys
+def mylog(ar):
+	f = open('log.txt', 'a')
+	f.write(str(datetime.now()) + " " + ar + "\n")
+	f.close()
+
 
 class FTPSettings:
 	"""Class to handle FTP Settings
@@ -38,9 +44,6 @@ class FTPSettings:
 			# self.permit_outside_lan = f['permit_outside_lan']
 			f.close()
 		else:
-			# print ('Settings file missing')
-			# f = open('settings', 'w')
-			# f.close()
 			self.server_name = 'Unnamed server'
 			self.server_banner = "Welcome to dFTP server"
 			self.port = 2121
@@ -50,19 +53,13 @@ class FTPSettings:
 			self.max_download_speed = 10	# to resrtict uploads from public on server,
 											# when write permission is allowed
 			# self.permit_outside_lan = False
-			# print ('Blank file created in lieu with default settings.')
-			# self.save_settings()
-			# print ('Default setttings saved')
 
 	def reload_settings(self):
 		self.__init__()
 
 	def save_settings(self):
 		"""save settings to settings file"""
-		# print ('saving settings ')
-		# os.remove('settings')
 		f = shelve.open('settings')
-		# print ('file opened')
 		f['server_name'] = self.server_name
 		f['server_banner'] = self.server_banner
 		f['port'] = self.port
@@ -72,6 +69,7 @@ class FTPSettings:
 		f['max_download_speed'] = self.max_download_speed
 		# f['permit_outside_lan'] = self.permit_outside_lan
 		f.close()
+		mylog("Settings modified")
 
 	def restore_default_settings(self):
 		if 'settings.db' in os.listdir(os.getcwd()):
@@ -132,11 +130,6 @@ class SettingsUI(QWidget):
 		self.restoreBtn.clicked.connect(self.restoreDefaults)
 		self.saveBtn.clicked.connect(self.saveData)
 
-		# dummylabel = QLabel(self)
-		# dummylabel.setText("")
-		# dummylabel.setStyleSheet("background-color: rgba(10, 10, 10, 0.4)")
-		# grid.addWidget(dummylabel, 6, 0, 2, 6)
-
 		# adding widgets to grid
 		grid.addWidget(self.nameLabel, 0, 0, 1, 2); grid.addWidget(self.nameInput, 0, 2); grid.addWidget(self.portLabel, 0, 4); grid.addWidget(self.portInput, 0, 5)
 		grid.addWidget(self.bannerLabel, 1, 0, 1, 2); grid.addWidget(self.bannerInput, 1, 2, 1, 4)
@@ -155,10 +148,6 @@ class SettingsUI(QWidget):
 		self.bannerInput.setToolTip("This message is displayed whenever someone connects to your system")
 		self.maxconInput.setToolTip("Total users which can connect to your system")
 		self.maxconperipInput.setToolTip("Total connections one user can make to your system")
-		# self.uploadInput.setTickPosition(2)
-		# self.uploadInput.setTickInterval(25)
-		# self.downloadInput.setTickPosition(2)
-		# self.downloadInput.setTickInterval(25)
 		self.uploadInput.setToolTip("This is the max.speed at which \nyou allow uploads from your system \nHigher values can freeze your system.")
 		self.downloadInput.setToolTip("This is the max.speed at which \nyou allow download to your system \n(For users with write permission) \nHigher values can freeze your system.")
 
@@ -176,9 +165,6 @@ class SettingsUI(QWidget):
 
 
 	def closeEvent(self, event):
-		# QMessageBox.question(self, message_label, text_in_dialog, combination_of_buttons_appearing_in_dialog, default_button)
-		# closing the widget generates QCloseEvent
-		# to modify the widget behavior, we need to reimplement closeEvent() event handler
 		reply = QMessageBox.question(self, 'Message', "Are you aure to exit ?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 
 		if reply == QMessageBox.Yes:
