@@ -126,21 +126,21 @@ class userconfigUI(QWidget):
 
 
 	def handle_perm(self, state):
-		if QApplication.sender(self) == self.readPerm:
+		if self.sender() == self.readPerm:
 			if state == Qt.Checked:
 				if not "elr" in self.permissions:
 					self.permissions += "elr"
 			else:
 				self.permissions = self.permissions.replace('elr', '')
 
-		elif QApplication.sender(self) == self.writePerm:
+		elif self.sender() == self.writePerm:
 			if state == Qt.Checked:
 				if not "w" in self.permissions:
 					self.permissions += "w"
 			else:
 				self.permissions = self.permissions.replace('w', '')
 
-		elif QApplication.sender(self) == self.modifyPerm:
+		elif self.sender() == self.modifyPerm:
 			if state == Qt.Checked:
 				if not "adfm" in self.permissions:
 					self.permissions += "adfm"
