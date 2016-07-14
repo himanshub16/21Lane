@@ -36,8 +36,8 @@ class userconfigUI(QWidget):
 			if sys.argv[1] == 'anonymous':
 				self.isanonuser = True
 
-		self.usernameLabel = QLabel(self); self.usernameLabel.setText("Username")
-		self.permissionsLabel = QLabel(self); self.permissionsLabel.setText("Permissions")
+		self.usernameLabel = QLabel(self); self.usernameLabel.setText("Username *")
+		self.permissionsLabel = QLabel(self); self.permissionsLabel.setText("Permissions *")
 		self.loginmsgLabel = QLabel(self); self.loginmsgLabel.setText("Login message")
 		self.logoutmsgLabel = QLabel(self); self.logoutmsgLabel.setText("Logout message")
 
@@ -68,7 +68,7 @@ class userconfigUI(QWidget):
 		self.saveBtn.clicked.connect(self.saveData)
 
 		if not self.isanonuser:
-			self.passwordLabel = QLabel(self); self.passwordLabel.setText("Password")
+			self.passwordLabel = QLabel(self); self.passwordLabel.setText("Password *")
 			self.passwordInput = QLineEdit(self); self.passwordInput.setEchoMode(QLineEdit.PasswordEchoOnEdit)
 			grid.addWidget(self.passwordLabel, 1, 0, 1, 2)
 			grid.addWidget(self.passwordInput, 1, 2, 1, 2)
@@ -169,6 +169,8 @@ class userconfigUI(QWidget):
 
 	def populateForm(self, usr):
 		usrobj = auth.Userbase().get_user_info(usr)
+		if usrobj is None:
+			return
 		if not self.isanonuser:
 			self.passwordInput.setText(usrobj.password)
 		self.usernameInput.setText(usrobj.name)
@@ -182,9 +184,7 @@ class userconfigUI(QWidget):
 	def saveData(self):
 		# code a form validator before saving
 		if len(self.usernameInput.text()) == 0 \
-			or len(self.homedirInput.text()) == 0 \
-			or len(self.loginmsgInput.text()) == 0 \
-			or len(self.logoutmsgInput.text()) == 0:
+			or len(self.homedirInput.text()) == 0:
 			QMessageBox.critical(self, 'Message', "Incomplete details!", QMessageBox.Ok, QMessageBox.Ok)
 			return
 
