@@ -1,5 +1,6 @@
 try:
 	from tinydb import TinyDB, where
+	from copy import deepcopy
 except ImportError as e:
 	print (e," Cannot import required modules")
 
@@ -18,10 +19,12 @@ class User:
 		if 'name' in k and \
 			'password' in k and \
 			'homedir' in k and \
-			'permission' in k and \
-			'msg_login' in k and \
-			'msg_quit' in k:
-			self.record = k
+			'permission' in k:
+			self.record = deepcopy(dic)
+		if not 'msg_quit' in k:
+			self.record['msg_quit'] = ''
+		if not 'msg_login' in k:
+			self.record['msg_login'] = ''
 
 	def save_details(self):
 		dbase = TinyDB('user_database.json')
@@ -40,12 +43,14 @@ class AnonymousUser:
 	"""
 	def __init__(self, dic):
 		k = list(dic.keys())
-		if 'password' in k and \
-			'homedir' in k and \
-			'permission' in k and \
-			'msg_login' in k and \
-			'msg_quit' in k:
-			self.record = k
+		print("copying ", dic)
+		if	'homedir' in k and \
+			'permission' in k:
+			self.record = deepcopy(dic)
+		if not 'msg_quit' in k:
+			self.record['msg_quit'] = ''
+		if not 'msg_login' in k:
+			self.record['msg_login'] = ''
 		self.record['name'] = 'anonymous'
 
 	def save_details(self):
