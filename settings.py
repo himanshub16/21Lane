@@ -45,14 +45,17 @@ class FTPSettings:
 			# self.permit_outside_lan = False
 
 		else:
-			rec = dbase.all()[0]
-			self.server_name = rec['server_name']
-			self.server_banner = rec['server_banner']
-			self.port = rec['port']
-			self.max_cons = rec['max_cons']
-			self.max_cons_per_ip = rec['max_cons_per_ip']
-			self.max_upload_speed = rec['max_upload_speed']
-			self.max_download_speed = rec['max_download_speed']
+			try:
+				rec = dbase.all()[0]
+				self.server_name = rec['server_name']
+				self.server_banner = rec['server_banner']
+				self.port = rec['port']
+				self.max_cons = rec['max_cons']
+				self.max_cons_per_ip = rec['max_cons_per_ip']
+				self.max_upload_speed = rec['max_upload_speed']
+				self.max_download_speed = rec['max_download_speed']
+			except KeyError:
+				self.restore_default_settings()
 			# permit outside lan has not been included
 		dbase.close()
 		
