@@ -1,15 +1,15 @@
 # This module manages FTP settings
 try:
 	os
-	shelve
 	sys
 except NameError:
 	try:
-		import os, shelve, sys
+		import os, sys
+		from datetime import datetime
+		from tinydb import TinyDB, where
 	except ImportError as e:
 		print (e," Cannot import required modules")
 
-from datetime import datetime
 
 def mylog(ar):
 	f = open('log.txt', 'a')
@@ -32,18 +32,8 @@ class FTPSettings:
 
 	def __init__(self):
 		"""read data from settings file"""
-		if 'settings.db' in os.listdir(os.getcwd()):
-			f = shelve.open('settings')
-			self.server_name = f['server_name']
-			self.server_banner = f['server_banner']
-			self.port = f['port']
-			self.max_cons = f['max_cons']
-			self.max_cons_per_ip = f['max_cons_per_ip']
-			self.max_upload_speed = f['max_upload_speed']
-			self.max_download_speed = f['max_download_speed']
-			# self.permit_outside_lan = f['permit_outside_lan']
-			f.close()
-		else:
+		dbase = TinyDB('settings.json')
+		if len(dbase.all()) == 0:
 			self.server_name = 'Unnamed server'
 			self.server_banner = "Welcome to dFTP server"
 			self.port = 2121
@@ -54,26 +44,41 @@ class FTPSettings:
 											# when write permission is allowed
 			# self.permit_outside_lan = False
 
+		else:
+			rec = dbase.all()[0]
+			self.server_name = rec['server_name']
+			self.server_banner = rec['server_banner']
+			self.port = rec['port']
+			self.max_cons = rec['max_cons']
+			self.max_cons_per_ip = rec['max_cons_per_ip']
+			self.max_upload_speed = rec['max_upload_speed']
+			self.max_download_speed = rec['max_download_speed']
+			# permit outside lan has not been included
+		dbase.close()
+		
 	def reload_settings(self):
 		self.__init__()
 
 	def save_settings(self):
 		"""save settings to settings file"""
-		f = shelve.open('settings')
-		f['server_name'] = self.server_name
-		f['server_banner'] = self.server_banner
-		f['port'] = self.port
-		f['max_cons'] = self.max_cons
-		f['max_cons_per_ip'] = self.max_cons_per_ip
-		f['max_upload_speed'] = self.max_upload_speed
-		f['max_download_speed'] = self.max_download_speed
+		dbase = TinyDB('settings.json')
+		rec={}
+		rec['server_name'] = self.server_name
+		rec['server_banner'] = self.server_banner
+		rec['port'] = self.port
+		rec['max_cons'] = self.max_cons
+		rec['max_cons_per_ip'] = self.max_cons_per_ip
+		rec['max_upload_speed'] = self.max_upload_speed
+		rec['max_download_speed'] = self.max_download_speed
 		# f['permit_outside_lan'] = self.permit_outside_lan
-		f.close()
+		dbase.insert(rec)
+		dbase.close()
 		mylog("Settings modified")
 
 	def restore_default_settings(self):
-		if 'settings.db' in os.listdir(os.getcwd()):
-			os.remove('settings.db')
+		dbase = TinyDB('settings.json')
+		dbase.purge()
+		dbase.close()
 		self.__init__()
 
 
