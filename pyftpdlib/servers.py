@@ -48,7 +48,7 @@ from .log import debug
 from .log import is_logging_configured
 from .log import logger
 
-print("This is sample server ")
+# print("This is sample server ")
 __all__ = ['FTPServer']
 _BSD = 'bsd' in sys.platform
 
