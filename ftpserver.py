@@ -54,13 +54,14 @@ def stop_server():
 
 
 def is_port_available(port=2121):
-	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	port = int(port)
 	try:
-		result = socket.create_connection(('0.0.0.0', port))
+		# connecting on localhost, previously it was 0.0.0.0, to satisfy Windows
+		result = socket.create_connection(('localhost', port), 2)
 	except OverflowError:
 		print ("Socket out of range")
-	except ConnectionError:
+	except (ConnectionError, ConnectionRefusedError):
+		# Connection refused error to handle windows systems:(
 		return True
 
 	return result==0
@@ -230,7 +231,7 @@ class MainUI(QMainWindow, QWidget):
 		except:
 			pass
 		finally:
-			reply = QMessageBox.question(self, 'Close', "Are you aure to exit ?", QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
+			reply = QMessageBox.question(self, 'Close', "Are you sure to exit ?", QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
 			if reply == QMessageBox.Yes:
 				event.accept()
 			else:
