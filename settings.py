@@ -168,6 +168,7 @@ class SettingsUI(QWidget):
 
 		# starting the main application
 		self.move(200, 100)
+		self.setFixedSize(500, 300)
 		self.setWindowTitle("FTP Settings")
 		self.show()
 
