@@ -45,12 +45,14 @@ class userconfigUI(QWidget):
 		self.usernameInput = QLineEdit(self); self.usernameInput.setMaxLength(16)
 		self.usernameInput.setToolTip("Don't user spaces or special characters")
 		self.usernameInput.setPlaceholderText("No spaces or special characters")
-		self.homedirInput = QLineEdit(self);
+		if not self.isanonuser:
+			self.passwordLabel = QLabel(self); self.passwordLabel.setText("Password *")
+			self.passwordInput = QLineEdit(self); self.passwordInput.setEchoMode(QLineEdit.PasswordEchoOnEdit)
+
 		self.homedirSelect = QPushButton('Home directory', self)
+		self.homedirInput = QLineEdit(self);
 		self.homedirSelect.setToolTip("Click this button to choose directory \nor type the compelete path \nin the adjoining input")
 		self.homedirSelect.clicked.connect(self.showDirChooser)
-		self.loginmsgInput = QLineEdit(self);
-		self.logoutmsgInput = QLineEdit(self);
 
 		self.permissions = ""
 
@@ -61,6 +63,9 @@ class userconfigUI(QWidget):
 		self.writePerm.stateChanged.connect(self.handle_perm)
 		self.modifyPerm.stateChanged.connect(self.handle_perm)
 
+		self.loginmsgInput = QLineEdit(self);
+		self.logoutmsgInput = QLineEdit(self);
+
 		self.saveBtn = QPushButton("Save", self)
 		self.cancelBtn = QPushButton("Cancel", self)
 
@@ -68,10 +73,10 @@ class userconfigUI(QWidget):
 		self.saveBtn.clicked.connect(self.saveData)
 
 		if not self.isanonuser:
-			self.passwordLabel = QLabel(self); self.passwordLabel.setText("Password *")
-			self.passwordInput = QLineEdit(self); self.passwordInput.setEchoMode(QLineEdit.PasswordEchoOnEdit)
 			grid.addWidget(self.passwordLabel, 1, 0, 1, 2)
 			grid.addWidget(self.passwordInput, 1, 2, 1, 2)
+		else:
+			self.usernameInput.setText("anonymous")
 
 		grid.addWidget(self.usernameLabel, 0, 0, 1, 2)
 		grid.addWidget(self.usernameInput, 0, 2, 1, 2)
@@ -194,6 +199,9 @@ class userconfigUI(QWidget):
 		dic = { 'name':self.usernameInput.text(), 'homedir':self.homedirInput.text(), \
 					'permission':self.permissions, 'msg_login':self.loginmsgInput.text(), 'msg_quit':self.logoutmsgInput.text() }
 		if dic['name'] == 'anonymous':
+			if not self.isanonuser:
+			 	QMessageBox.critical(self, "Error", "Please choose a name other than 'anonymous'", QMessageBox.Ok, QMessageBox.Ok)
+			 	return
 			dic.pop('name')
 			userobj = auth.AnonymousUser(dic)
 			userobj.save_details()
