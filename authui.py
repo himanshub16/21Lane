@@ -9,8 +9,8 @@ import threading
 from datetime import datetime
 
 from PyQt5.QtWidgets import (QWidget, QAction, qApp, QPushButton, QApplication,
-	QMainWindow, QTextEdit, QMessageBox, QInputDialog, QLabel, QLineEdit,
-	QGridLayout, QSpinBox, QSlider, QCheckBox)
+	QMainWindow, QTextEdit, QMessageBox, QInputDialog, QLabel, QLineEdit, QHBoxLayout,
+	QGridLayout, QSpinBox, QSlider, QCheckBox, QVBoxLayout, QSplitter, QFrame)
 from PyQt5.QtGui import QIcon, QFont, QPainter, QPen
 from PyQt5.QtCore import Qt, QCoreApplication
 
@@ -26,10 +26,10 @@ class ListUserUI(QWidget):
 		self.initUI()
 
 	def initUI(self):
-		self.grid = QGridLayout()
-		self.setLayout(self.grid)
-		self.grid.setSpacing(10)
-		self.grid.setVerticalSpacing(10)
+		# self.grid = QGridLayout()
+		# self.setLayout(self.grid)
+		# self.grid.setSpacing(10)
+		# self.grid.setVerticalSpacing(10)
 
 		self.userdb = auth.Userbase()
 
@@ -40,10 +40,12 @@ class ListUserUI(QWidget):
 		self.anonLabel.setToolTip("Any general user can login to anyone without password")
 
 		self.anonCheck = QCheckBox("", self);
-		if 'anonymous.db' in self.userdb.userlist:
-			self.anonCheck.toggle() # unchecked by default
+		
 		self.anonCheck.setObjectName("anonymous")
 		self.anonCheck.setToolTip("Enable/Disable anonymous users")
+		if 'anonymous' in self.userdb.get_user_list():
+			self.anonCheck.toggle()
+		self.anonCheck.stateChanged.connect(self.removeUser)
 		self.anonSettings = QPushButton('', self)
 		self.anonSettings.setIcon(QIcon("icons/ic_create_black_24dp_1x.png"))
 		self.anonSettings.setFlat(True)
@@ -60,14 +62,47 @@ class ListUserUI(QWidget):
 		self.addUserButton.setToolTip("Add user")
 		self.addUserButton.clicked.connect(self.add_user)
 
-		self.grid.addWidget(self.anonLabel, 0, 0, 1, 2)
-		self.grid.addWidget(blankLabel, 0, 2)
-		self.grid.addWidget(self.anonCheck, 0, 3)
-		self.grid.addWidget(blankLabel, 0, 4)
-		self.grid.addWidget(self.anonSettings, 0, 5)
+		# self.grid.addWidget(self.anonLabel, 0, 0, 1, 2)
+		# self.grid.addWidget(blankLabel, 0, 2)
+		# self.grid.addWidget(self.anonCheck, 0, 3)
+		# self.grid.addWidget(blankLabel, 0, 4)
+		# self.grid.addWidget(self.anonSettings, 0, 5)
 
-		self.grid.addWidget(self.usersHeading, 2, 0, 2, 2)
-		self.grid.addWidget(self.addUserButton, 2, 4, 2, 1)
+		# self.grid.addWidget(self.usersHeading, 2, 0, 2, 2)
+		# self.grid.addWidget(self.addUserButton, 2, 4, 2, 1)
+
+		self.anonLayout = QHBoxLayout()
+		self.userHeadingLayout = QHBoxLayout()
+		self.grid = QGridLayout()
+		self.topFrame = QFrame()
+		self.usersFrame = QFrame()
+
+		# self.anonLayout.setStyleSheet("border-bottom: 1px solid black")
+		self.anonLayout.addWidget(self.anonLabel)
+		self.anonLayout.addWidget(self.anonCheck)
+		self.anonLayout.addWidget(self.anonSettings)
+
+		self.userHeadingLayout.addWidget(self.usersHeading)
+		self.userHeadingLayout.addWidget(self.addUserButton)
+
+		self.topFrame.setWindowTitle("Anonymous settings")
+		self.topFrame.setLayout(self.anonLayout)
+		# self.topFrame.setStyleSheet("border-bottom: 1px solid")
+		self.topFrame.setFrameShape(QFrame.StyledPanel)
+		self.topFrame.setFrameShadow(QFrame.Plain)
+		self.usersFrame.setWindowTitle("Verified users ")
+		self.usersFrame.setLayout(self.userHeadingLayout)
+		self.usersFrame.setFrameShape(QFrame.StyledPanel)
+		self.usersFrame.setFrameShadow(QFrame.Plain)
+
+		self.mainLayout = QVBoxLayout()
+
+		self.mainLayout.addWidget(self.topFrame)
+		self.mainLayout.addWidget(self.usersFrame)
+		self.mainLayout.addLayout(self.grid)
+		self.mainLayout.setSpacing(10)
+
+		self.setLayout(self.mainLayout)
 
 		self.addUsers()
 
@@ -77,27 +112,50 @@ class ListUserUI(QWidget):
 		self.show()
 
 
+	def rebuildUI(self):
+		while self.grid.count():
+			item = self.grid.takeAt(0)
+			widget = item.widget()
+			if widget == self.anonLabel or \
+				widget == self.anonCheck or \
+				widget == self.anonSettings or \
+				widget == self.addUserButton or \
+				widget == self.usersHeading:
+				continue
+			widget.deleteLater()
+		self.addUsers()
+
 	def closeEvent(self, e):
 		QMessageBox.information(self, "Message", "Restart sharing for changes to be effective.", QMessageBox.Ok, QMessageBox.Ok)
 
-	def paintEvent(self, e):
-		qp = QPainter()
-		qp.begin(self)
-		self.drawLines(qp)
-		qp.end()
+	# def paintEvent(self, e):
+	# 	qp = QPainter()
+	# 	qp.begin(self)
+	# 	self.drawLines(qp)
+	# 	qp.end()
 
-	def drawLines(self, qp):
-		pen = QPen(Qt.black, 2, Qt.SolidLine)
-		# created a QPen object, black, 2px wide, black
+	# def drawLines(self, qp):
+	# 	pen = QPen(Qt.black, 2, Qt.SolidLine)
+	# 	# created a QPen object, black, 2px wide, black
 
-		qp.setPen(pen)
-		qp.drawLine(10, 40, 280, 40)
+	# 	qp.setPen(pen)
+	# 	qp.drawLine(10, 40, 280, 40)
 
+
+	def anon_state_changed(self, state):
+		if not state == Qt.Checked:
+			print('removing anonymous')
+			self.modify_user()
+		else:
+			print('adding anonymous')
+			self.add_user()
 
 	def addUsers(self):
 		l = self.userdb.get_user_list()
+
 		self.userRows = []
-		self.gridRow = 4 # start entries from here
+		self.gridRow = 0 # start entries from here
+		
 		for i in range(len(l)):
 			if not l[i]=='anonymous':
 				indexLabel = QLabel(self); indexLabel.setText(str(i+1))
@@ -129,16 +187,16 @@ class ListUserUI(QWidget):
 
 	def add_user(self):
 		subprocess.call([sys.executable, 'get_user_data.py'])
+		self.rebuildUI()
 
 	def modify_user(self):
-		username = QApplication.sender(self).objectName()
+		username = self.sender().objectName()
 		subprocess.call([sys.executable, 'get_user_data.py', username])
 
-
 	def removeUser(self):
-		username = QApplication.sender(self).objectName()
+		username = self.sender().objectName()
 		self.userdb.remove_user(username)
-		restart_program()
+		self.rebuildUI()
 
 
 class mythread(threading.Thread):
@@ -150,9 +208,10 @@ class mythread(threading.Thread):
 		ex = ListUserUI()
 		app.exec_()
 
-def restart_program():
-	python = sys.executable
-	os.execl(python, python, *sys.argv)
+# def restart_program():
+	# python = sys.executable
+	# thisProg = os.path.realpath(__file__)
+	# os.execl(python, thisProg, *sys.argv)
 
 
 
