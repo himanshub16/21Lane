@@ -10,7 +10,6 @@ class User:
 	* name		|	* password
 	* homedir	| 	* permission
 	* msg_login	| 	* msg_quit
-	* filepath : path to user configuration filepath
 	*
 	* save_details() : save current details
 	"""
@@ -25,6 +24,13 @@ class User:
 			self.record['msg_quit'] = ''
 		if not 'msg_login' in k:
 			self.record['msg_login'] = ''
+
+		self.name = self.record['name']
+		self.password = self.record['password']
+		self.homedir = self.record['homedir']
+		self.permission = self.record['permission']
+		self.msg_login = self.record['msg_login']
+		self.msg_quit = self.record['msg_quit']
 
 	def save_details(self):
 		dbase = TinyDB('user_database.json')
@@ -43,7 +49,6 @@ class AnonymousUser:
 	"""
 	def __init__(self, dic):
 		k = list(dic.keys())
-		print("copying ", dic)
 		if	'homedir' in k and \
 			'permission' in k:
 			self.record = deepcopy(dic)
@@ -52,6 +57,12 @@ class AnonymousUser:
 		if not 'msg_login' in k:
 			self.record['msg_login'] = ''
 		self.record['name'] = 'anonymous'
+
+		self.name = self.record['name']
+		self.homedir = self.record['homedir']
+		self.permission = self.record['permission']
+		self.msg_login = self.record['msg_login']
+		self.msg_quit = self.record['msg_quit']
 
 	def save_details(self):
 		dbase = TinyDB('user_database.json')
@@ -85,7 +96,8 @@ class Userbase:
 		if username in self.get_user_list():
 			# in following either case tmpuser is of respective user type
 			dbase = TinyDB('user_database.json')
-			usr = dbase.search(where('name') == username)
+			# assuming there is one user by one name
+			usr = dbase.search(where('name') == username)[0]
 			if username == 'anonymous':
 				# dbase = shelve.open(os.path.join(self.userdir, 'anonymous'), 'r')
 				# tmpuser = AnonymousUser({'name':dbase['name'], 'homedir':dbase['homedir'], 'permission':dbase['permission'], 'msg_login':dbase['msg_login'], 'msg_quit':dbase['msg_quit']})
