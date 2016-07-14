@@ -32,13 +32,14 @@ def load_users():
 	""" creates a new DummyAuthorizer object at every call
 	"""
 	authorizer = DummyAuthorizer()
-	if len(userbase.userlist) == 0:
+	if len(userbase.get_user_list()) == 0:
 		# there are no users, so at least one anonymous user should be authorized
 		authorizer.add_anonymous(os.getcwd())
 		return authorizer
 
 	for username in userbase.get_user_list():
 		userobj = userbase.get_user_info(username)
+		print("attempting to add ", username, " i.e. ", userobj.name)
 		if username == 'anonymous':
 			authorizer.add_anonymous(userobj.homedir, perm=userobj.permission, msg_login=userobj.msg_login, msg_quit=userobj.msg_quit)
 		else:
@@ -130,6 +131,7 @@ class MainUI(QMainWindow, QWidget):
 
 	def initUI(self):
 		mylog ("Creating ui")
+
 		self.mainbtn = QPushButton("Start server", self)
 		self.mainbtn.setStyleSheet("background-color: blue; color: white; border: none")
 		# self.mainbtn.setCheckable(True)
@@ -197,6 +199,9 @@ class MainUI(QMainWindow, QWidget):
 		sys.exit()
 
 	def check_server(self, pressed):
+		if len(userbase.get_user_list()) == 0:
+			QMessageBox.critical(self, "No users", "There are no users available.\nPlease add at least one user.", QMessageBox.Ok, QMessageBox.Ok)
+			return
 		global server
 		if not server:
 			global port
@@ -236,6 +241,7 @@ class MainUI(QMainWindow, QWidget):
 				event.accept()
 			else:
 				event.ignore()
+
 
 
 	def checkPortUI(self):
