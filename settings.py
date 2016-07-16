@@ -183,7 +183,7 @@ class SettingsUI(QWidget):
 
 
 	def populateForm(self):
-		if not 'settings.db' in os.listdir(os.getcwd()):
+		if not 'settings.json' in os.listdir(os.getcwd()):
 			QMessageBox.information(self, "Settings missing", "No settings are present on your system.\nDefault settings have been loaded.", QMessageBox.Ok, QMessageBox.Ok)
 			self.restoreDefaults()
 		else:
