@@ -43,7 +43,6 @@ class AnonymousUser:
 	* name 		: anonymous (as both kinds of users are in same database)
 	* homedir	| 	* permission
 	* msg_login	| 	* msg_quit
-	* filepath : path to user configuration filepath
 	*
 	* save_details() : save current details
 	"""
@@ -99,14 +98,10 @@ class Userbase:
 			# assuming there is one user by one name
 			usr = dbase.search(where('name') == username)[0]
 			if username == 'anonymous':
-				# dbase = shelve.open(os.path.join(self.userdir, 'anonymous'), 'r')
-				# tmpuser = AnonymousUser({'name':dbase['name'], 'homedir':dbase['homedir'], 'permission':dbase['permission'], 'msg_login':dbase['msg_login'], 'msg_quit':dbase['msg_quit']})
 				tmpuser = AnonymousUser(usr)
 				dbase.close()
 				return tmpuser
 			else:
-				# dbase = shelve.open(os.path.join(self.userdir, username), 'r')
-				# tmpuser = User({'name':dbase['name'], 'password':dbase['password'], 'homedir':dbase['homedir'], 'permission':dbase['permission'], 'msg_login':dbase['msg_login'], 'msg_quit':dbase['msg_quit']})
 				tmpuser = AnonymousUser(usr)
 				dbase.close()
 				return tmpuser
