@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python3 
 from pyftpdlib.authorizers import DummyAuthorizer
 from pyftpdlib.handlers import FTPHandler
 from pyftpdlib.handlers import ThrottledDTPHandler
@@ -33,8 +33,15 @@ def load_users():
 	"""
 	authorizer = DummyAuthorizer()
 	if len(userbase.get_user_list()) == 0:
-		# there are no users, so at least one anonymous user should be authorized
-		authorizer.add_anonymous(os.getcwd())
+		try:
+			# there are no users, so at least one anonymous user should be authorized
+			pubdir = os.path.join(os.path.expanduser('~'), 'Public')
+			if not os.path.isdir(pubdir):
+				os.makedirs(pubdir)
+			mylog("There is no user defined, using anonymous user with public folder ", pubdir)
+		except OSError as e:
+			mylog("Error raised ", e)
+		authorizer.add_anonymous(pubdir)
 		return authorizer
 
 	for username in userbase.get_user_list():
@@ -134,7 +141,7 @@ class MainUI(QMainWindow, QWidget):
 
 		self.mainbtn = QPushButton("Start server", self)
 		self.mainbtn.setStyleSheet("background-color: blue; color: white; border: none")
-		# self.mainbtn.setCheckable(True)
+		self.mainbtn.setCheckable(True)
 		self.mainbtn.move(90, 100)
 		self.mainbtn.clicked[bool].connect(self.check_server)
 
@@ -204,7 +211,10 @@ class MainUI(QMainWindow, QWidget):
 			QMessageBox.critical(self, "No users", "There are no users available.\nPlease add at least one user.", QMessageBox.Ok, QMessageBox.Ok)
 			return
 		global server
+		self.mainbtn.setEnabled(False)
+
 		if not server:
+			self.statusBar().showMessage("Starting...")
 			global port
 			port = load_settings().port
 			if not is_port_available(port):
@@ -226,6 +236,8 @@ class MainUI(QMainWindow, QWidget):
 			self.mainbtn.setText("Start Server")
 			self.mainbtn.setStyleSheet("background-color: #40e0d0; color: black; border: none")
 
+		self.mainbtn.setEnabled(True)
+
 
 	def closeEvent(self, event):
 		try:
@@ -242,7 +254,6 @@ class MainUI(QMainWindow, QWidget):
 				event.accept()
 			else:
 				event.ignore()
-
 
 
 	def checkPortUI(self):
@@ -268,6 +279,22 @@ class MainUI(QMainWindow, QWidget):
 	def userui_init(self):
 		th = userui_thread()
 		th.start()
+
+
+	def checkPortUI(self):
+		text, ok = QInputDialog.getText(self, "Input Dialog", "Enter any port")
+		try:
+			port = int(text)
+			if port < 0 or port > 65535:
+				raise ValueError
+			if ok:
+				if is_port_available(int(text)):
+					QMessageBox.information(self, 'Message', "Port is available", QMessageBox.Ok, QMessageBox.Ok)
+				else:
+					QMessageBox.critical(self, 'Message', "Port is unavailable", QMessageBox.Ok, QMessageBox.Ok)
+		except ValueError:
+			QMessageBox.warning(self, 'Error', "Port number should be a number between 0 and 65535", QMessageBox.Ok, QMessageBox.Ok)
+
 
 
 if __name__ == "__main__":
