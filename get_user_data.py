@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python3 
 # this script either creates a new user, or modifies current user
 # for modifying, the username is sent as command-line argument
 # else, there is not command line argument.
@@ -45,6 +45,7 @@ class userconfigUI(QWidget):
 		self.usernameInput = QLineEdit(self); self.usernameInput.setMaxLength(16)
 		self.usernameInput.setToolTip("Don't user spaces or special characters")
 		self.usernameInput.setPlaceholderText("No spaces or special characters")
+		self.usernameInput.textEdited.connect(self.nameChanged)
 		if not self.isanonuser:
 			self.passwordLabel = QLabel(self); self.passwordLabel.setText("Password *")
 			self.passwordInput = QLineEdit(self); self.passwordInput.setEchoMode(QLineEdit.PasswordEchoOnEdit)
@@ -178,13 +179,18 @@ class userconfigUI(QWidget):
 			return
 		if not self.isanonuser:
 			self.passwordInput.setText(usrobj.password)
+		else:
+			self.usernameInput.setReadOnly(True)
 		self.usernameInput.setText(usrobj.name)
-		self.usernameInput.setReadOnly(True)
 		self.homedirInput.setText(usrobj.homedir)
 		self.loginmsgInput.setText(usrobj.msg_login)
 		self.logoutmsgInput.setText(usrobj.msg_quit)
 		self.permissions = usrobj.permission
 
+
+	def nameChanged(self):
+		if self.usernameInput.text() == "anonymous" and not self.isanonuser:
+			QMessageBox.critical(self, "Error", "Please choose a name other than 'anonymous'", QMessageBox.Ok, QMessageBox.Ok)
 
 	def saveData(self):
 		# code a form validator before saving
@@ -200,8 +206,8 @@ class userconfigUI(QWidget):
 					'permission':self.permissions, 'msg_login':self.loginmsgInput.text(), 'msg_quit':self.logoutmsgInput.text() }
 		if dic['name'] == 'anonymous':
 			if not self.isanonuser:
-			 	QMessageBox.critical(self, "Error", "Please choose a name other than 'anonymous'", QMessageBox.Ok, QMessageBox.Ok)
-			 	return
+				QMessageBox.critical(self, "Error", "Please choose a name other than 'anonymous'", QMessageBox.Ok, QMessageBox.Ok)
+				return
 			dic.pop('name')
 			userobj = auth.AnonymousUser(dic)
 			userobj.save_details()
