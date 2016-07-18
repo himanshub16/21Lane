@@ -63,7 +63,7 @@ def load_users():
 				authorizer.add_user(userobj.name, userobj.password, userobj.homedir, perm=userobj.permission, msg_login=userobj.msg_login, msg_quit=userobj.msg_quit)
 		return authorizer
 	except Exception as e:
-		mylog("Error while creating authorizer object ")
+		mylog("Error while creating authorizer object")
 		raise e
 		sys.exit(1)
 
@@ -85,6 +85,8 @@ def is_port_available(port):
 	except (ConnectionError, ConnectionRefusedError):
 		# Connection refused error to handle windows systems:(
 		return True
+	except Exception as e:
+		mylog('error while port check')
 
 	return result==0
 
@@ -138,11 +140,19 @@ class generate_system_snapshot(threading.Thread):
 
 	def run(self):
 		global gen_snapshot
-		while (gen_snapshot):
-			self.do_the_job()
-			# wait for one hour
-			time.sleep(60*60)
-		mylog("Snapshot creator Thread quits")
+		cur_time = time.time()
+		wait_time = 60*60 # one hour gap
+		next_time = cur_time
+		while (True):
+			if not gen_snapshot:
+				break
+			if cur_time >= next_time:
+				self.do_the_job()
+				next_time += wait_time
+			# breathe, don't choke while you run
+			time.sleep(1)
+			cur_time += 1
+		print("Snapshot creator Thread quits")
 
 
 
@@ -302,7 +312,6 @@ class MainUI(QMainWindow, QWidget):
 
 
 		global server, gen_snapshot, server_running_status, PORT
-		print("Click triggered, server status ", server_running_status, "server variable", server)
 		PORT = load_settings().port
 		self.mainbtn.setEnabled(False)
 
@@ -317,8 +326,6 @@ class MainUI(QMainWindow, QWidget):
 			# 	QMessageBox.critical(self, "Error", "Error while starting sharing.", QMessageBox.Ok, QMessageBox.Ok)
 			# 	self.statusBar().showMessage("Error occured.")
 			# 	return
-			self.mainbtn.setText("Please wait...")
-			self.mainbtn.setStyleSheet("background-color: #6c9a43; color: white; border: none")
 			self.srv = myserver()
 			self.srv.start()
 			msg = "Sharing on " + get_ip_address() + ":" + str(self.srv.getport())
