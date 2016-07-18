@@ -13,11 +13,25 @@ import errno
 import socket
 import threading
 import subprocess
+import time
+import requests
+import json
 
 from datetime import datetime
 
+
+# these are my global variables
 userbase = auth.Userbase()
 python = sys.executable
+
+PORT = 2121
+server = None
+gen_snapshot = False
+exchange_connect_status = True
+server_running_status = False
+
+
+# here the global key functions 
 
 def mylog(ar):
 	f = open('log.txt', 'a')
@@ -31,27 +45,27 @@ def load_settings():
 def load_users():
 	""" creates a new DummyAuthorizer object at every call
 	"""
-	authorizer = DummyAuthorizer()
-	if len(userbase.get_user_list()) == 0:
-		try:
-			# there are no users, so at least one anonymous user should be authorized
-			pubdir = os.path.join(os.path.expanduser('~'), 'Public')
-			if not os.path.isdir(pubdir):
-				os.makedirs(pubdir)
-			mylog("There is no user defined, using anonymous user with public folder ", pubdir)
-		except OSError as e:
-			mylog("Error raised ", e)
-		authorizer.add_anonymous(pubdir)
-		return authorizer
+	try:
+		authorizer = DummyAuthorizer()
+		if len(userbase.get_user_list()) == 0:
+			mylog("There are no users available.")
+			sys.exit(1)
 
-	for username in userbase.get_user_list():
-		userobj = userbase.get_user_info(username)
-		print("attempting to add ", username, " i.e. ", userobj.name)
-		if username == 'anonymous':
-			authorizer.add_anonymous(userobj.homedir, perm=userobj.permission, msg_login=userobj.msg_login, msg_quit=userobj.msg_quit)
-		else:
-			authorizer.add_user(userobj.name, userobj.password, userobj.homedir, perm=userobj.permission, msg_login=userobj.msg_login, msg_quit=userobj.msg_quit)
-	return authorizer
+		for username in userbase.get_user_list():
+			userobj = userbase.get_user_info(username)
+			if username == 'anonymous':
+				if authorizer.has_user(username):
+					authorizer.remove_user(username)
+				authorizer.add_anonymous(userobj.homedir, perm=userobj.permission, msg_login=userobj.msg_login, msg_quit=userobj.msg_quit)
+			else:
+				if authorizer.has_user(username):
+					authorizer.remove_user(username)
+				authorizer.add_user(userobj.name, userobj.password, userobj.homedir, perm=userobj.permission, msg_login=userobj.msg_login, msg_quit=userobj.msg_quit)
+		return authorizer
+	except Exception as e:
+		mylog("Error while creating authorizer object ")
+		raise e
+		sys.exit(1)
 
 
 def start_server():
@@ -61,7 +75,7 @@ def stop_server():
 	server.close_all()
 
 
-def is_port_available(port=2121):
+def is_port_available(port):
 	port = int(port)
 	try:
 		# connecting on localhost, previously it was 0.0.0.0, to satisfy Windows
@@ -74,8 +88,62 @@ def is_port_available(port=2121):
 
 	return result==0
 
-port = 2121
-server = None
+
+def get_ip_address():
+	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+	s.connect(("8.8.8.8",80))
+	ip = s.getsockname()[0]
+	s.close()
+	return ip
+
+
+class generate_system_snapshot(threading.Thread):
+	def __init__(self):
+		threading.Thread.__init__(self)
+
+	def do_the_job(self):
+		global exchange_connect_status, gen_snapshot
+		if not exchange_connect_status:
+			mylog("Not connected to exchange, cannot generate sharing snapshot")
+			return
+
+		if not 'anonymous' in userbase.get_user_list():
+			print("No anonymous user, cannot generate sharing snapshot")
+			return
+
+		self.dic = dict()
+		self.totalsize = 0
+		def path_to_dict(path, l):
+			try:
+				if os.path.isdir(path):
+					for x in os.listdir(path):
+						path_to_dict(os.path.join(path, x), l)
+				else:
+					self.dic[os.path.basename(path)] = { "size" : os.path.getsize(path), "fullpath" : path[l:] }
+					self.totalsize += os.path.getsize(path)
+			except Exception as e:
+				pass
+
+		shared_dir = userbase.get_user_info('anonymous').homedir
+		p = os.path.abspath(shared_dir)
+		path_to_dict(p, len(p))
+		self.dic['total_shared_size'] = self.totalsize
+
+		# write to file
+		f = open('snapshot.json', 'w')
+		f.write(json.dumps(self.dic, indent=2))
+		f.close()
+		mylog("Snapshot generated")
+		gen_snapshot = True
+
+	def run(self):
+		global gen_snapshot
+		while (gen_snapshot):
+			self.do_the_job()
+			# wait for one hour
+			time.sleep(60*60)
+		mylog("Snapshot creator Thread quits")
+
 
 
 class myserver(threading.Thread):
@@ -83,9 +151,13 @@ class myserver(threading.Thread):
 		threading.Thread.__init__(self)
 
 	def run(self):
-		global server, port
+		global server, PORT, server_running_status
 		conf = load_settings()
-		authorizer = load_users()
+		try:
+			authorizer = load_users()
+		except Exception as e:
+			mylog("My server caught an exception")
+			return 1
 		ThrottledDTPHandler.write_limit = conf.max_upload_speed
 		ThrottledDTPHandler.read_limit = conf.max_download_speed
 		FTPHandler.dtp_handler = ThrottledDTPHandler
@@ -95,16 +167,16 @@ class myserver(threading.Thread):
 		FTPHandler.authorizer = authorizer
 		# FTPHandler.permit_foreign_addresses = conf.permit_outside_lan
 
-		port = conf.port
-		if is_port_available(port):
-			server = FTPServer(('0.0.0.0', port), FTPHandler)
+		if is_port_available(conf.port):
+			server = FTPServer(('0.0.0.0', conf.port), FTPHandler)
 		else:
 			return
-
+		server_running_status = True
+		print(server_running_status)
 		server.serve_forever()
 
 	def getport(self):
-		return str(port)
+		return str(PORT)
 
 
 class settings_ui_thread(threading.Thread):
@@ -123,6 +195,9 @@ class userui_thread(threading.Thread):
 		subprocess.call([python, "authui.py"])
 
 
+# class filesystem_snapshot(threading.Thread):
+
+
 
 # handling with GUI
 from PyQt5.QtWidgets import (QWidget, QAction, qApp, QPushButton, QApplication,
@@ -137,9 +212,9 @@ class MainUI(QMainWindow, QWidget):
 		self.initUI()
 
 	def initUI(self):
-		mylog ("Creating ui")
+		mylog ("Starting ui")
 
-		self.mainbtn = QPushButton("Start server", self)
+		self.mainbtn = QPushButton("Start sharing", self)
 		self.mainbtn.setStyleSheet("background-color: blue; color: white; border: none")
 		self.mainbtn.setCheckable(True)
 		self.mainbtn.move(90, 100)
@@ -165,7 +240,7 @@ class MainUI(QMainWindow, QWidget):
 		sett_conf = QAction(QIcon('icons/ic_settings_black_48dp_1x.png'), '&Settings', self)
 		sett_conf.setShortcut('Ctrl+S')
 		sett_conf.setToolTip("Settings :  Ctrl+S")
-		sett_conf.setStatusTip("Modify server settings")
+		sett_conf.setStatusTip("Modify sharing settings")
 		sett_conf.triggered.connect(self.setttingsUI)
 
 		# user management tool
@@ -175,9 +250,17 @@ class MainUI(QMainWindow, QWidget):
 		userui.setStatusTip("Manage the list of users which connect to you.")
 		userui.triggered.connect(self.userui_init)
 
+		# connect to 21exchange
+		exchange = QAction(QIcon('icons/ic_wb_cloudy_black_48dp_1x.png'), 'Connect to &Exchange...', self)
+		exchange.setShortcut('Ctrl+E')
+		exchange.setToolTip("Connect to exchange  :  Ctrl+E")
+		exchange.setStatusTip("Connect to 21Exchange servers on local network.")
+		exchange.triggered.connect(self.exchange_connect)
+
 		menubar = self.menuBar()
 		appMenu = menubar.addMenu('&App')
 		appMenu.addAction(portCheck)
+		appMenu.addAction(exchange)
 		# appMenu.addAction(exitAction)
 		configMenu = menubar.addMenu('&Config')
 		configMenu.addAction(sett_conf)
@@ -190,6 +273,7 @@ class MainUI(QMainWindow, QWidget):
 		self.toolbar.addAction(portCheck)
 		self.toolbar.addAction(sett_conf)
 		self.toolbar.addAction(userui)
+		self.toolbar.addAction(exchange)
 
 
 		self.setGeometry(200, 100, 280, 170)
@@ -200,42 +284,73 @@ class MainUI(QMainWindow, QWidget):
 
 
 	def quitapp(self):
-		global Server
+		global server, gen_snapshot
+		mylog("quit event caught", gen_snapshot)
 		if server:
 			server.close_all()
 		del self.srv
+		mylog(self.snapshot_thread)
+		if self.snapshot_thread:
+			gen_snapshot = False
+			del self.snapshot_thread
 		sys.exit()
 
 	def check_server(self, pressed):
 		if len(userbase.get_user_list()) == 0:
 			QMessageBox.critical(self, "No users", "There are no users available.\nPlease add at least one user.", QMessageBox.Ok, QMessageBox.Ok)
 			return
-		global server
+
+
+		global server, gen_snapshot, server_running_status, PORT
+		print("Click triggered, server status ", server_running_status, "server variable", server)
+		PORT = load_settings().port
 		self.mainbtn.setEnabled(False)
 
-		if not server:
-			self.statusBar().showMessage("Starting...")
-			global port
-			port = load_settings().port
-			if not is_port_available(port):
-				mylog("\nPort : " + str(port) + " is not available\n")
-				QMessageBox.critical(self, "Port error", "The port requested is not available.\nPlease change the port in settings.\n", QMessageBox.Ok, QMessageBox.Ok)
+		if not server and not server_running_status:
+			print("Service is not running")
+			if not is_port_available(PORT):
+				mylog("\nPort : " + str(PORT) + " is not available\n")
+				QMessageBox.critical(self, "Port error", "Port " + str(PORT) + " is not available.\nPlease change the port in settings.\n", QMessageBox.Ok, QMessageBox.Ok)
 				return
+			self.statusBar().showMessage("Starting, please wait...")
+			# if not server_running_status:
+			# 	QMessageBox.critical(self, "Error", "Error while starting sharing.", QMessageBox.Ok, QMessageBox.Ok)
+			# 	self.statusBar().showMessage("Error occured.")
+			# 	return
+			self.mainbtn.setText("Please wait...")
+			self.mainbtn.setStyleSheet("background-color: #6c9a43; color: white; border: none")
 			self.srv = myserver()
 			self.srv.start()
-			msg = "Running on port " + str(self.srv.getport())
-			self.mainbtn.setText("Stop Server")
+			msg = "Sharing on " + get_ip_address() + ":" + str(self.srv.getport())
+			while not server_running_status:
+				print("not started yet")
+				time.sleep(1)
+			self.mainbtn.setText("Stop Sharing")
 			self.mainbtn.setStyleSheet("background-color: #ff7373; color: black; border: none")
 			self.statusBar().showMessage(msg)
-		else:
+
+			self.snapshot_thread = generate_system_snapshot()
+			gen_snapshot = True
+			self.snapshot_thread.start()
+
+		elif server and server_running_status:
+			print("Service is running")
 			server.close_all()
 			del self.srv
 			self.srv = None
 			server = None
+			# end snapshot generation thread
+			if gen_snapshot:
+				gen_snapshot = False
+				del self.snapshot_thread
 			self.statusBar().showMessage("Stopped")
+			server_running_status = False
 			self.mainbtn.setText("Start Server")
 			self.mainbtn.setStyleSheet("background-color: #40e0d0; color: black; border: none")
+		else:
+			return
 
+		print('status at the end', server_running_status)
 		self.mainbtn.setEnabled(True)
 
 
@@ -245,7 +360,11 @@ class MainUI(QMainWindow, QWidget):
 				self.statusBar().showMessage("Cleaning up")
 				server.close_all()
 				del self.srv
-				print("Cleaned up")
+				global gen_snapshot
+				if self.snapshot_thread:
+					gen_snapshot = False
+					del self.snapshot_thread
+				mylog("Cleaned up")
 		except:
 			pass
 		finally:
@@ -296,9 +415,26 @@ class MainUI(QMainWindow, QWidget):
 			QMessageBox.warning(self, 'Error', "Port number should be a number between 0 and 65535", QMessageBox.Ok, QMessageBox.Ok)
 
 
+	def exchange_connect(self):
+		global server
+		if not server:
+			QMessageBox.warning(self, 'Sorry', "You must have sharing enabled to connect to an exchange.", QMessageBox.Ok, QMessageBox.Ok)
+			return
+		inp, ok = QInputDialog.getText(self, 'Connect to server', 'Enter details as in given examples\n\n192.168.1.2 2020 user password (OR)\nexchange.url.com 2020 user password')
+		if ok:
+			inp = inp.split()
+			if len(inp) == 2:
+				h, p, u, pwd = inp[0], inp[1], None, None
+			else:
+				h, p, u, pwd = inp[0], inp[1], inp[2], inp[3]
+				
+			print(h, p, u, pwd)
+
+
 
 if __name__ == "__main__":
 	app = QApplication([])
 	app.setWindowIcon(QIcon('icons/1468025361_cmyk-03.png'))
 	ex = MainUI()
 	sys.exit(app.exec_())
+	
