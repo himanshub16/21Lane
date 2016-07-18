@@ -102,7 +102,7 @@ class Userbase:
 				dbase.close()
 				return tmpuser
 			else:
-				tmpuser = AnonymousUser(usr)
+				tmpuser = User(usr)
 				dbase.close()
 				return tmpuser
 
