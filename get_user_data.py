@@ -221,6 +221,6 @@ class userconfigUI(QWidget):
 
 if __name__=="__main__":
 	app = QApplication([])
-
+	app.setWindowIcon(QIcon("icons/ic_create_black_24dp_2x.png"))
 	ui = userconfigUI()
 	sys.exit(app.exec_())
