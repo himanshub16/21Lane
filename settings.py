@@ -1,4 +1,4 @@
-# This module manages FTP settings
+# This module manages FTP settings 
 try:
 	os
 	sys
@@ -65,6 +65,7 @@ class FTPSettings:
 	def save_settings(self):
 		"""save settings to settings file"""
 		dbase = TinyDB('settings.json')
+		dbase.purge()
 		rec={}
 		rec['server_name'] = self.server_name
 		rec['server_banner'] = self.server_banner
