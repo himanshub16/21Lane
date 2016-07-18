@@ -48,6 +48,12 @@ class ListUserUI(QWidget):
 		self.anonSettings.setObjectName("anonymous")
 		self.anonSettings.clicked.connect(self.modify_user)
 
+		self.anonHelp = QPushButton('', self)
+		self.anonHelp.setIcon(QIcon("icons/ic_help_outline_black_24dp_2x.png"))
+		self.anonHelp.setFlat(True)
+		self.anonHelp.setToolTip("Know what anonymous user means")
+		self.anonHelp.clicked.connect(self.display_help_anon)
+
 		self.usersHeading = QLabel(self); self.usersHeading.setText("Verified users : ")
 		self.usersHeading.setStyleSheet("font-weight: bold")
 
@@ -56,6 +62,12 @@ class ListUserUI(QWidget):
 		self.addUserButton.setFlat(True)
 		self.addUserButton.setToolTip("Add user")
 		self.addUserButton.clicked.connect(self.add_user)
+
+		self.userHelp = QPushButton('', self)
+		self.userHelp.setIcon(QIcon("icons/ic_help_outline_black_24dp_2x.png"))
+		self.userHelp.setFlat(True)
+		self.userHelp.setToolTip("Know what users are")
+		self.userHelp.clicked.connect(self.display_help_user)
 
 		self.anonLayout = QHBoxLayout()
 		self.userHeadingLayout = QHBoxLayout()
@@ -66,13 +78,15 @@ class ListUserUI(QWidget):
 		self.anonLayout.addWidget(self.anonLabel)
 		self.anonLayout.addWidget(self.anonCheck)
 		self.anonLayout.addWidget(self.anonSettings)
+		self.anonLayout.addWidget(self.anonHelp)
 
 		self.userHeadingLayout.addWidget(self.usersHeading)
 		self.userHeadingLayout.addWidget(self.addUserButton)
+		self.userHeadingLayout.addWidget(self.userHelp)
 
 		self.topFrame.setWindowTitle("Anonymous settings")
 		self.topFrame.setLayout(self.anonLayout)
-		self.topFrame.setFrameShape(QFrame.StyledPanel)
+		self.topFrame.setFrameShape(QFrame.Box)
 		self.topFrame.setFrameShadow(QFrame.Plain)
 		self.usersFrame.setWindowTitle("Verified users ")
 		self.usersFrame.setLayout(self.userHeadingLayout)
@@ -112,20 +126,6 @@ class ListUserUI(QWidget):
 	def closeEvent(self, e):
 		QMessageBox.information(self, "Message", "Restart sharing for changes to be effective.", QMessageBox.Ok, QMessageBox.Ok)
 
-	# def paintEvent(self, e):
-	# 	qp = QPainter()
-	# 	qp.begin(self)
-	# 	self.drawLines(qp)
-	# 	qp.end()
-
-	# def drawLines(self, qp):
-	# 	pen = QPen(Qt.black, 2, Qt.SolidLine)
-	# 	# created a QPen object, black, 2px wide, black
-
-	# 	qp.setPen(pen)
-	# 	qp.drawLine(10, 40, 280, 40)
-
-
 	def anon_state_changed(self, state):
 		print("anon state changed")
 		if state == Qt.Checked:
@@ -139,33 +139,33 @@ class ListUserUI(QWidget):
 		self.userRows = []
 		self.gridRow = 0 # start entries from here
 		
+		if 'anonymous' in l: l.remove('anonymous')
 		for i in range(len(l)):
-			if not l[i]=='anonymous':
-				indexLabel = QLabel(self); indexLabel.setText(str(i+1))
-				indexLabel.setStyleSheet('border: 1px')
-				usernameLabel = QLabel(self); usernameLabel.setText(l[i])
-				usereditBtn = QPushButton('', self)
-				usereditBtn.setIcon(QIcon('icons/ic_create_black_24dp_1x.png'))
-				usereditBtn.setFlat(True)
-				usereditBtn.setObjectName(l[i])
-				usereditBtn.setToolTip("Edit user settings")
+			indexLabel = QLabel(self); indexLabel.setText(str(i+1))
+			indexLabel.setStyleSheet('border: 1px')
+			usernameLabel = QLabel(self); usernameLabel.setText(l[i])
+			usereditBtn = QPushButton('', self)
+			usereditBtn.setIcon(QIcon('icons/ic_create_black_24dp_1x.png'))
+			usereditBtn.setFlat(True)
+			usereditBtn.setObjectName(l[i])
+			usereditBtn.setToolTip("Edit user settings")
 
-				userremoveBtn = QPushButton('', self)
-				userremoveBtn.setIcon(QIcon('icons/ic_remove_circle_outline_black_24dp_1x.png'))
-				userremoveBtn.setFlat(True)
-				userremoveBtn.setObjectName(l[i])
-				userremoveBtn.setToolTip("Remove user")
+			userremoveBtn = QPushButton('', self)
+			userremoveBtn.setIcon(QIcon('icons/ic_delete_sweep_black_24dp_2x.png'))
+			userremoveBtn.setFlat(True)
+			userremoveBtn.setObjectName(l[i])
+			userremoveBtn.setToolTip("Remove user")
 
-				usereditBtn.clicked.connect(self.modify_user)
-				userremoveBtn.clicked.connect(self.removeUser)
+			usereditBtn.clicked.connect(self.modify_user)
+			userremoveBtn.clicked.connect(self.removeUser)
 
-				self.userRows.append([i, indexLabel, usernameLabel, usereditBtn, userremoveBtn])
+			self.userRows.append([i, indexLabel, usernameLabel, usereditBtn, userremoveBtn])
 
-				self.grid.addWidget(indexLabel, self.gridRow, 0)
-				self.grid.addWidget(usernameLabel, self.gridRow, 1)
-				self.grid.addWidget(usereditBtn, self.gridRow, 4)
-				self.grid.addWidget(userremoveBtn, self.gridRow, 5)
-				self.gridRow += 1
+			self.grid.addWidget(indexLabel, self.gridRow, 0)
+			self.grid.addWidget(usernameLabel, self.gridRow, 1)
+			self.grid.addWidget(usereditBtn, self.gridRow, 4)
+			self.grid.addWidget(userremoveBtn, self.gridRow, 5)
+			self.gridRow += 1
 
 
 	def add_user(self):
@@ -188,12 +188,20 @@ class ListUserUI(QWidget):
 		self.rebuildUI()
 
 
+	def display_help_anon(self):
+		QMessageBox.information(self, "Help", "Anonymous are the public users who can access your share without any id or password.", QMessageBox.Ok, QMessageBox.Ok)
+
+	def display_help_user(self):
+		QMessageBox.information(self, "Help", "Users are the users you set up.\nThey can access your share only using the set of username and password you create.\nClick on plus sign to add users.", QMessageBox.Ok, QMessageBox.Ok)
+
+
 class mythread(threading.Thread):
 	def __init__(self):
 		threading.Thread.__init__(self)
 
 	def run(self):
 		app = QApplication([])
+		app.setWindowIcon(QIcon('icons/ic_account_box_black_48dp_2x.png'))
 		ex = ListUserUI()
 		app.exec_()
 
