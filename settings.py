@@ -43,6 +43,7 @@ class FTPSettings:
 			self.max_download_speed = 10	# to resrtict uploads from public on server,
 											# when write permission is allowed
 			# self.permit_outside_lan = False
+			self.exchange_url = ''
 
 		else:
 			try:
@@ -54,6 +55,7 @@ class FTPSettings:
 				self.max_cons_per_ip = rec['max_cons_per_ip']
 				self.max_upload_speed = rec['max_upload_speed']
 				self.max_download_speed = rec['max_download_speed']
+				self.exchange_url = rec['exchange_url']
 			except KeyError:
 				self.restore_default_settings()
 			# permit outside lan has not been included
@@ -75,6 +77,7 @@ class FTPSettings:
 		rec['max_upload_speed'] = self.max_upload_speed
 		rec['max_download_speed'] = self.max_download_speed
 		# f['permit_outside_lan'] = self.permit_outside_lan
+		rec['exchange_url'] = self.exchange_url
 		dbase.insert(rec)
 		dbase.close()
 		mylog("Settings modified")
@@ -115,6 +118,7 @@ class SettingsUI(QWidget):
 		self.maxconperipLabel = QLabel(self); self.maxconperipLabel.setText("Max. connections per IP allowed")
 		self.uploadLabel = QLabel(self); self.uploadLabel.setText("Maximum upload speed")
 		self.downloadLabel = QLabel(self); self.downloadLabel.setText("Maximum download speed")
+		self.exchangeLabel = QLabel(self); self.exchangeLabel.setText("Exchange URL")
 		self.uploadDisplay = QLabel(self)
 		self.downloadDisplay = QLabel(self)
 
@@ -126,6 +130,7 @@ class SettingsUI(QWidget):
 		self.maxconperipInput = QSpinBox(self)
 		self.uploadInput = QSlider(Qt.Horizontal, self); self.uploadInput.setFocusPolicy(Qt.NoFocus)
 		self.downloadInput = QSlider(Qt.Horizontal, self); self.downloadInput.setFocusPolicy(Qt.NoFocus)
+		self.exchangeInput = QLineEdit(self); self.exchangeInput.setPlaceholderText("URL of the exchange you connect the most")
 
 		# control buttons
 		self.restoreBtn = QPushButton("Restore Defaults", self)
@@ -146,10 +151,11 @@ class SettingsUI(QWidget):
 		grid.addWidget(self.maxconperipLabel, 3, 0, 1, 4); grid.addWidget(self.maxconperipInput, 3, 3, 1, 1)
 		grid.addWidget(self.uploadLabel, 4, 0, 1, 3); grid.addWidget(self.uploadInput, 4, 3, 1, 2); grid.addWidget(self.uploadDisplay, 4, 5)
 		grid.addWidget(self.downloadLabel, 5, 0, 1, 3); grid.addWidget(self.downloadInput, 5, 3, 1, 2); grid.addWidget(self.downloadDisplay, 5, 5)
+		grid.addWidget(self.exchangeLabel, 6, 0, 1, 2); grid.addWidget(self.exchangeInput, 6, 2, 1, 4)
 
-		grid.addWidget(self.restoreBtn, 7, 0)
-		grid.addWidget(self.exitBtn, 7, 3)
-		grid.addWidget(self.saveBtn, 7, 5)
+		grid.addWidget(self.restoreBtn, 8, 0)
+		grid.addWidget(self.exitBtn, 8, 3)
+		grid.addWidget(self.saveBtn, 8, 5)
 
 		# setting other properties
 		self.nameInput.setToolTip("Your name on the network")
@@ -195,6 +201,7 @@ class SettingsUI(QWidget):
 			self.maxconperipInput.setValue(self.sett.max_cons_per_ip)
 			self.uploadInput.setValue(self.sett.max_upload_speed/1024) # display in kilobytes
 			self.downloadInput.setValue(self.sett.max_download_speed/1024) # display in kilobytes
+			self.exchangeInput.setText(self.sett.exchange_url)
 
 
 	def getSpeedText(self, value):
@@ -230,6 +237,7 @@ class SettingsUI(QWidget):
 		self.sett.port = self.portInput.value()
 		self.sett.max_cons = self.maxconInput.value()
 		self.sett.max_cons_per_ip = self.maxconperipInput.value()
+		self.sett.exchange_url = self.exchangeInput.text()
 
 		if self.uploadInput.value() > 5220:
 			self.sett.max_upload_speed = 0
@@ -255,6 +263,7 @@ class SettingsUI(QWidget):
 		self.maxconperipInput.setValue(self.sett.max_cons_per_ip)
 		self.uploadInput.setValue(self.sett.max_upload_speed/1024)
 		self.downloadInput.setValue(self.sett.max_download_speed/1024)
+		self.exchangeInput.setText(self.sett.exchange_url)
 
 		QMessageBox.information(self, 'Message', "Default settings are displayed\nEdit if you want.\nClick Save to save them.", QMessageBox.Ok, QMessageBox.Ok)
 
