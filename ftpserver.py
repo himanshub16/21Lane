@@ -16,6 +16,7 @@ import subprocess
 import time
 import requests
 import json
+from tinydb import TinyDB, where, Query
 
 from datetime import datetime
 
@@ -28,6 +29,7 @@ PORT = 2121
 server = None
 gen_snapshot = False
 exchange_connect_status = True
+exchange_url = ''
 server_running_status = False
 
 
@@ -81,7 +83,7 @@ def is_port_available(port):
 		# connecting on localhost, previously it was 0.0.0.0, to satisfy Windows
 		result = socket.create_connection(('localhost', port), 2)
 	except OverflowError:
-		print ("Socket out of range")
+		mylog ("Socket out of range")
 	except (ConnectionError, ConnectionRefusedError):
 		# Connection refused error to handle windows systems:(
 		return True
@@ -92,11 +94,14 @@ def is_port_available(port):
 
 
 def get_ip_address():
-	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-	s.connect(("8.8.8.8",80))
-	ip = s.getsockname()[0]
-	s.close()
-	return ip
+	try:
+		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+		s.connect(("8.8.8.8",80))
+		ip = s.getsockname()[0]
+		s.close()
+		return ip
+	except Exception as e:
+		return ''
 
 
 class generate_system_snapshot(threading.Thread):
@@ -110,49 +115,81 @@ class generate_system_snapshot(threading.Thread):
 			return
 
 		if not 'anonymous' in userbase.get_user_list():
-			print("No anonymous user, cannot generate sharing snapshot")
+			mylog("No anonymous user, cannot generate sharing snapshot")
 			return
 
-		self.dic = dict()
+		self.dbdict = {}
+		self.dbdict["filedata"] = {}
+		self.dbtable = self.dbdict["filedata"]
+		# self.dic = dict()
 		self.totalsize = 0
+		self.filecount = 0
 		def path_to_dict(path, l):
+			if not gen_snapshot:
+				return
 			try:
 				if os.path.isdir(path):
 					for x in os.listdir(path):
 						path_to_dict(os.path.join(path, x), l)
 				else:
-					self.dic[os.path.basename(path)] = { "size" : os.path.getsize(path), "fullpath" : path[l:] }
-					self.totalsize += os.path.getsize(path)
+					self.filecount += 1
+					size = os.path.getsize(path)
+					self.dbtable[str(self.filecount)] = { "filename":os.path.basename(path), "size":size, "fullpath":path[l:], "size":os.path.getsize(path) }
+					# self.dic[os.path.basename(path)] = { "size" : os.path.getsize(path), "fullpath" : path[l:] }
+					self.totalsize += size
 			except Exception as e:
 				pass
 
+		if not gen_snapshot:
+			return
 		shared_dir = userbase.get_user_info('anonymous').homedir
 		p = os.path.abspath(shared_dir)
 		path_to_dict(p, len(p))
-		self.dic['total_shared_size'] = self.totalsize
+		self.dbdict["metadata"] = {}
+		self.metadata = self.dbdict["metadata"]
+		self.metadata['1'] = { "totalfiles":self.filecount, "totalsize":self.totalsize }
+
+		f = open('snapshot.json', 'w')
+		f.write(json.dumps(self.dbdict, indent=2))
+		f.close()	
+		# self.dbtable[str(self.filecount)] = { "filename":os.path.basename(path), "size":os.path.getsize(path), "fullpath":path[l:], "size":os.path.getsize(path) }
+		# self.dic['total_shared_size'] = self.totalsize
 
 		# write to file
-		f = open('snapshot.json', 'w')
-		f.write(json.dumps(self.dic, indent=2))
-		f.close()
+		# f = open('snapshot.json', 'w')
+		# f.write(json.dumps(self.dic, indent=2))
+		# f.close()
+		# db = TinyDB('snapshot.json')
+		# print("adding to db ", db)
+
+		# for k in self.dic.keys():
+		# 	# print("adding ", k)
+		# 	db.insert( {'filename':k, 'desc':self.dic[k] })
+		# db.close()
 		mylog("Snapshot generated")
-		gen_snapshot = True
+
+	def getThreadName(self):
+		return self.thread_name
 
 	def run(self):
+		self.thread_name = self.getName()
 		global gen_snapshot
 		cur_time = time.time()
 		wait_time = 60*60 # one hour gap
 		next_time = cur_time
 		while (True):
 			if not gen_snapshot:
+				mylog("Ending snapshot thread")
 				break
 			if cur_time >= next_time:
+				mylog('generating snapshot')
 				self.do_the_job()
 				next_time += wait_time
 			# breathe, don't choke while you run
 			time.sleep(1)
 			cur_time += 1
-		print("Snapshot creator Thread quits")
+		mylog("Snapshot creator Thread quits")
+
 
 
 
@@ -161,8 +198,10 @@ class myserver(threading.Thread):
 		threading.Thread.__init__(self)
 
 	def run(self):
-		global server, PORT, server_running_status
+		self.thread_name = self.getName()
+		global server, PORT, server_running_status, exchange_url
 		conf = load_settings()
+		exchange_url = conf.exchange_url
 		try:
 			authorizer = load_users()
 		except Exception as e:
@@ -182,11 +221,14 @@ class myserver(threading.Thread):
 		else:
 			return
 		server_running_status = True
-		print(server_running_status)
+		mylog('server status ' + str(server_running_status))
 		server.serve_forever()
 
 	def getport(self):
 		return str(PORT)
+
+	def getThreadName(self):
+		return self.thread_name
 
 
 class settings_ui_thread(threading.Thread):
@@ -316,7 +358,6 @@ class MainUI(QMainWindow, QWidget):
 		self.mainbtn.setEnabled(False)
 
 		if not server and not server_running_status:
-			print("Service is not running")
 			if not is_port_available(PORT):
 				mylog("\nPort : " + str(PORT) + " is not available\n")
 				QMessageBox.critical(self, "Port error", "Port " + str(PORT) + " is not available.\nPlease change the port in settings.\n", QMessageBox.Ok, QMessageBox.Ok)
@@ -330,25 +371,32 @@ class MainUI(QMainWindow, QWidget):
 			self.srv.start()
 			msg = "Sharing on " + get_ip_address() + ":" + str(self.srv.getport())
 			while not server_running_status:
-				print("not started yet")
-				time.sleep(1)
+				time.sleep(0.5)
 			self.mainbtn.setText("Stop Sharing")
 			self.mainbtn.setStyleSheet("background-color: #ff7373; color: black; border: none")
 			self.statusBar().showMessage(msg)
 
-			self.snapshot_thread = generate_system_snapshot()
 			gen_snapshot = True
+			self.snapshot_thread = generate_system_snapshot()
 			self.snapshot_thread.start()
 
 		elif server and server_running_status:
-			print("Service is running")
+			self.statusBar().showMessage("Stopping, please wait...")
 			server.close_all()
+			# wait for the thread to exit
+			while( threading.Thread.isAlive(self.srv) ):
+				mylog("Waiting for server thread to end")
+				time.sleep(0.5)
 			del self.srv
 			self.srv = None
 			server = None
 			# end snapshot generation thread
 			if gen_snapshot:
 				gen_snapshot = False
+				# wait for the thread to exit
+				while( threading.Thread.isAlive(self.snapshot_thread) ):
+					mylog("Waiting for snapshot thread to end.")
+					time.sleep(1)
 				del self.snapshot_thread
 			self.statusBar().showMessage("Stopped")
 			server_running_status = False
@@ -357,7 +405,6 @@ class MainUI(QMainWindow, QWidget):
 		else:
 			return
 
-		print('status at the end', server_running_status)
 		self.mainbtn.setEnabled(True)
 
 
@@ -423,19 +470,44 @@ class MainUI(QMainWindow, QWidget):
 
 
 	def exchange_connect(self):
-		global server
-		if not server:
-			QMessageBox.warning(self, 'Sorry', "You must have sharing enabled to connect to an exchange.", QMessageBox.Ok, QMessageBox.Ok)
-			return
-		inp, ok = QInputDialog.getText(self, 'Connect to server', 'Enter details as in given examples\n\n192.168.1.2 2020 user password (OR)\nexchange.url.com 2020 user password')
-		if ok:
-			inp = inp.split()
-			if len(inp) == 2:
-				h, p, u, pwd = inp[0], inp[1], None, None
-			else:
-				h, p, u, pwd = inp[0], inp[1], inp[2], inp[3]
-				
-			print(h, p, u, pwd)
+		global server, exchange_url
+		# if not server:
+		# 	QMessageBox.warning(self, 'Sorry', "You must have sharing enabled to connect to an exchange.", QMessageBox.Ok, QMessageBox.Ok)
+		# 	return
+		inp, ok = QInputDialog.getText(self, 'Connect to servers', 'Enter details as in given examples\n\n192.168.1.2:2020 user password (OR)\nexchange.url.com:2020 user password\n', QLineEdit.Normal, exchange_url)
+		try:
+			if ok:
+				print(inp)
+				inp = inp.split(' ')
+				url = inp[0]
+				print(inp)
+				if not url.startswith('http'):
+					url = 'http://'+url
+				print(url, 'is url')
+				if len(inp) == 1:
+					u, pwd = None, None
+				else:
+					u, pwd = inp[1], inp[2]
+					
+				# url = '+str(p)
+				print(url, u, pwd)
+				post_data = { 'username':u, 'password':pwd, 'action':'connect' }
+
+				if 'sessid' in os.listdir(os.getcwd()):
+					f = open('session_id', 'r')
+					ckstr = f.read()
+					f.close()
+					ck = {'session_id':f}
+				else:
+					ck = {'sesison_id':ckstr.strip()}
+				r = requests.post(url, data=post_data, cookies=ck)
+				if r.status_code == 200:
+					f = open('session_id', 'w')
+					f.write(r.text.strip())
+					f.close()
+		except Exception as e:
+			QMessageBox.critical(self, 'Error', "Some error occured!", QMessageBox.Ok, QMessageBox.Ok)
+			# raise e
 
 
 
