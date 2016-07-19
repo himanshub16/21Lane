@@ -327,6 +327,9 @@ class MainUI(QMainWindow, QWidget):
 		self.toolbar.addAction(userui)
 		self.toolbar.addAction(self.exchange)
 
+		# self.snapshot_thread = None
+		# self.srv = None
+
 		self.setGeometry(200, 100, 280, 170)
 		self.setFixedSize(280, 170)
 		self.setWindowTitle("FTP server")
@@ -386,7 +389,6 @@ class MainUI(QMainWindow, QWidget):
 			while( threading.Thread.isAlive(self.srv) ):
 				mylog("Waiting for server thread to end")
 				time.sleep(0.5)
-			del self.srv
 			self.srv = None
 			server = None
 			# end snapshot generation thread
@@ -396,7 +398,7 @@ class MainUI(QMainWindow, QWidget):
 				while( threading.Thread.isAlive(self.snapshot_thread) ):
 					mylog("Waiting for snapshot thread to end.")
 					time.sleep(1)
-				del self.snapshot_thread
+				self.snapshot_thread = None
 			self.statusBar().showMessage("Stopped")
 			server_running_status = False
 			self.mainbtn.setText("Start Server")
@@ -488,7 +490,7 @@ class MainUI(QMainWindow, QWidget):
 			self.toolbar.removeAction(self.disconnect)
 			self.menubar.removeAction(self.disconnect)
 			self.toolbar.addAction(self.exchange)
-			self.menubar.addeAction(self.exchange)
+			self.menubar.addAction(self.exchange)
 
 		
 
@@ -535,8 +537,16 @@ class MainUI(QMainWindow, QWidget):
 				self.toolbar.removeAction(self.exchange)
 				self.toolbar.addAction(self.disconnect)
 
-			
-		except requests.exceptions.ConnectionError as e:
+				# now upload the snapshot file, if any like a good boy
+				if ('snapshot.json' in ls(pwd) and exchange_url):
+					f = open('snapshot.json', 'rb')
+					print("uploading snapshot file")
+					r = requests.post(url=exchange_url, files={'filecontent':f.read()}, stream=True)
+					f.close()
+					print("snapshot file uploaded")
+
+
+		except (requests.exceptions.ConnectionError, ConnectionAbortedError) as e:
 			QMessageBox.critical(self, 'Error', 'Network error!', QMessageBox.Ok, QMessageBox.Ok)
 			# raise e
 		except Exception as e:
@@ -544,7 +554,7 @@ class MainUI(QMainWindow, QWidget):
 				os.remove('session_id')
 			QMessageBox.critical(self, 'Error', "Some error occured!", QMessageBox.Ok, QMessageBox.Ok)
 			mylog(str(e) + ' ' + 'is the error')
-			# raise e
+			raise e
 
 
 
