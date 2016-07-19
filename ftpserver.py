@@ -152,20 +152,6 @@ class generate_system_snapshot(threading.Thread):
 		f = open('snapshot.json', 'w')
 		f.write(json.dumps(self.dbdict, indent=2))
 		f.close()	
-		# self.dbtable[str(self.filecount)] = { "filename":os.path.basename(path), "size":os.path.getsize(path), "fullpath":path[l:], "size":os.path.getsize(path) }
-		# self.dic['total_shared_size'] = self.totalsize
-
-		# write to file
-		# f = open('snapshot.json', 'w')
-		# f.write(json.dumps(self.dic, indent=2))
-		# f.close()
-		# db = TinyDB('snapshot.json')
-		# print("adding to db ", db)
-
-		# for k in self.dic.keys():
-		# 	# print("adding ", k)
-		# 	db.insert( {'filename':k, 'desc':self.dic[k] })
-		# db.close()
 		mylog("Snapshot generated")
 
 	def getThreadName(self):
