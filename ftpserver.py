@@ -32,6 +32,9 @@ exchange_connect_status = True
 exchange_url = ''
 server_running_status = False
 
+ls = os.listdir
+pwd = os.getcwd()
+
 
 # here the global key functions 
 
@@ -129,7 +132,7 @@ class generate_system_snapshot(threading.Thread):
 				return
 			try:
 				if os.path.isdir(path):
-					for x in os.listdir(path):
+					for x in ls(path):
 						path_to_dict(os.path.join(path, x), l)
 				else:
 					self.filecount += 1
@@ -148,6 +151,10 @@ class generate_system_snapshot(threading.Thread):
 		self.dbdict["metadata"] = {}
 		self.metadata = self.dbdict["metadata"]
 		self.metadata['1'] = { "totalfiles":self.filecount, "totalsize":self.totalsize }
+
+		# earlier, tinydb insert function was used to insert records into database in json format
+		# which was extremely slow
+		# now, the database is created manually, in the format tinydb keeps them.
 
 		f = open('snapshot.json', 'w')
 		f.write(json.dumps(self.dbdict, indent=2))
@@ -289,18 +296,25 @@ class MainUI(QMainWindow, QWidget):
 		userui.triggered.connect(self.userui_init)
 
 		# connect to 21exchange
-		exchange = QAction(QIcon('icons/ic_wb_cloudy_black_48dp_1x.png'), 'Connect to &Exchange...', self)
-		exchange.setShortcut('Ctrl+E')
-		exchange.setToolTip("Connect to exchange  :  Ctrl+E")
-		exchange.setStatusTip("Connect to 21Exchange servers on local network.")
-		exchange.triggered.connect(self.exchange_connect)
+		self.exchange = QAction(QIcon('icons/ic_wb_cloudy_black_48dp_1x.png'), 'Connect to &Exchange...', self)
+		self.exchange.setShortcut('Ctrl+E')
+		self.exchange.setToolTip("Connect to exchange  :  Ctrl+E")
+		self.exchange.setStatusTip("Connect to 21Exchange servers on local network.")
+		self.exchange.triggered.connect(self.exchange_connect)
 
-		menubar = self.menuBar()
-		appMenu = menubar.addMenu('&App')
-		appMenu.addAction(portCheck)
-		appMenu.addAction(exchange)
+		# disconnect from 21exchange
+		self.disconnect = QAction(QIcon('icons/disconnect.png'), 'Connect to &Exchange...', self)
+		self.disconnect.setShortcut('Ctrl+E')
+		self.disconnect.setToolTip("Connect to exchange  :  Ctrl+E")
+		self.disconnect.setStatusTip("Connect to 21Exchange servers on local network.")
+		self.disconnect.triggered.connect(self.exchange_disconnect)
+
+		self.menubar = self.menuBar()
+		self.appMenu = self.menubar.addMenu('&App')
+		self.appMenu.addAction(portCheck)
+		self.appMenu.addAction(self.exchange)
 		# appMenu.addAction(exitAction)
-		configMenu = menubar.addMenu('&Config')
+		configMenu = self.menubar.addMenu('&Config')
 		configMenu.addAction(sett_conf)
 		configMenu.addAction(userui)
 
@@ -311,8 +325,7 @@ class MainUI(QMainWindow, QWidget):
 		self.toolbar.addAction(portCheck)
 		self.toolbar.addAction(sett_conf)
 		self.toolbar.addAction(userui)
-		self.toolbar.addAction(exchange)
-
+		self.toolbar.addAction(self.exchange)
 
 		self.setGeometry(200, 100, 280, 170)
 		self.setFixedSize(280, 170)
@@ -455,6 +468,30 @@ class MainUI(QMainWindow, QWidget):
 			QMessageBox.warning(self, 'Error', "Port number should be a number between 0 and 65535", QMessageBox.Ok, QMessageBox.Ok)
 
 
+	def exchange_disconnect(self):
+		global exchange_url
+		reply = QMessageBox.question(self, '21Exchange', "You are connected. Do you want to log out from the server?", QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
+		if reply == QMessageBox.Yes:
+			if 'session_id' in ls(pwd):
+				f = open('session_id', 'r')
+				sessionid = f.read().strip()
+				f.close()
+			else:
+				sessionid = None
+			exchange_url = 'http://localhost:8000/cgi-bin/cgiauth.py'
+			post_data = { 'action':'disconnect' }
+			r = requests.post(exchange_url, data=post_data, cookies={'session_id':sessionid})
+			if r.status_code == 200 and r.text.strip() == 'ok':
+				QMessageBox.information(self, '21Exchange', "You have been logged out.")
+				if 'session_id' in ls(pwd):
+					os.remove('session_id')
+			self.toolbar.removeAction(self.disconnect)
+			self.menubar.removeAction(self.disconnect)
+			self.toolbar.addAction(self.exchange)
+			self.menubar.addeAction(self.exchange)
+
+		
+
 	def exchange_connect(self):
 		global server, exchange_url
 		# if not server:
@@ -463,36 +500,50 @@ class MainUI(QMainWindow, QWidget):
 		inp, ok = QInputDialog.getText(self, 'Connect to servers', 'Enter details as in given examples\n\n192.168.1.2:2020 user password (OR)\nexchange.url.com:2020 user password\n', QLineEdit.Normal, exchange_url)
 		try:
 			if ok:
-				print(inp)
 				inp = inp.split(' ')
-				url = inp[0]
-				print(inp)
-				if not url.startswith('http'):
-					url = 'http://'+url
-				print(url, 'is url')
+				exchange_url = inp[0]
+				if not exchange_url.startswith('http'):
+					exchange_url = 'http://'+exchange_url
 				if len(inp) == 1:
 					u, pwd = None, None
 				else:
 					u, pwd = inp[1], inp[2]
 					
 				# url = '+str(p)
-				print(url, u, pwd)
 				post_data = { 'username':u, 'password':pwd, 'action':'connect' }
 
-				if 'sessid' in os.listdir(os.getcwd()):
+				if 'session_id' in ls(pwd):
 					f = open('session_id', 'r')
 					ckstr = f.read()
 					f.close()
-					ck = {'session_id':f}
+					ck = {'session_id':ckstr.strip()}
 				else:
-					ck = {'sesison_id':ckstr.strip()}
-				r = requests.post(url, data=post_data, cookies=ck)
+					ck = None
+				r = requests.post(exchange_url, data=post_data, cookies=ck)
+				print(r.status_code, r.text)
 				if r.status_code == 200:
 					f = open('session_id', 'w')
-					f.write(r.text.strip())
+					f.write(r.cookies['session_id'])
 					f.close()
+				if r.status_code == 404:
+					QMessageBox.warning(self, "Invalid URL", "Oops... You entered an invalid URL / host.", QMessageBox.Ok, QMessageBox.Ok)
+					return
+
+				# modify menubar and toolbar accordingly
+				self.appMenu.removeAction(self.exchange)
+				self.appMenu.addAction(self.disconnect)
+				self.toolbar.removeAction(self.exchange)
+				self.toolbar.addAction(self.disconnect)
+
+			
+		except requests.exceptions.ConnectionError as e:
+			QMessageBox.critical(self, 'Error', 'Network error!', QMessageBox.Ok, QMessageBox.Ok)
+			# raise e
 		except Exception as e:
+			if 'session_id' in ls(pwd):
+				os.remove('session_id')
 			QMessageBox.critical(self, 'Error', "Some error occured!", QMessageBox.Ok, QMessageBox.Ok)
+			mylog(str(e) + ' ' + 'is the error')
 			# raise e
 
 
