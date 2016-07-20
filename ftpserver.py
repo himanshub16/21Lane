@@ -175,7 +175,7 @@ class generate_system_snapshot(threading.Thread):
 				mylog("Ending snapshot thread")
 				break
 			if cur_time >= next_time:
-				mylog('generating snapshot')
+				mylog('Generating snapshot')
 				self.do_the_job()
 				next_time += wait_time
 			# breathe, don't choke while you run
@@ -240,8 +240,6 @@ class userui_thread(threading.Thread):
 		subprocess.call([python, "authui.py"])
 
 
-# class filesystem_snapshot(threading.Thread):
-
 
 
 # handling with GUI
@@ -262,7 +260,7 @@ class MainUI(QMainWindow, QWidget):
 		self.mainbtn = QPushButton("Start sharing", self)
 		self.mainbtn.setStyleSheet("background-color: blue; color: white; border: none")
 		self.mainbtn.setCheckable(True)
-		self.mainbtn.move(90, 100)
+		self.mainbtn.move(85, 100)
 		self.mainbtn.clicked[bool].connect(self.check_server)
 
 		# exit action
@@ -296,14 +294,14 @@ class MainUI(QMainWindow, QWidget):
 		userui.triggered.connect(self.userui_init)
 
 		# connect to 21exchange
-		self.exchange = QAction(QIcon('icons/ic_wb_cloudy_black_48dp_1x.png'), 'Connect to &Exchange...', self)
+		self.exchange = QAction(QIcon('icons/disconnect.png'), 'Connect to &Exchange...', self)
 		self.exchange.setShortcut('Ctrl+E')
 		self.exchange.setToolTip("Connect to exchange  :  Ctrl+E")
 		self.exchange.setStatusTip("Connect to 21Exchange servers on local network.")
 		self.exchange.triggered.connect(self.exchange_connect)
 
 		# disconnect from 21exchange
-		self.disconnect = QAction(QIcon('icons/disconnect.png'), 'Connect to &Exchange...', self)
+		self.disconnect = QAction(QIcon('icons/ic_wb_cloudy_black_48dp_2x.png'), 'Connect to &Exchange...', self)
 		self.disconnect.setShortcut('Ctrl+E')
 		self.disconnect.setToolTip("Connect to exchange  :  Ctrl+E")
 		self.disconnect.setStatusTip("Connect to 21Exchange servers on local network.")
@@ -487,10 +485,11 @@ class MainUI(QMainWindow, QWidget):
 				QMessageBox.information(self, '21Exchange', "You have been logged out.")
 				if 'session_id' in ls(pwd):
 					os.remove('session_id')
+					mylog("session_id file removed")
 			self.toolbar.removeAction(self.disconnect)
-			self.menubar.removeAction(self.disconnect)
+			self.appMenu.removeAction(self.disconnect)
 			self.toolbar.addAction(self.exchange)
-			self.menubar.addAction(self.exchange)
+			self.appMenu.addAction(self.exchange)
 
 		
 
@@ -522,10 +521,12 @@ class MainUI(QMainWindow, QWidget):
 				else:
 					ck = None
 				r = requests.post(exchange_url, data=post_data, cookies=ck)
-				print(r.status_code, r.text)
+				sessionid = None
+				# print(r.status_code, r.text)
 				if r.status_code == 200:
 					f = open('session_id', 'w')
 					f.write(r.cookies['session_id'])
+					sessionid = r.cookies['session_id']
 					f.close()
 				if r.status_code == 404:
 					QMessageBox.warning(self, "Invalid URL", "Oops... You entered an invalid URL / host.", QMessageBox.Ok, QMessageBox.Ok)
@@ -538,18 +539,58 @@ class MainUI(QMainWindow, QWidget):
 				self.toolbar.addAction(self.disconnect)
 
 				# now upload the snapshot file, if any like a good boy
-				if ('snapshot.json' in ls(pwd) and exchange_url):
-					f = open('snapshot.json', 'rb')
-					print("uploading snapshot file")
-					r = requests.post(url=exchange_url, files={'filecontent':f.read()}, stream=True)
-					f.close()
-					print("snapshot file uploaded")
+				# this didn't work
+				# if ('snapshot.json' in ls(pwd) and exchange_url):
+				# 	f = open('snapshot.json', 'rb')
+				# 	print("uploading snapshot file")
+				# 	r = requests.post(url=exchange_url, files={'filecontent':f.read()}, stream=True)
+				# 	f.close()
+				# 	print("snapshot file uploaded")
+
+				# check whether the file is ready to be uploaded and 
+				# send a message to exchange_url, indicating the file is ready to be uploaded
+				# if 'snapshot.json' in ls(pwd) and exchange_url:
+				# 	r = requests.post(url='http://localhost:8000/cgi-bin/get_snapshot_file.py')
+				# 	print(r.textn)
+
+				# now trying to place the snapshot file in anonymous user's directory
+				# to be uploaded to the exchange.
+				# oh boy, you worked graciously, i'll keep you
+				# fuck all the above methods.. 
+				# let them be in comments for future references
+				if 'anonymous' in userbase.get_user_list():
+					dest_dir = userbase.get_user_info('anonymous').homedir
+					dest_path = os.path.join(dest_dir, 'snapshot.json')
+					dest_file = open(dest_path, 'wb')
+					source_file = open('snapshot.json', 'rb')
+					dest_file.write(source_file.read())
+					source_file.close()
+					dest_file.close()
+
+					# now notify you dad to take the parcel
+					mylog('Asking dad to take the parcel')
+					r = requests.post(url=exchange_url, data={'action':'snapshot'}, cookies={'session_id':sessionid})
+					# print(r.text, 'is the response for snapshot')
+					if r.status_code==200 and r.text.strip()=='ok':
+						mylog('Snapshot file uploaded successfully.')
+						os.remove(dest_path)
 
 
 		except (requests.exceptions.ConnectionError, ConnectionAbortedError) as e:
 			QMessageBox.critical(self, 'Error', 'Network error!', QMessageBox.Ok, QMessageBox.Ok)
 			# raise e
 		except Exception as e:
+			# first close any open file to avoid permissions error in windows, and other similar errors
+			try:
+				if not f.closed:
+					f.close()
+				if not dest_file.closed:
+					dest_file.close()
+				if not source_file.closed:
+					source_file.close
+			except NameError:
+				pass
+
 			if 'session_id' in ls(pwd):
 				os.remove('session_id')
 			QMessageBox.critical(self, 'Error', "Some error occured!", QMessageBox.Ok, QMessageBox.Ok)
