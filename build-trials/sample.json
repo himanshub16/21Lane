@@ -1,0 +1,5010 @@
+{
+  "name": "drive",
+  "type": "directory",
+  "children": [
+    {
+      "name": "all_books",
+      "type": "directory",
+      "children": [
+        {
+          "name": "Class Notes.pdf",
+          "type": "file",
+          "size": 7162.951171875
+        },
+        {
+          "name": "Hayt Engineering Circuit Analysis 8th txtbk.PDF",
+          "type": "file",
+          "size": 31296.7451171875
+        },
+        {
+          "name": "[Ben_G._Streetman,_Sanjay_Kumar_Banerjee]_Solid_St(BookZZ.org).pdf",
+          "type": "file",
+          "size": 79145.76171875
+        },
+        {
+          "name": "[Robert_L._Boylestad,_Louis_Nashelsky]_Electronic_(BookZZ.org).pdf",
+          "type": "file",
+          "size": 26538.0166015625
+        },
+        {
+          "name": "[Simon_M._Sze,_Ming-Kwei_Lee]_Semiconductor_Device(BookZZ.org).pdf",
+          "type": "file",
+          "size": 19671.4775390625
+        }
+      ]
+    },
+    {
+      "name": "Congestion Control.ppt",
+      "type": "file",
+      "size": 240.5
+    },
+    {
+      "name": "End SEM Exam Schedule Nov 2015.pdf",
+      "type": "file",
+      "size": 173.7724609375
+    },
+    {
+      "name": "Himanshu Shekhar.onepkg",
+      "type": "file",
+      "size": 67.814453125
+    },
+    {
+      "name": "Lab 5041 B.tech IT(SEC-C).pdf",
+      "type": "file",
+      "size": 82.5361328125
+    },
+    {
+      "name": "mind is not a vessel- sudhanshu.docx",
+      "type": "file",
+      "size": 24.1884765625
+    },
+    {
+      "name": "my_books",
+      "type": "directory",
+      "children": [
+        {
+          "name": "thinking in c++, volume 1, 2nd edition.pdf",
+          "type": "file",
+          "size": 2546.7431640625
+        },
+        {
+          "name": "Thinking in C++, Volume 2, 2nd Edition.pdf",
+          "type": "file",
+          "size": 2057.96484375
+        },
+        {
+          "name": "Thinking in Java 4th Ed.pdf",
+          "type": "file",
+          "size": 7578.4306640625
+        },
+        {
+          "name": "thinkpython.pdf",
+          "type": "file",
+          "size": 815.9208984375
+        },
+        {
+          "name": "TLCL-13.07.pdf",
+          "type": "file",
+          "size": 2070.271484375
+        }
+      ]
+    },
+    {
+      "name": "Newcomer's.pdf",
+      "type": "file",
+      "size": 182.177734375
+    },
+    {
+      "name": "Question Papers",
+      "type": "directory",
+      "children": [
+        {
+          "name": "0More",
+          "type": "directory",
+          "children": [
+            {
+              "name": "BBC.jpg",
+              "type": "file",
+              "size": 649.6875
+            },
+            {
+              "name": "DSP.jpg",
+              "type": "file",
+              "size": 256.0673828125
+            },
+            {
+              "name": "ELE.jpg",
+              "type": "file",
+              "size": 409.25
+            },
+            {
+              "name": "FLAT.JPG",
+              "type": "file",
+              "size": 2757.8251953125
+            },
+            {
+              "name": "INS (2).jpg",
+              "type": "file",
+              "size": 297.8671875
+            },
+            {
+              "name": "MIN.jpg",
+              "type": "file",
+              "size": 122.4384765625
+            },
+            {
+              "name": "sen_quiz.txt",
+              "type": "file",
+              "size": 0.8681640625
+            }
+          ]
+        },
+        {
+          "name": "ADBMS",
+          "type": "directory",
+          "children": [
+            {
+              "name": "ADBMS (2).jpg",
+              "type": "file",
+              "size": 1463.1201171875
+            },
+            {
+              "name": "ADBMS (3).jpg",
+              "type": "file",
+              "size": 670.9560546875
+            },
+            {
+              "name": "ADBMS (4).jpg",
+              "type": "file",
+              "size": 961.7099609375
+            },
+            {
+              "name": "ADBMS (5).jpg",
+              "type": "file",
+              "size": 1547.158203125
+            },
+            {
+              "name": "ADBMS (6).jpg",
+              "type": "file",
+              "size": 1021.9072265625
+            },
+            {
+              "name": "ADBMS (7).jpg",
+              "type": "file",
+              "size": 1205.8701171875
+            },
+            {
+              "name": "ADBMS (8).jpg",
+              "type": "file",
+              "size": 689.244140625
+            },
+            {
+              "name": "ADBMS.jpg",
+              "type": "file",
+              "size": 291.2177734375
+            },
+            {
+              "name": "adbms2014midsem.jpg",
+              "type": "file",
+              "size": 1973.9970703125
+            },
+            {
+              "name": "ADBMS_endsem.jpg",
+              "type": "file",
+              "size": 273.8203125
+            },
+            {
+              "name": "ADBMS_midsem.jpg",
+              "type": "file",
+              "size": 261.958984375
+            },
+            {
+              "name": "DSC_0188.jpg",
+              "type": "file",
+              "size": 941.3173828125
+            },
+            {
+              "name": "DSC_0196.jpg",
+              "type": "file",
+              "size": 921.27734375
+            },
+            {
+              "name": "DSC_0204.jpg",
+              "type": "file",
+              "size": 1081.7978515625
+            },
+            {
+              "name": "DSC_0205.jpg",
+              "type": "file",
+              "size": 1093.8505859375
+            }
+          ]
+        },
+        {
+          "name": "Advanced Digital Signal Processing",
+          "type": "directory",
+          "children": [
+            {
+              "name": "Advanced digital Signal Processing.jpg",
+              "type": "file",
+              "size": 3069.724609375
+            }
+          ]
+        },
+        {
+          "name": "Artificial Inelligence",
+          "type": "directory",
+          "children": [
+            {
+              "name": "AI (2).jpg",
+              "type": "file",
+              "size": 112.6005859375
+            },
+            {
+              "name": "AI (3).jpg",
+              "type": "file",
+              "size": 204.1181640625
+            },
+            {
+              "name": "AI (5).jpg",
+              "type": "file",
+              "size": 297.296875
+            },
+            {
+              "name": "AI (6).jpg",
+              "type": "file",
+              "size": 746.0986328125
+            },
+            {
+              "name": "AI (7).jpg",
+              "type": "file",
+              "size": 263.0478515625
+            },
+            {
+              "name": "AI (8).jpg",
+              "type": "file",
+              "size": 286.7841796875
+            },
+            {
+              "name": "AI (9).jpg",
+              "type": "file",
+              "size": 364.2587890625
+            },
+            {
+              "name": "AI.jpg",
+              "type": "file",
+              "size": 241.2890625
+            },
+            {
+              "name": "AI_endsem.jpg",
+              "type": "file",
+              "size": 399.359375
+            },
+            {
+              "name": "DSC_0172.jpg",
+              "type": "file",
+              "size": 1036.384765625
+            },
+            {
+              "name": "DSC_0173.jpg",
+              "type": "file",
+              "size": 1044.5302734375
+            },
+            {
+              "name": "DSC_0179.jpg",
+              "type": "file",
+              "size": 917.4462890625
+            },
+            {
+              "name": "DSC_0180.jpg",
+              "type": "file",
+              "size": 1059.5458984375
+            }
+          ]
+        },
+        {
+          "name": "Business Systems",
+          "type": "directory",
+          "children": [
+            {
+              "name": "BSY (10).JPG",
+              "type": "file",
+              "size": 963.984375
+            },
+            {
+              "name": "BSY (11).jpg",
+              "type": "file",
+              "size": 228.99609375
+            },
+            {
+              "name": "BSY (12).jpg",
+              "type": "file",
+              "size": 673.8955078125
+            },
+            {
+              "name": "BSY (13).jpg",
+              "type": "file",
+              "size": 289.6689453125
+            },
+            {
+              "name": "BSY (2).JPG",
+              "type": "file",
+              "size": 2838.7734375
+            },
+            {
+              "name": "BSY (3).JPG",
+              "type": "file",
+              "size": 923.66015625
+            },
+            {
+              "name": "BSY (4).JPG",
+              "type": "file",
+              "size": 988.21875
+            },
+            {
+              "name": "BSY (5).JPG",
+              "type": "file",
+              "size": 972.38671875
+            },
+            {
+              "name": "BSY (6).JPG",
+              "type": "file",
+              "size": 1246.8623046875
+            },
+            {
+              "name": "BSY (7).JPG",
+              "type": "file",
+              "size": 1165.91796875
+            },
+            {
+              "name": "BSY (9).JPG",
+              "type": "file",
+              "size": 1000.203125
+            },
+            {
+              "name": "BSY.JPG",
+              "type": "file",
+              "size": 2230.572265625
+            },
+            {
+              "name": "BSY_endsem1.jpg",
+              "type": "file",
+              "size": 279.2822265625
+            },
+            {
+              "name": "BSY_endsem2.jpg",
+              "type": "file",
+              "size": 237.24609375
+            },
+            {
+              "name": "BSY_endsem3.jpg",
+              "type": "file",
+              "size": 354.400390625
+            },
+            {
+              "name": "BSY_endsem4.jpg",
+              "type": "file",
+              "size": 163.876953125
+            },
+            {
+              "name": "BSY_midsem1.jpg",
+              "type": "file",
+              "size": 425.8740234375
+            },
+            {
+              "name": "BSY_midsem2.jpg",
+              "type": "file",
+              "size": 335.443359375
+            },
+            {
+              "name": "DSC_0141.jpg",
+              "type": "file",
+              "size": 1409.310546875
+            },
+            {
+              "name": "DSC_0143.jpg",
+              "type": "file",
+              "size": 1395.3662109375
+            }
+          ]
+        },
+        {
+          "name": "CCPM",
+          "type": "directory",
+          "children": [
+            {
+              "name": "CCPM (2).jpg",
+              "type": "file",
+              "size": 734.8466796875
+            },
+            {
+              "name": "CCPM (3).jpg",
+              "type": "file",
+              "size": 199.09375
+            },
+            {
+              "name": "CCPM.jpg",
+              "type": "file",
+              "size": 378.0048828125
+            }
+          ]
+        },
+        {
+          "name": "communication skills and technical writing",
+          "type": "directory",
+          "children": [
+            {
+              "name": "cstw2014midsem.jpg",
+              "type": "file",
+              "size": 1849.966796875
+            }
+          ]
+        },
+        {
+          "name": "Compiler Design",
+          "type": "directory",
+          "children": [
+            {
+              "name": "COD (2).jpg",
+              "type": "file",
+              "size": 412.6396484375
+            },
+            {
+              "name": "COD (3).jpg",
+              "type": "file",
+              "size": 385.255859375
+            },
+            {
+              "name": "COD (4).jpg",
+              "type": "file",
+              "size": 1131.453125
+            },
+            {
+              "name": "COD.jpg",
+              "type": "file",
+              "size": 659.5283203125
+            },
+            {
+              "name": "COD_endsem.jpg",
+              "type": "file",
+              "size": 307.0400390625
+            },
+            {
+              "name": "COD_midsem1.jpg",
+              "type": "file",
+              "size": 338.34765625
+            },
+            {
+              "name": "COD_midsem2.jpg",
+              "type": "file",
+              "size": 331.2041015625
+            },
+            {
+              "name": "Compiler Design.jpg",
+              "type": "file",
+              "size": 3002.9453125
+            },
+            {
+              "name": "DSC_0183.jpg",
+              "type": "file",
+              "size": 905.05078125
+            },
+            {
+              "name": "DSC_0189.jpg",
+              "type": "file",
+              "size": 964.9921875
+            },
+            {
+              "name": "DSC_0190.jpg",
+              "type": "file",
+              "size": 1175.23046875
+            },
+            {
+              "name": "DSC_0191.jpg",
+              "type": "file",
+              "size": 920.7275390625
+            },
+            {
+              "name": "DSC_0192.jpg",
+              "type": "file",
+              "size": 916.3212890625
+            },
+            {
+              "name": "DSC_0198.jpg",
+              "type": "file",
+              "size": 1197.51953125
+            }
+          ]
+        },
+        {
+          "name": "Computer Control Systems",
+          "type": "directory",
+          "children": [
+            {
+              "name": "CCS (10).jpg",
+              "type": "file",
+              "size": 1613.603515625
+            },
+            {
+              "name": "CCS (11).jpg",
+              "type": "file",
+              "size": 1043.109375
+            },
+            {
+              "name": "CCS (13).jpg",
+              "type": "file",
+              "size": 3636.154296875
+            },
+            {
+              "name": "CCS (14).jpg",
+              "type": "file",
+              "size": 283.9375
+            },
+            {
+              "name": "CCS (15).JPG",
+              "type": "file",
+              "size": 1452.630859375
+            },
+            {
+              "name": "CCS (2).JPG",
+              "type": "file",
+              "size": 2271.052734375
+            },
+            {
+              "name": "CCS (3).JPG",
+              "type": "file",
+              "size": 1781.322265625
+            },
+            {
+              "name": "CCS (4).JPG",
+              "type": "file",
+              "size": 1774.166015625
+            },
+            {
+              "name": "CCS (5).JPG",
+              "type": "file",
+              "size": 4650.6787109375
+            },
+            {
+              "name": "CCS (6).JPG",
+              "type": "file",
+              "size": 4628.501953125
+            },
+            {
+              "name": "CCS (7).jpg",
+              "type": "file",
+              "size": 195.4619140625
+            },
+            {
+              "name": "CCS (8).jpg",
+              "type": "file",
+              "size": 987.615234375
+            },
+            {
+              "name": "CCS (9).jpg",
+              "type": "file",
+              "size": 909.94921875
+            },
+            {
+              "name": "CCS.JPG",
+              "type": "file",
+              "size": 4529.90234375
+            },
+            {
+              "name": "CCS_endsem.jpg",
+              "type": "file",
+              "size": 513.458984375
+            },
+            {
+              "name": "CCS_midsem.jpg",
+              "type": "file",
+              "size": 331.9970703125
+            },
+            {
+              "name": "DSC_0169.jpg",
+              "type": "file",
+              "size": 1022.79296875
+            },
+            {
+              "name": "DSC_0175.jpg",
+              "type": "file",
+              "size": 1189.208984375
+            }
+          ]
+        },
+        {
+          "name": "Computer Networks",
+          "type": "directory",
+          "children": [
+            {
+              "name": "CNE (2).jpg",
+              "type": "file",
+              "size": 642.5556640625
+            },
+            {
+              "name": "CNE (3).jpg",
+              "type": "file",
+              "size": 325.2880859375
+            },
+            {
+              "name": "CNE (4).jpg",
+              "type": "file",
+              "size": 279.1826171875
+            },
+            {
+              "name": "CNE (5).jpg",
+              "type": "file",
+              "size": 266.9423828125
+            },
+            {
+              "name": "CNE (6).jpg",
+              "type": "file",
+              "size": 295.39453125
+            },
+            {
+              "name": "CNE (7).jpg",
+              "type": "file",
+              "size": 529.0888671875
+            },
+            {
+              "name": "CNE (8).jpg",
+              "type": "file",
+              "size": 578.6435546875
+            },
+            {
+              "name": "CNE (9).jpg",
+              "type": "file",
+              "size": 521.6484375
+            },
+            {
+              "name": "CNE.jpg",
+              "type": "file",
+              "size": 168.73046875
+            },
+            {
+              "name": "CNE_endsem1.jpg",
+              "type": "file",
+              "size": 349.0498046875
+            },
+            {
+              "name": "CNE_endsem2.jpg",
+              "type": "file",
+              "size": 325.9736328125
+            },
+            {
+              "name": "DSC_0171.jpg",
+              "type": "file",
+              "size": 1103.5166015625
+            },
+            {
+              "name": "DSC_0176.jpg",
+              "type": "file",
+              "size": 970.693359375
+            },
+            {
+              "name": "DSC_0177.jpg",
+              "type": "file",
+              "size": 927.9736328125
+            },
+            {
+              "name": "DSC_0178.jpg",
+              "type": "file",
+              "size": 907.828125
+            }
+          ]
+        },
+        {
+          "name": "Computer Organisation",
+          "type": "directory",
+          "children": [
+            {
+              "name": "COR (2).jpg",
+              "type": "file",
+              "size": 267.326171875
+            },
+            {
+              "name": "COR (3).jpg",
+              "type": "file",
+              "size": 285.337890625
+            },
+            {
+              "name": "COR (4).jpg",
+              "type": "file",
+              "size": 711.3369140625
+            },
+            {
+              "name": "COR (5).jpg",
+              "type": "file",
+              "size": 605.7646484375
+            },
+            {
+              "name": "COR (6).jpg",
+              "type": "file",
+              "size": 891.57421875
+            },
+            {
+              "name": "COR (7).JPG",
+              "type": "file",
+              "size": 966.37890625
+            },
+            {
+              "name": "COR (8).JPG",
+              "type": "file",
+              "size": 2875.78125
+            },
+            {
+              "name": "COR.JPG",
+              "type": "file",
+              "size": 979.18359375
+            },
+            {
+              "name": "COR_endsem.jpg",
+              "type": "file",
+              "size": 288.3720703125
+            },
+            {
+              "name": "COR_midsem.jpg",
+              "type": "file",
+              "size": 299.7978515625
+            }
+          ]
+        },
+        {
+          "name": "Computer Organisation and Architecture",
+          "type": "directory",
+          "children": [
+            {
+              "name": "COA (2).jpg",
+              "type": "file",
+              "size": 57.853515625
+            },
+            {
+              "name": "coa(1)2104midsem.jpg",
+              "type": "file",
+              "size": 1877.35546875
+            },
+            {
+              "name": "coa(2)2014midsem.jpg",
+              "type": "file",
+              "size": 1785.18359375
+            },
+            {
+              "name": "COA.jpg",
+              "type": "file",
+              "size": 63.5732421875
+            },
+            {
+              "name": "DSC_0162.jpg",
+              "type": "file",
+              "size": 1490.69140625
+            }
+          ]
+        },
+        {
+          "name": "Cryptography and Information Security",
+          "type": "directory",
+          "children": [
+            {
+              "name": "CIS (2).JPG",
+              "type": "file",
+              "size": 1549.3291015625
+            },
+            {
+              "name": "CIS (3).jpg",
+              "type": "file",
+              "size": 323.6533203125
+            },
+            {
+              "name": "CIS (4).jpg",
+              "type": "file",
+              "size": 979.7744140625
+            },
+            {
+              "name": "CIS.JPG",
+              "type": "file",
+              "size": 3366.6875
+            },
+            {
+              "name": "CIS_endsem.jpg",
+              "type": "file",
+              "size": 284.17578125
+            },
+            {
+              "name": "CIS_midsem.jpg",
+              "type": "file",
+              "size": 181.6884765625
+            }
+          ]
+        },
+        {
+          "name": "Data and Network Security",
+          "type": "directory",
+          "children": [
+            {
+              "name": "DNS (2).jpg",
+              "type": "file",
+              "size": 1003.3779296875
+            },
+            {
+              "name": "DNS (3).jpg",
+              "type": "file",
+              "size": 409.9404296875
+            },
+            {
+              "name": "DNS.jpg",
+              "type": "file",
+              "size": 1028.10546875
+            },
+            {
+              "name": "dns2014midsem.jpg",
+              "type": "file",
+              "size": 2041.8701171875
+            },
+            {
+              "name": "DNS_endsem1.jpg",
+              "type": "file",
+              "size": 347.4443359375
+            },
+            {
+              "name": "DNS_endsem2.jpg",
+              "type": "file",
+              "size": 136.73828125
+            },
+            {
+              "name": "DNS_midsem1.jpg",
+              "type": "file",
+              "size": 240.1591796875
+            },
+            {
+              "name": "DNS_midsem2.jpg",
+              "type": "file",
+              "size": 219.13671875
+            }
+          ]
+        },
+        {
+          "name": "Data Mining and Warehousing",
+          "type": "directory",
+          "children": [
+            {
+              "name": "DMW (2).JPG",
+              "type": "file",
+              "size": 1825.6982421875
+            },
+            {
+              "name": "DMW (3).jpg",
+              "type": "file",
+              "size": 792.5556640625
+            },
+            {
+              "name": "DMW (4).JPG",
+              "type": "file",
+              "size": 1875.185546875
+            },
+            {
+              "name": "DMW (5).JPG",
+              "type": "file",
+              "size": 1926.72265625
+            },
+            {
+              "name": "DMW (6).JPG",
+              "type": "file",
+              "size": 1930.544921875
+            },
+            {
+              "name": "DMW.jpg",
+              "type": "file",
+              "size": 292.4228515625
+            }
+          ]
+        },
+        {
+          "name": "Data Structures and Algorithms",
+          "type": "directory",
+          "children": [
+            {
+              "name": "DFS.jpg",
+              "type": "file",
+              "size": 803.205078125
+            },
+            {
+              "name": "DSA.jpg",
+              "type": "file",
+              "size": 41.7578125
+            },
+            {
+              "name": "dsa2014midsem.jpg",
+              "type": "file",
+              "size": 1774.580078125
+            },
+            {
+              "name": "DSC_0164.jpg",
+              "type": "file",
+              "size": 1062.08984375
+            }
+          ]
+        },
+        {
+          "name": "DBMS",
+          "type": "directory",
+          "children": [
+            {
+              "name": "DBMS (2).jpg",
+              "type": "file",
+              "size": 1388.087890625
+            },
+            {
+              "name": "DBMS (3).jpg",
+              "type": "file",
+              "size": 140.451171875
+            },
+            {
+              "name": "DBMS (4).jpg",
+              "type": "file",
+              "size": 337.443359375
+            },
+            {
+              "name": "DBMS (5).jpg",
+              "type": "file",
+              "size": 1165.4921875
+            },
+            {
+              "name": "DBMS (6).jpg",
+              "type": "file",
+              "size": 858.4228515625
+            },
+            {
+              "name": "DBMS (7).jpg",
+              "type": "file",
+              "size": 478.4013671875
+            },
+            {
+              "name": "DBMS (8).JPG",
+              "type": "file",
+              "size": 2853.466796875
+            },
+            {
+              "name": "DBMS (9).JPG",
+              "type": "file",
+              "size": 2602.072265625
+            },
+            {
+              "name": "DBMS.jpg",
+              "type": "file",
+              "size": 2368.21484375
+            },
+            {
+              "name": "DBMS_endsem1.jpg",
+              "type": "file",
+              "size": 442.353515625
+            },
+            {
+              "name": "DBMS_endsem2.jpg",
+              "type": "file",
+              "size": 433.052734375
+            },
+            {
+              "name": "DBMS_midsem.jpg",
+              "type": "file",
+              "size": 271.837890625
+            }
+          ]
+        },
+        {
+          "name": "Design and Analysis of Algorithms",
+          "type": "directory",
+          "children": [
+            {
+              "name": "DAA (10).jpg",
+              "type": "file",
+              "size": 510.666015625
+            },
+            {
+              "name": "DAA (11).jpg",
+              "type": "file",
+              "size": 196.34375
+            },
+            {
+              "name": "DAA (12).jpg",
+              "type": "file",
+              "size": 184.3681640625
+            },
+            {
+              "name": "DAA (13).JPG",
+              "type": "file",
+              "size": 986.837890625
+            },
+            {
+              "name": "DAA (2).JPG",
+              "type": "file",
+              "size": 1401.642578125
+            },
+            {
+              "name": "DAA (3).JPG",
+              "type": "file",
+              "size": 701.6083984375
+            },
+            {
+              "name": "DAA (4).JPG",
+              "type": "file",
+              "size": 943.58984375
+            },
+            {
+              "name": "DAA (5).jpg",
+              "type": "file",
+              "size": 316.833984375
+            },
+            {
+              "name": "DAA (6).jpg",
+              "type": "file",
+              "size": 517.4658203125
+            },
+            {
+              "name": "DAA (7).jpg",
+              "type": "file",
+              "size": 588.3505859375
+            },
+            {
+              "name": "DAA (8).jpg",
+              "type": "file",
+              "size": 369.5439453125
+            },
+            {
+              "name": "DAA (9).jpg",
+              "type": "file",
+              "size": 178.1376953125
+            },
+            {
+              "name": "DAA.JPG",
+              "type": "file",
+              "size": 968.12890625
+            },
+            {
+              "name": "DAA_endsem1.jpg",
+              "type": "file",
+              "size": 322.2998046875
+            },
+            {
+              "name": "DAA_endsem2.jpg",
+              "type": "file",
+              "size": 317.1435546875
+            },
+            {
+              "name": "DAA_midsem1.jpg",
+              "type": "file",
+              "size": 266.6513671875
+            },
+            {
+              "name": "DAA_midsem2.jpg",
+              "type": "file",
+              "size": 224.76953125
+            },
+            {
+              "name": "DSC_0136.jpg",
+              "type": "file",
+              "size": 1320.4140625
+            },
+            {
+              "name": "DSC_0140.jpg",
+              "type": "file",
+              "size": 1237.0693359375
+            }
+          ]
+        },
+        {
+          "name": "Digital Communication and Modulation",
+          "type": "directory",
+          "children": [
+            {
+              "name": "DCO (11).JPG",
+              "type": "file",
+              "size": 1062.75390625
+            },
+            {
+              "name": "DCO (12).jpg",
+              "type": "file",
+              "size": 1408.4912109375
+            },
+            {
+              "name": "DCO (2).jpg",
+              "type": "file",
+              "size": 1675.7041015625
+            },
+            {
+              "name": "DCO (3).jpg",
+              "type": "file",
+              "size": 1384.53125
+            },
+            {
+              "name": "DCO (4).jpg",
+              "type": "file",
+              "size": 1356.025390625
+            },
+            {
+              "name": "DCO (5).jpg",
+              "type": "file",
+              "size": 136.19140625
+            },
+            {
+              "name": "DCO (6).jpg",
+              "type": "file",
+              "size": 270.890625
+            },
+            {
+              "name": "DCO (7).jpg",
+              "type": "file",
+              "size": 728.8056640625
+            },
+            {
+              "name": "DCO (8).jpg",
+              "type": "file",
+              "size": 350.7021484375
+            },
+            {
+              "name": "DCO (9).jpg",
+              "type": "file",
+              "size": 1269.111328125
+            },
+            {
+              "name": "DCO.JPG",
+              "type": "file",
+              "size": 2908.4453125
+            },
+            {
+              "name": "DCO_endsem1.jpg",
+              "type": "file",
+              "size": 355.6875
+            },
+            {
+              "name": "DCO_endsem2.jpg",
+              "type": "file",
+              "size": 182.8876953125
+            },
+            {
+              "name": "DCO_midsem.jpg",
+              "type": "file",
+              "size": 349.017578125
+            },
+            {
+              "name": "DSC_0132.jpg",
+              "type": "file",
+              "size": 1004.8818359375
+            },
+            {
+              "name": "DSC_0149.jpg",
+              "type": "file",
+              "size": 1054.4921875
+            },
+            {
+              "name": "DSC_0151.jpg",
+              "type": "file",
+              "size": 1036.64453125
+            }
+          ]
+        },
+        {
+          "name": "Digital Electronics",
+          "type": "directory",
+          "children": [
+            {
+              "name": "DEL (2).jpg",
+              "type": "file",
+              "size": 360.42578125
+            },
+            {
+              "name": "DEL (3).jpg",
+              "type": "file",
+              "size": 635.171875
+            },
+            {
+              "name": "DEL-1.jpg",
+              "type": "file",
+              "size": 63.0166015625
+            },
+            {
+              "name": "DEL.jpg",
+              "type": "file",
+              "size": 1148.5166015625
+            },
+            {
+              "name": "del2014midsem.jpg",
+              "type": "file",
+              "size": 1858.5986328125
+            },
+            {
+              "name": "DSC_0163.jpg",
+              "type": "file",
+              "size": 1149.748046875
+            }
+          ]
+        },
+        {
+          "name": "Discrete Mathematics",
+          "type": "directory",
+          "children": [
+            {
+              "name": "DIM-part1.jpg",
+              "type": "file",
+              "size": 72.765625
+            },
+            {
+              "name": "DIM-part2.jpg",
+              "type": "file",
+              "size": 63.2470703125
+            },
+            {
+              "name": "dim2014midsem.pdf",
+              "type": "file",
+              "size": 1704.6904296875
+            },
+            {
+              "name": "Discrete Mathematics and Mathematical Logic",
+              "type": "directory",
+              "children": [
+                {
+                  "name": "DMML (2).jpg",
+                  "type": "file",
+                  "size": 734.9443359375
+                },
+                {
+                  "name": "DMML (3).jpg",
+                  "type": "file",
+                  "size": 796.318359375
+                },
+                {
+                  "name": "DMML (4).jpg",
+                  "type": "file",
+                  "size": 592.408203125
+                },
+                {
+                  "name": "DMML (5).jpg",
+                  "type": "file",
+                  "size": 588.1953125
+                },
+                {
+                  "name": "DMML (7).jpg",
+                  "type": "file",
+                  "size": 697.3662109375
+                },
+                {
+                  "name": "DMML (8).jpg",
+                  "type": "file",
+                  "size": 1229.8291015625
+                },
+                {
+                  "name": "DMML.jpg",
+                  "type": "file",
+                  "size": 1898.4462890625
+                }
+              ]
+            },
+            {
+              "name": "DSC_0158.jpg",
+              "type": "file",
+              "size": 964.9169921875
+            },
+            {
+              "name": "DSC_0159.jpg",
+              "type": "file",
+              "size": 1156.47265625
+            },
+            {
+              "name": "DSC_0160.jpg",
+              "type": "file",
+              "size": 1066.9951171875
+            },
+            {
+              "name": "DSC_0161.jpg",
+              "type": "file",
+              "size": 1097.494140625
+            }
+          ]
+        },
+        {
+          "name": "Distributed Systems",
+          "type": "directory",
+          "children": [
+            {
+              "name": "DSC_0197.jpg",
+              "type": "file",
+              "size": 1194.83984375
+            },
+            {
+              "name": "DSC_0199.jpg",
+              "type": "file",
+              "size": 1097.82421875
+            },
+            {
+              "name": "DSC_0200.jpg",
+              "type": "file",
+              "size": 1103.6689453125
+            },
+            {
+              "name": "DSY (10).jpg",
+              "type": "file",
+              "size": 461.908203125
+            },
+            {
+              "name": "DSY (11).jpg",
+              "type": "file",
+              "size": 537.80078125
+            },
+            {
+              "name": "DSY (12).jpg",
+              "type": "file",
+              "size": 382.962890625
+            },
+            {
+              "name": "DSY (13).jpg",
+              "type": "file",
+              "size": 827.396484375
+            },
+            {
+              "name": "DSY (3).jpg",
+              "type": "file",
+              "size": 245.1943359375
+            },
+            {
+              "name": "DSY (4).jpg",
+              "type": "file",
+              "size": 761.126953125
+            },
+            {
+              "name": "DSY (5).jpg",
+              "type": "file",
+              "size": 295.419921875
+            },
+            {
+              "name": "DSY (6).jpg",
+              "type": "file",
+              "size": 876.455078125
+            },
+            {
+              "name": "DSY (7).jpg",
+              "type": "file",
+              "size": 1749.28515625
+            },
+            {
+              "name": "DSY (8).jpg",
+              "type": "file",
+              "size": 703.0380859375
+            },
+            {
+              "name": "DSY (9).jpg",
+              "type": "file",
+              "size": 167.2412109375
+            },
+            {
+              "name": "DSY.jpg",
+              "type": "file",
+              "size": 298.662109375
+            },
+            {
+              "name": "dsy2014midsem.jpg",
+              "type": "file",
+              "size": 2181.9033203125
+            },
+            {
+              "name": "DSY_endsem.jpg",
+              "type": "file",
+              "size": 409.267578125
+            },
+            {
+              "name": "DSY_midsem.jpg",
+              "type": "file",
+              "size": 331.41015625
+            }
+          ]
+        },
+        {
+          "name": "Electronic Devices and Circuits",
+          "type": "directory",
+          "children": [
+            {
+              "name": "EDC (2).jpg",
+              "type": "file",
+              "size": 2268.115234375
+            },
+            {
+              "name": "EDC (3).jpg",
+              "type": "file",
+              "size": 1291.8935546875
+            },
+            {
+              "name": "EDC.jpg",
+              "type": "file",
+              "size": 403.2431640625
+            }
+          ]
+        },
+        {
+          "name": "Electronic Measurement and Instrumentation",
+          "type": "directory",
+          "children": [
+            {
+              "name": "DSC_0135.jpg",
+              "type": "file",
+              "size": 1117.0703125
+            },
+            {
+              "name": "DSC_0147.jpg",
+              "type": "file",
+              "size": 1066.103515625
+            },
+            {
+              "name": "DSC_0153.jpg",
+              "type": "file",
+              "size": 1060.4912109375
+            }
+          ]
+        },
+        {
+          "name": "Embedded System Design",
+          "type": "directory",
+          "children": [
+            {
+              "name": "Embedded System Design.jpg",
+              "type": "file",
+              "size": 3143.7216796875
+            }
+          ]
+        },
+        {
+          "name": "Formal Languages and Automata Theory",
+          "type": "directory",
+          "children": [
+            {
+              "name": "FAT (10).jpg",
+              "type": "file",
+              "size": 676.0654296875
+            },
+            {
+              "name": "FAT (11).jpg",
+              "type": "file",
+              "size": 441.2685546875
+            },
+            {
+              "name": "FAT (12).jpg",
+              "type": "file",
+              "size": 1317.8193359375
+            },
+            {
+              "name": "FAT (13).jpg",
+              "type": "file",
+              "size": 1269.78125
+            },
+            {
+              "name": "FAT (14).jpg",
+              "type": "file",
+              "size": 1346.23046875
+            },
+            {
+              "name": "FAT (15).jpg",
+              "type": "file",
+              "size": 1241.3173828125
+            },
+            {
+              "name": "FAT (17).JPG",
+              "type": "file",
+              "size": 944.34765625
+            },
+            {
+              "name": "FAT (3).jpg",
+              "type": "file",
+              "size": 1356.814453125
+            },
+            {
+              "name": "FAT (4).jpg",
+              "type": "file",
+              "size": 1338.1474609375
+            },
+            {
+              "name": "FAT (5).jpg",
+              "type": "file",
+              "size": 1398.6337890625
+            },
+            {
+              "name": "FAT (6).jpg",
+              "type": "file",
+              "size": 1116.4853515625
+            },
+            {
+              "name": "FAT (7).jpg",
+              "type": "file",
+              "size": 735.9326171875
+            },
+            {
+              "name": "FAT (8).jpg",
+              "type": "file",
+              "size": 1192.2021484375
+            },
+            {
+              "name": "FAT (9).jpg",
+              "type": "file",
+              "size": 430.294921875
+            },
+            {
+              "name": "FAT.JPG",
+              "type": "file",
+              "size": 972.2734375
+            },
+            {
+              "name": "FAT_endsem1.jpg",
+              "type": "file",
+              "size": 244.1533203125
+            },
+            {
+              "name": "FAT_endsem2.jpg",
+              "type": "file",
+              "size": 211.05078125
+            },
+            {
+              "name": "FAT_midsem.jpg",
+              "type": "file",
+              "size": 301.8994140625
+            }
+          ]
+        },
+        {
+          "name": "Graphics and Visual Computing",
+          "type": "directory",
+          "children": [
+            {
+              "name": "GVC (10).jpg",
+              "type": "file",
+              "size": 1306.57421875
+            },
+            {
+              "name": "GVC (2).JPG",
+              "type": "file",
+              "size": 876.75390625
+            },
+            {
+              "name": "GVC (3).JPG",
+              "type": "file",
+              "size": 895.44140625
+            },
+            {
+              "name": "GVC (4).JPG",
+              "type": "file",
+              "size": 958.859375
+            },
+            {
+              "name": "GVC (5).JPG",
+              "type": "file",
+              "size": 980.0390625
+            },
+            {
+              "name": "GVC (6).jpg",
+              "type": "file",
+              "size": 597.7138671875
+            },
+            {
+              "name": "GVC (7).jpg",
+              "type": "file",
+              "size": 479.826171875
+            },
+            {
+              "name": "GVC (8).JPG",
+              "type": "file",
+              "size": 891.37109375
+            },
+            {
+              "name": "GVC (9).jpg",
+              "type": "file",
+              "size": 1036.25390625
+            },
+            {
+              "name": "GVC.JPG",
+              "type": "file",
+              "size": 997.75390625
+            },
+            {
+              "name": "GVC_endsem1.jpg",
+              "type": "file",
+              "size": 731.9248046875
+            },
+            {
+              "name": "GVC_endsem2.jpg",
+              "type": "file",
+              "size": 296.208984375
+            },
+            {
+              "name": "GVC_midsem1.jpg",
+              "type": "file",
+              "size": 383.6259765625
+            },
+            {
+              "name": "GVC_midsem2.jpg",
+              "type": "file",
+              "size": 320.953125
+            }
+          ]
+        },
+        {
+          "name": "Human-Computer Interaction",
+          "type": "directory",
+          "children": [
+            {
+              "name": "DSC_0170.jpg",
+              "type": "file",
+              "size": 948.7373046875
+            },
+            {
+              "name": "DSC_0174.jpg",
+              "type": "file",
+              "size": 969.2685546875
+            },
+            {
+              "name": "HCI (2).jpg",
+              "type": "file",
+              "size": 783.513671875
+            },
+            {
+              "name": "HCI (3).jpg",
+              "type": "file",
+              "size": 819.25
+            },
+            {
+              "name": "HCI.jpg",
+              "type": "file",
+              "size": 272.0908203125
+            },
+            {
+              "name": "HCI_endsem.jpg",
+              "type": "file",
+              "size": 238.4140625
+            }
+          ]
+        },
+        {
+          "name": "Humanoid Robots",
+          "type": "directory",
+          "children": [
+            {
+              "name": "RIA.jpg",
+              "type": "file",
+              "size": 317.7314453125
+            },
+            {
+              "name": "RIA2.jpg",
+              "type": "file",
+              "size": 269.568359375
+            }
+          ]
+        },
+        {
+          "name": "Image Processing",
+          "type": "directory",
+          "children": [
+            {
+              "name": "DSC_0184.jpg",
+              "type": "file",
+              "size": 948.3623046875
+            },
+            {
+              "name": "DSC_0185.jpg",
+              "type": "file",
+              "size": 927.359375
+            },
+            {
+              "name": "DSC_0186.jpg",
+              "type": "file",
+              "size": 1099.8935546875
+            },
+            {
+              "name": "DSC_0195.jpg",
+              "type": "file",
+              "size": 1133.767578125
+            },
+            {
+              "name": "DSC_0201.jpg",
+              "type": "file",
+              "size": 1083.4833984375
+            },
+            {
+              "name": "image processing quiz2014.jpg",
+              "type": "file",
+              "size": 1832.6328125
+            },
+            {
+              "name": "image processing2014midsem.jpg",
+              "type": "file",
+              "size": 1945.939453125
+            },
+            {
+              "name": "IMP (2).jpg",
+              "type": "file",
+              "size": 522.896484375
+            },
+            {
+              "name": "IMP.jpg",
+              "type": "file",
+              "size": 187.2490234375
+            },
+            {
+              "name": "IMP_endsem.jpg",
+              "type": "file",
+              "size": 307.0693359375
+            }
+          ]
+        },
+        {
+          "name": "Information Retrival",
+          "type": "directory",
+          "children": [
+            {
+              "name": "IR (2).jpg",
+              "type": "file",
+              "size": 673.3798828125
+            },
+            {
+              "name": "IR (3).jpg",
+              "type": "file",
+              "size": 927.7783203125
+            },
+            {
+              "name": "IR.jpg",
+              "type": "file",
+              "size": 608.4912109375
+            },
+            {
+              "name": "IR_endsem1.jpg",
+              "type": "file",
+              "size": 241.228515625
+            },
+            {
+              "name": "IR_endsem2.jpg",
+              "type": "file",
+              "size": 190.8662109375
+            },
+            {
+              "name": "IR_midsem.jpg",
+              "type": "file",
+              "size": 245.69140625
+            }
+          ]
+        },
+        {
+          "name": "Intellectual Property Rights",
+          "type": "directory",
+          "children": [
+            {
+              "name": "Intellectual Property Rights IPR.jpg",
+              "type": "file",
+              "size": 3293.2734375
+            },
+            {
+              "name": "ipr (2).jpg",
+              "type": "file",
+              "size": 46.0068359375
+            },
+            {
+              "name": "ipr (3).jpg",
+              "type": "file",
+              "size": 96.0361328125
+            },
+            {
+              "name": "ipr (4).jpg",
+              "type": "file",
+              "size": 54.23828125
+            },
+            {
+              "name": "IPR.jpg",
+              "type": "file",
+              "size": 793.091796875
+            },
+            {
+              "name": "ipr2014midsem.jpg",
+              "type": "file",
+              "size": 2097.13671875
+            }
+          ]
+        },
+        {
+          "name": "Introduction to Programming",
+          "type": "directory",
+          "children": [
+            {
+              "name": "ICP (2).jpg",
+              "type": "file",
+              "size": 1890.3642578125
+            },
+            {
+              "name": "ICP (3).jpg",
+              "type": "file",
+              "size": 1494.123046875
+            },
+            {
+              "name": "ICP.jpg",
+              "type": "file",
+              "size": 303.8701171875
+            }
+          ]
+        },
+        {
+          "name": "Math - 1",
+          "type": "directory",
+          "children": [
+            {
+              "name": "MAt-1 (2).jpg",
+              "type": "file",
+              "size": 1736.421875
+            },
+            {
+              "name": "MAT-1.jpg",
+              "type": "file",
+              "size": 2029.1669921875
+            },
+            {
+              "name": "MAT-I.jpg",
+              "type": "file",
+              "size": 670.1083984375
+            },
+            {
+              "name": "maths mid sem 2k13_2.jpg",
+              "type": "file",
+              "size": 0.0
+            },
+            {
+              "name": "maths1 mid sem 2k13_1.jpg",
+              "type": "file",
+              "size": 0.0
+            }
+          ]
+        },
+        {
+          "name": "Math - 2",
+          "type": "directory",
+          "children": [
+            {
+              "name": "DSC_0154.jpg",
+              "type": "file",
+              "size": 1069.2314453125
+            },
+            {
+              "name": "DSC_0155.jpg",
+              "type": "file",
+              "size": 1046.8212890625
+            },
+            {
+              "name": "DSC_0156.jpg",
+              "type": "file",
+              "size": 1035.146484375
+            },
+            {
+              "name": "DSC_0165.jpg",
+              "type": "file",
+              "size": 1369.8017578125
+            },
+            {
+              "name": "DSC_0166.jpg",
+              "type": "file",
+              "size": 1058.228515625
+            },
+            {
+              "name": "MAT - II (2).jpg",
+              "type": "file",
+              "size": 247.572265625
+            },
+            {
+              "name": "MAT- II.jpg",
+              "type": "file",
+              "size": 589.6982421875
+            },
+            {
+              "name": "MATH-2 (2).jpg",
+              "type": "file",
+              "size": 29.2041015625
+            },
+            {
+              "name": "MATH-2-ECE (2).jpg",
+              "type": "file",
+              "size": 43.431640625
+            },
+            {
+              "name": "MATH-2-ECE.jpg",
+              "type": "file",
+              "size": 36.728515625
+            },
+            {
+              "name": "MATH-2.jpg",
+              "type": "file",
+              "size": 39.240234375
+            },
+            {
+              "name": "maths 2(1)2014midsem.jpg",
+              "type": "file",
+              "size": 1981.9765625
+            },
+            {
+              "name": "maths2(2)2014midsem.jpg",
+              "type": "file",
+              "size": 1912.56640625
+            }
+          ]
+        },
+        {
+          "name": "Math - 3",
+          "type": "directory",
+          "children": [
+            {
+              "name": "MAT-3 (2).jpg",
+              "type": "file",
+              "size": 568.2626953125
+            },
+            {
+              "name": "MAT-3 (3).jpg",
+              "type": "file",
+              "size": 433.7294921875
+            },
+            {
+              "name": "MAT-3.jpg",
+              "type": "file",
+              "size": 246.564453125
+            }
+          ]
+        },
+        {
+          "name": "Math - 4",
+          "type": "directory",
+          "children": [
+            {
+              "name": "DSC_0137.jpg",
+              "type": "file",
+              "size": 1043.1103515625
+            },
+            {
+              "name": "DSC_0138.jpg",
+              "type": "file",
+              "size": 1407.28125
+            }
+          ]
+        },
+        {
+          "name": "MDM",
+          "type": "directory",
+          "children": [
+            {
+              "name": "MDM_endsem.jpg",
+              "type": "file",
+              "size": 288.6669921875
+            },
+            {
+              "name": "MDM_midsem1.jpg",
+              "type": "file",
+              "size": 251.3798828125
+            },
+            {
+              "name": "MDM_midsem2.jpg",
+              "type": "file",
+              "size": 215.591796875
+            }
+          ]
+        },
+        {
+          "name": "Microelectronics Technology",
+          "type": "directory",
+          "children": [
+            {
+              "name": "DSC_0146.jpg",
+              "type": "file",
+              "size": 1330.708984375
+            },
+            {
+              "name": "DSC_0150.jpg",
+              "type": "file",
+              "size": 1095.943359375
+            }
+          ]
+        },
+        {
+          "name": "Microprocessors and Programming",
+          "type": "directory",
+          "children": [
+            {
+              "name": "DSC_0134.jpg",
+              "type": "file",
+              "size": 1417.12890625
+            },
+            {
+              "name": "DSC_0148.jpg",
+              "type": "file",
+              "size": 1453.2939453125
+            },
+            {
+              "name": "DSC_0152.jpg",
+              "type": "file",
+              "size": 1409.1533203125
+            },
+            {
+              "name": "MIP (2).JPG",
+              "type": "file",
+              "size": 1297.0
+            },
+            {
+              "name": "MIP (3).JPG",
+              "type": "file",
+              "size": 2040.7900390625
+            },
+            {
+              "name": "MIP (4).JPG",
+              "type": "file",
+              "size": 947.50390625
+            },
+            {
+              "name": "MIP (5).JPG",
+              "type": "file",
+              "size": 915.1640625
+            },
+            {
+              "name": "MIP (6).jpg",
+              "type": "file",
+              "size": 826.2548828125
+            },
+            {
+              "name": "MIP.jpg",
+              "type": "file",
+              "size": 1057.755859375
+            },
+            {
+              "name": "MIP_endsem1.jpg",
+              "type": "file",
+              "size": 393.314453125
+            },
+            {
+              "name": "MIP_endsem2.jpg",
+              "type": "file",
+              "size": 348.1064453125
+            },
+            {
+              "name": "MIP_midsem.jpg",
+              "type": "file",
+              "size": 340.02734375
+            }
+          ]
+        },
+        {
+          "name": "Object Oriented Methodology",
+          "type": "directory",
+          "children": [
+            {
+              "name": "DSC_0144.jpg",
+              "type": "file",
+              "size": 1388.8212890625
+            },
+            {
+              "name": "OOM (2).jpg",
+              "type": "file",
+              "size": 441.466796875
+            },
+            {
+              "name": "OOM (3).jpg",
+              "type": "file",
+              "size": 1259.623046875
+            },
+            {
+              "name": "OOM (4).jpg",
+              "type": "file",
+              "size": 873.7421875
+            },
+            {
+              "name": "OOM.jpg",
+              "type": "file",
+              "size": 706.150390625
+            },
+            {
+              "name": "OOM_endsem1.jpg",
+              "type": "file",
+              "size": 348.2724609375
+            },
+            {
+              "name": "OOM_endsem2.jpg",
+              "type": "file",
+              "size": 406.9853515625
+            },
+            {
+              "name": "OOM_midsem1.jpg",
+              "type": "file",
+              "size": 257.3017578125
+            },
+            {
+              "name": "OOM_midsem2.jpg",
+              "type": "file",
+              "size": 323.732421875
+            }
+          ]
+        },
+        {
+          "name": "Operating Systems",
+          "type": "directory",
+          "children": [
+            {
+              "name": "DSC_0142.jpg",
+              "type": "file",
+              "size": 1316.583984375
+            },
+            {
+              "name": "DSC_0145.jpg",
+              "type": "file",
+              "size": 1413.693359375
+            },
+            {
+              "name": "OSY (2).jpg",
+              "type": "file",
+              "size": 946.9296875
+            },
+            {
+              "name": "OSY (3).JPG",
+              "type": "file",
+              "size": 1393.2470703125
+            },
+            {
+              "name": "OSY (4).jpg",
+              "type": "file",
+              "size": 1353.20703125
+            },
+            {
+              "name": "OSY (5).JPG",
+              "type": "file",
+              "size": 2671.2705078125
+            },
+            {
+              "name": "OSY (6).jpg",
+              "type": "file",
+              "size": 1427.767578125
+            },
+            {
+              "name": "OSY (7).jpg",
+              "type": "file",
+              "size": 282.798828125
+            },
+            {
+              "name": "OSY (8).jpg",
+              "type": "file",
+              "size": 1431.4345703125
+            },
+            {
+              "name": "OSY (9).jpg",
+              "type": "file",
+              "size": 1357.9365234375
+            },
+            {
+              "name": "OSY.jpg",
+              "type": "file",
+              "size": 620.654296875
+            },
+            {
+              "name": "OSY_midsem.jpg",
+              "type": "file",
+              "size": 230.291015625
+            }
+          ]
+        },
+        {
+          "name": "Operations Research and Optimisation Techniques",
+          "type": "directory",
+          "children": [
+            {
+              "name": "OOT (10).JPG",
+              "type": "file",
+              "size": 1153.337890625
+            },
+            {
+              "name": "OOT (11).jpg",
+              "type": "file",
+              "size": 922.130859375
+            },
+            {
+              "name": "OOT (12).jpg",
+              "type": "file",
+              "size": 975.984375
+            },
+            {
+              "name": "OOT (13).JPG",
+              "type": "file",
+              "size": 1322.2099609375
+            },
+            {
+              "name": "OOT (2).JPG",
+              "type": "file",
+              "size": 1112.9560546875
+            },
+            {
+              "name": "OOT (3).JPG",
+              "type": "file",
+              "size": 1202.15234375
+            },
+            {
+              "name": "OOT (4).JPG",
+              "type": "file",
+              "size": 962.77734375
+            },
+            {
+              "name": "OOT (5).JPG",
+              "type": "file",
+              "size": 1048.9609375
+            },
+            {
+              "name": "OOT (6).JPG",
+              "type": "file",
+              "size": 978.80859375
+            },
+            {
+              "name": "OOT (7).JPG",
+              "type": "file",
+              "size": 1004.2138671875
+            },
+            {
+              "name": "OOT (8).JPG",
+              "type": "file",
+              "size": 1301.7099609375
+            },
+            {
+              "name": "OOT (9).JPG",
+              "type": "file",
+              "size": 1280.775390625
+            },
+            {
+              "name": "OOT.jpg",
+              "type": "file",
+              "size": 917.0810546875
+            },
+            {
+              "name": "OOT_endsem.jpg",
+              "type": "file",
+              "size": 376.3173828125
+            },
+            {
+              "name": "OOT_midsem.jpg",
+              "type": "file",
+              "size": 272.341796875
+            }
+          ]
+        },
+        {
+          "name": "Physics - 1",
+          "type": "directory",
+          "children": [
+            {
+              "name": "PHY-1 (2).jpg",
+              "type": "file",
+              "size": 2394.01171875
+            },
+            {
+              "name": "PHY-1 (3).jpg",
+              "type": "file",
+              "size": 543.330078125
+            },
+            {
+              "name": "PHY-1.jpg",
+              "type": "file",
+              "size": 840.486328125
+            }
+          ]
+        },
+        {
+          "name": "Physics - 2",
+          "type": "directory",
+          "children": [
+            {
+              "name": "DSC_0167.jpg",
+              "type": "file",
+              "size": 1505.7431640625
+            },
+            {
+              "name": "PHY - II.jpg",
+              "type": "file",
+              "size": 800.5947265625
+            },
+            {
+              "name": "PHY-2.jpg",
+              "type": "file",
+              "size": 76.54296875
+            }
+          ]
+        },
+        {
+          "name": "Physics Lab",
+          "type": "directory",
+          "children": [
+            {
+              "name": "PHY_L (2).jpg",
+              "type": "file",
+              "size": 2894.544921875
+            },
+            {
+              "name": "PHY_L (3).jpg",
+              "type": "file",
+              "size": 980.51953125
+            },
+            {
+              "name": "PHY_L.jpg",
+              "type": "file",
+              "size": 1671.361328125
+            }
+          ]
+        },
+        {
+          "name": "Principles of Management and Economics",
+          "type": "directory",
+          "children": [
+            {
+              "name": "DSC_0157.jpg",
+              "type": "file",
+              "size": 1286.318359375
+            },
+            {
+              "name": "PME.jpg",
+              "type": "file",
+              "size": 208.2734375
+            },
+            {
+              "name": "PME1.jpg",
+              "type": "file",
+              "size": 41.8388671875
+            }
+          ]
+        },
+        {
+          "name": "Probability and Statistics",
+          "type": "directory",
+          "children": [
+            {
+              "name": "PNS (2).jpg",
+              "type": "file",
+              "size": 943.0107421875
+            },
+            {
+              "name": "PNS (3).jpg",
+              "type": "file",
+              "size": 396.705078125
+            },
+            {
+              "name": "PNS (5).jpg",
+              "type": "file",
+              "size": 857.2001953125
+            },
+            {
+              "name": "PNS (6).JPG",
+              "type": "file",
+              "size": 2756.88671875
+            },
+            {
+              "name": "PNS (7).jpg",
+              "type": "file",
+              "size": 535.8994140625
+            },
+            {
+              "name": "PNS (9).jpg",
+              "type": "file",
+              "size": 826.05078125
+            },
+            {
+              "name": "PNS.jpg",
+              "type": "file",
+              "size": 493.400390625
+            },
+            {
+              "name": "Prob_St_endsem1.jpg",
+              "type": "file",
+              "size": 412.9052734375
+            },
+            {
+              "name": "Prob_St_endsem2.jpg",
+              "type": "file",
+              "size": 175.0859375
+            },
+            {
+              "name": "Prob_St_midsem.jpg",
+              "type": "file",
+              "size": 289.93359375
+            }
+          ]
+        },
+        {
+          "name": "Semiconductor Devices",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SCD (2).jpg",
+              "type": "file",
+              "size": 2350.5751953125
+            },
+            {
+              "name": "SCD (3).jpg",
+              "type": "file",
+              "size": 1016.8037109375
+            },
+            {
+              "name": "SCD (4).jpg",
+              "type": "file",
+              "size": 771.5
+            },
+            {
+              "name": "SCD.jpg",
+              "type": "file",
+              "size": 469.451171875
+            }
+          ]
+        },
+        {
+          "name": "Signals and Systems",
+          "type": "directory",
+          "children": [
+            {
+              "name": "DSC_0139.jpg",
+              "type": "file",
+              "size": 1095.3984375
+            }
+          ]
+        },
+        {
+          "name": "Soft Computing",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SCO (2).jpg",
+              "type": "file",
+              "size": 150.8583984375
+            },
+            {
+              "name": "SCO (3).jpg",
+              "type": "file",
+              "size": 285.548828125
+            },
+            {
+              "name": "SCO (4).jpg",
+              "type": "file",
+              "size": 943.498046875
+            },
+            {
+              "name": "SCO (5).jpg",
+              "type": "file",
+              "size": 805.9501953125
+            },
+            {
+              "name": "SCO (6).jpg",
+              "type": "file",
+              "size": 486.451171875
+            },
+            {
+              "name": "SCO (7).jpg",
+              "type": "file",
+              "size": 723.2861328125
+            },
+            {
+              "name": "SCO.jpg",
+              "type": "file",
+              "size": 238.3056640625
+            },
+            {
+              "name": "Soft Computing.jpg",
+              "type": "file",
+              "size": 3299.677734375
+            }
+          ]
+        },
+        {
+          "name": "Software Engineering",
+          "type": "directory",
+          "children": [
+            {
+              "name": "DSC_0168.jpg",
+              "type": "file",
+              "size": 1095.205078125
+            },
+            {
+              "name": "DSC_0181.jpg",
+              "type": "file",
+              "size": 970.3046875
+            },
+            {
+              "name": "DSC_0182.jpg",
+              "type": "file",
+              "size": 1107.35546875
+            },
+            {
+              "name": "SEN (10).jpg",
+              "type": "file",
+              "size": 553.6796875
+            },
+            {
+              "name": "SEN (11).jpg",
+              "type": "file",
+              "size": 118.3154296875
+            },
+            {
+              "name": "SEN (12).jpg",
+              "type": "file",
+              "size": 122.7734375
+            },
+            {
+              "name": "SEN (13).jpg",
+              "type": "file",
+              "size": 152.48046875
+            },
+            {
+              "name": "SEN (14).jpg",
+              "type": "file",
+              "size": 193.3525390625
+            },
+            {
+              "name": "SEN (15).jpg",
+              "type": "file",
+              "size": 202.8310546875
+            },
+            {
+              "name": "SEN (16).jpg",
+              "type": "file",
+              "size": 891.982421875
+            },
+            {
+              "name": "SEN (17).jpg",
+              "type": "file",
+              "size": 199.0224609375
+            },
+            {
+              "name": "SEN (18).jpg",
+              "type": "file",
+              "size": 204.1708984375
+            },
+            {
+              "name": "SEN (19).jpg",
+              "type": "file",
+              "size": 215.4521484375
+            },
+            {
+              "name": "SEN (2).jpg",
+              "type": "file",
+              "size": 1047.0029296875
+            },
+            {
+              "name": "SEN (20).jpg",
+              "type": "file",
+              "size": 74.8662109375
+            },
+            {
+              "name": "SEN (21).jpg",
+              "type": "file",
+              "size": 112.1015625
+            },
+            {
+              "name": "SEN (22).jpg",
+              "type": "file",
+              "size": 109.4375
+            },
+            {
+              "name": "SEN (23).jpg",
+              "type": "file",
+              "size": 142.55078125
+            },
+            {
+              "name": "SEN (3).jpg",
+              "type": "file",
+              "size": 814.3740234375
+            },
+            {
+              "name": "SEN (4).jpg",
+              "type": "file",
+              "size": 508.3408203125
+            },
+            {
+              "name": "SEN (5).jpg",
+              "type": "file",
+              "size": 302.435546875
+            },
+            {
+              "name": "SEN (6).jpg",
+              "type": "file",
+              "size": 713.537109375
+            },
+            {
+              "name": "SEN (7).jpg",
+              "type": "file",
+              "size": 105.83984375
+            },
+            {
+              "name": "SEN (8).jpg",
+              "type": "file",
+              "size": 133.3525390625
+            },
+            {
+              "name": "SEN (9).jpg",
+              "type": "file",
+              "size": 444.744140625
+            },
+            {
+              "name": "SEN.jpg",
+              "type": "file",
+              "size": 133.3388671875
+            },
+            {
+              "name": "SEN_endsem.jpg",
+              "type": "file",
+              "size": 593.6923828125
+            }
+          ]
+        },
+        {
+          "name": "System Modelling and Simulation",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SMS (2).JPG",
+              "type": "file",
+              "size": 5289.6669921875
+            },
+            {
+              "name": "SMS (3).JPG",
+              "type": "file",
+              "size": 4251.2275390625
+            },
+            {
+              "name": "SMS (4).jpg",
+              "type": "file",
+              "size": 1066.8427734375
+            },
+            {
+              "name": "SMS (5).jpg",
+              "type": "file",
+              "size": 1268.6064453125
+            },
+            {
+              "name": "SMS (6).jpg",
+              "type": "file",
+              "size": 989.435546875
+            },
+            {
+              "name": "SMS.jpg",
+              "type": "file",
+              "size": 798.6123046875
+            },
+            {
+              "name": "SMS_endsem1.jpg",
+              "type": "file",
+              "size": 376.22265625
+            },
+            {
+              "name": "SMS_endsem2.jpg",
+              "type": "file",
+              "size": 262.9423828125
+            },
+            {
+              "name": "SMS_midsem.jpg",
+              "type": "file",
+              "size": 323.83984375
+            }
+          ]
+        },
+        {
+          "name": "VLSI Design",
+          "type": "directory",
+          "children": [
+            {
+              "name": "VLSI Design.jpg",
+              "type": "file",
+              "size": 3085.16015625
+            }
+          ]
+        },
+        {
+          "name": "Wireless Sensor Networks",
+          "type": "directory",
+          "children": [
+            {
+              "name": "DSC_0187.jpg",
+              "type": "file",
+              "size": 1110.158203125
+            },
+            {
+              "name": "DSC_0193.jpg",
+              "type": "file",
+              "size": 943.5830078125
+            },
+            {
+              "name": "DSC_0194.jpg",
+              "type": "file",
+              "size": 950.0009765625
+            },
+            {
+              "name": "DSC_0202.jpg",
+              "type": "file",
+              "size": 1217.4248046875
+            },
+            {
+              "name": "DSC_0203.jpg",
+              "type": "file",
+              "size": 979.587890625
+            },
+            {
+              "name": "wireless sensor network2014midsem.jpg",
+              "type": "file",
+              "size": 2001.46875
+            },
+            {
+              "name": "WSN_endem2.jpg",
+              "type": "file",
+              "size": 236.2216796875
+            },
+            {
+              "name": "WSN_endsem1.jpg",
+              "type": "file",
+              "size": 349.998046875
+            },
+            {
+              "name": "WSN_midsem.jpg",
+              "type": "file",
+              "size": 251.845703125
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Question_Papers-2015-11-18.zip",
+      "type": "file",
+      "size": 412253.7529296875
+    },
+    {
+      "name": "sem-1",
+      "type": "directory",
+      "children": [
+        {
+          "name": "ECAS130",
+          "type": "directory",
+          "children": [
+            {
+              "name": "engineering-circuit-analysis-6ed-hayt-solutions-manual.pdf",
+              "type": "file",
+              "size": 5651.1796875
+            },
+            {
+              "name": "Hayt Engineering Circuit Analysis 8th txtbk.PDF",
+              "type": "file",
+              "size": 31312.7412109375
+            },
+            {
+              "name": "HaytKemmerly-EngineeringCircuitAnalysis6thEdition.pdf",
+              "type": "file",
+              "size": 19929.51171875
+            },
+            {
+              "name": "Kuo-NetworkAnalysisSynthesis.pdf",
+              "type": "file",
+              "size": 11413.779296875
+            }
+          ]
+        },
+        {
+          "name": "EDAC130",
+          "type": "directory",
+          "children": [
+            {
+              "name": "Binder1.pdf",
+              "type": "file",
+              "size": 613.5078125
+            },
+            {
+              "name": "Class Notes.pdf",
+              "type": "file",
+              "size": 7162.951171875
+            },
+            {
+              "name": "EEDC132C.docx",
+              "type": "file",
+              "size": 11.8359375
+            },
+            {
+              "name": "EEDC132C.pdf",
+              "type": "file",
+              "size": 36.6865234375
+            },
+            {
+              "name": "L15 FET DC Analysis.ppt",
+              "type": "file",
+              "size": 1677.5
+            },
+            {
+              "name": "L16 Common Source and Common Drain.ppt",
+              "type": "file",
+              "size": 1954.0
+            },
+            {
+              "name": "solution-manual-Boylestad-8ed.1.pdf",
+              "type": "file",
+              "size": 23816.8916015625
+            },
+            {
+              "name": "transistor_configurations.pdf",
+              "type": "file",
+              "size": 41.6416015625
+            },
+            {
+              "name": "Tunnel Diodes.pdf",
+              "type": "file",
+              "size": 622.857421875
+            },
+            {
+              "name": "[Ben_G._Streetman,_Sanjay_Kumar_Banerjee]_Solid_St(BookZZ.org).pdf",
+              "type": "file",
+              "size": 79145.76171875
+            },
+            {
+              "name": "[Robert_L._Boylestad,_Louis_Nashelsky]_Electronic_(BookZZ.org).pdf",
+              "type": "file",
+              "size": 26538.0166015625
+            },
+            {
+              "name": "[Simon_M._Sze,_Ming-Kwei_Lee]_Semiconductor_Device(BookZZ.org).pdf",
+              "type": "file",
+              "size": 19671.4775390625
+            }
+          ]
+        },
+        {
+          "name": "EDAC130-LAB",
+          "type": "directory",
+          "children": [
+            {
+              "name": "EDC Experiments.docx",
+              "type": "file",
+              "size": 14.2060546875
+            },
+            {
+              "name": "Experiment No 1.docx",
+              "type": "file",
+              "size": 30.3818359375
+            },
+            {
+              "name": "Intoduction to Cables & tools.pdf",
+              "type": "file",
+              "size": 60.8837890625
+            },
+            {
+              "name": "LQ6324T - Multi Output Regulated DC Power Supply.pdf",
+              "type": "file",
+              "size": 615.259765625
+            },
+            {
+              "name": "MulltimeterUse.pdf",
+              "type": "file",
+              "size": 190.080078125
+            },
+            {
+              "name": "Scientific Function Generator.pdf",
+              "type": "file",
+              "size": 1846.90625
+            },
+            {
+              "name": "Scientific Oscilloscope SM511.pdf",
+              "type": "file",
+              "size": 3126.048828125
+            }
+          ]
+        },
+        {
+          "name": "EDC Slides",
+          "type": "directory",
+          "children": [
+            {
+              "name": "L1 Introduction.ppt",
+              "type": "file",
+              "size": 2987.0
+            },
+            {
+              "name": "L10 BJT Introduction.pptx",
+              "type": "file",
+              "size": 832.0
+            },
+            {
+              "name": "L11 DC Analysis of BJT and load lines.ppt",
+              "type": "file",
+              "size": 8.0
+            },
+            {
+              "name": "L12 Voltage Transfer Characteristic,BJT Biasing 1.ppt",
+              "type": "file",
+              "size": 64.0
+            },
+            {
+              "name": "L13 BJT Biasing 2 and BJT Application.ppt",
+              "type": "file",
+              "size": 8.0
+            },
+            {
+              "name": "L14 Common Emitter_ gnd, with RE.ppt",
+              "type": "file",
+              "size": 8.0
+            },
+            {
+              "name": "L15 Common Emitter_CE and common collector.ppt",
+              "type": "file",
+              "size": 8.0
+            },
+            {
+              "name": "L16 FET Introduction.ppt",
+              "type": "file",
+              "size": 816.0
+            },
+            {
+              "name": "L17 FET DC Analysis.ppt",
+              "type": "file",
+              "size": 8.0
+            },
+            {
+              "name": "L18 Common Source and Common Drain.ppt",
+              "type": "file",
+              "size": 8.0
+            },
+            {
+              "name": "L19 Op Amp.ppt",
+              "type": "file",
+              "size": 8.0
+            },
+            {
+              "name": "L2 Chapter 1.ppt",
+              "type": "file",
+              "size": 952.0
+            },
+            {
+              "name": "L3 Semiconductor, Intrinsic and Extrinsic.ppt",
+              "type": "file",
+              "size": 8.0
+            },
+            {
+              "name": "L4 Drift, Diffusion, PN junction.ppt",
+              "type": "file",
+              "size": 8.0
+            },
+            {
+              "name": "L5 Piecewise linear model,diode AC analysis.ppt",
+              "type": "file",
+              "size": 8.0
+            },
+            {
+              "name": "L6 zener effect,voltage regulator.ppt",
+              "type": "file",
+              "size": 8.0
+            },
+            {
+              "name": "L7 rectifier, PIV.ppt",
+              "type": "file",
+              "size": 1522.0
+            },
+            {
+              "name": "L8 clipper.ppt",
+              "type": "file",
+              "size": 958.0
+            },
+            {
+              "name": "L9 Clamper and Multiple Diode.ppt",
+              "type": "file",
+              "size": 760.5
+            }
+          ]
+        },
+        {
+          "name": "ENGLISH",
+          "type": "directory",
+          "children": [
+            {
+              "name": "20150728_153534.jpg",
+              "type": "file",
+              "size": 473.248046875
+            },
+            {
+              "name": "20150728_153541.jpg",
+              "type": "file",
+              "size": 474.576171875
+            },
+            {
+              "name": "Content management and delivery assignement.txt",
+              "type": "file",
+              "size": 0.4296875
+            },
+            {
+              "name": "content management.ppt",
+              "type": "file",
+              "size": 1201.0
+            },
+            {
+              "name": "Delivery.ppt",
+              "type": "file",
+              "size": 664.0
+            },
+            {
+              "name": "Do's of public presentation.gdoc",
+              "type": "file",
+              "size": 0.24609375
+            },
+            {
+              "name": "effective public presentation.docx",
+              "type": "file",
+              "size": 15.9794921875
+            },
+            {
+              "name": "The dont's of a public presentation.gdoc",
+              "type": "file",
+              "size": 0.24609375
+            }
+          ]
+        },
+        {
+          "name": "IIPG130",
+          "type": "directory",
+          "children": [
+            {
+              "name": "Automate the Boring Stuff with Python Practical Programming for Total Beginn.pdf",
+              "type": "file",
+              "size": 7240.123046875
+            },
+            {
+              "name": "basic computer hardware.ppt",
+              "type": "file",
+              "size": 7037.0
+            },
+            {
+              "name": "basic computer hardware1.ppt",
+              "type": "file",
+              "size": 7037.0
+            },
+            {
+              "name": "c programming language-dennis ritchie.pdf",
+              "type": "file",
+              "size": 1116.794921875
+            },
+            {
+              "name": "hardware.ppt",
+              "type": "file",
+              "size": 181.5
+            },
+            {
+              "name": "IITC.jpg",
+              "type": "file",
+              "size": 133.951171875
+            },
+            {
+              "name": "iso_c_99.pdf",
+              "type": "file",
+              "size": 1334.744140625
+            },
+            {
+              "name": "jagpreet",
+              "type": "directory",
+              "children": [
+                {
+                  "name": "slide1.pdf",
+                  "type": "file",
+                  "size": 2055.5517578125
+                }
+              ]
+            },
+            {
+              "name": "let-us-c-solutions.pdf",
+              "type": "file",
+              "size": 18606.2236328125
+            },
+            {
+              "name": "let-us-c.pdf",
+              "type": "file",
+              "size": 7038.6044921875
+            },
+            {
+              "name": "ProgramminginANSICbyBalagurusamyThirdEdition.pdf",
+              "type": "file",
+              "size": 1224.2744140625
+            },
+            {
+              "name": "vi-reference.pdf",
+              "type": "file",
+              "size": 56.3759765625
+            }
+          ]
+        },
+        {
+          "name": "lab_exam",
+          "type": "directory",
+          "children": [
+            {
+              "name": "2.txt",
+              "type": "file",
+              "size": 0.0244140625
+            },
+            {
+              "name": "a.out",
+              "type": "file",
+              "size": 8.6142578125
+            },
+            {
+              "name": "backup",
+              "type": "directory",
+              "children": [
+                {
+                  "name": "2",
+                  "type": "file",
+                  "size": 8.515625
+                },
+                {
+                  "name": "2.txt",
+                  "type": "file",
+                  "size": 0.0166015625
+                },
+                {
+                  "name": "3",
+                  "type": "file",
+                  "size": 8.6142578125
+                },
+                {
+                  "name": "a.out",
+                  "type": "file",
+                  "size": 8.6142578125
+                },
+                {
+                  "name": "irm2015006_1.c",
+                  "type": "file",
+                  "size": 0.4580078125
+                },
+                {
+                  "name": "irm2015006_2.c",
+                  "type": "file",
+                  "size": 0.4892578125
+                },
+                {
+                  "name": "irm2015006_3.c",
+                  "type": "file",
+                  "size": 0.283203125
+                }
+              ]
+            },
+            {
+              "name": "irm2015006_1.c",
+              "type": "file",
+              "size": 0.4580078125
+            },
+            {
+              "name": "irm2015006_2.c",
+              "type": "file",
+              "size": 0.4892578125
+            },
+            {
+              "name": "irm2015006_3.c",
+              "type": "file",
+              "size": 0.283203125
+            },
+            {
+              "name": "irm2015006_4.c",
+              "type": "file",
+              "size": 1.154296875
+            }
+          ]
+        },
+        {
+          "name": "SCDE130",
+          "type": "directory",
+          "children": [
+            {
+              "name": "0-Admin130.pdf",
+              "type": "file",
+              "size": 1781.82421875
+            },
+            {
+              "name": "1-Introduction.pdf",
+              "type": "file",
+              "size": 8036.7919921875
+            },
+            {
+              "name": "2-Single-Variable-Calculus.pdf",
+              "type": "file",
+              "size": 8217.07421875
+            },
+            {
+              "name": "3-Introduction-to-Power-Series.pdf",
+              "type": "file",
+              "size": 8296.44921875
+            },
+            {
+              "name": "epsilon-delta proogs.pdf",
+              "type": "file",
+              "size": 1187.8125
+            },
+            {
+              "name": "Thomas calculus 12th edition.pdf",
+              "type": "file",
+              "size": 360940.57421875
+            }
+          ]
+        },
+        {
+          "name": "SEGP130",
+          "type": "directory",
+          "children": [
+            {
+              "name": "beiser 6.pdf",
+              "type": "file",
+              "size": 9203.85546875
+            },
+            {
+              "name": "Chenming-Hu_ch1.pdf",
+              "type": "file",
+              "size": 1862.3125
+            },
+            {
+              "name": "Chenming-Hu_ch2.pdf",
+              "type": "file",
+              "size": 667.9794921875
+            },
+            {
+              "name": "Chenming-Hu_ch4.pdf",
+              "type": "file",
+              "size": 2032.1435546875
+            },
+            {
+              "name": "CM_1.pptx",
+              "type": "file",
+              "size": 221.9990234375
+            },
+            {
+              "name": "CM_2.pptx",
+              "type": "file",
+              "size": 404.9501953125
+            },
+            {
+              "name": "Goldstein.pdf",
+              "type": "file",
+              "size": 27169.9873046875
+            },
+            {
+              "name": "integrated-electronics-by-millman-halkias.pdf",
+              "type": "file",
+              "size": 18145.4365234375
+            },
+            {
+              "name": "solution manual of physics by arthur beiser.pdf",
+              "type": "file",
+              "size": 1474.8037109375
+            },
+            {
+              "name": "Streetman Banarjee.pdf",
+              "type": "file",
+              "size": 79158.40234375
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "sem-2",
+      "type": "directory",
+      "children": [
+        {
+          "name": "computer-architecture",
+          "type": "directory",
+          "children": [
+            {
+              "name": "(The Morgan Kaufmann Series in Computer Architecture and Design) David A. Patterson, John L. Hennessy-Computer Organization and Design, Fifth Edition_ The Hardware_Software Interface-Morgan Kaufmann (.pdf",
+              "type": "file",
+              "size": 29917.77734375
+            },
+            {
+              "name": "arm_inst.pdf",
+              "type": "file",
+              "size": 1014.84375
+            },
+            {
+              "name": "Cache_Memory.pdf",
+              "type": "file",
+              "size": 530.251953125
+            },
+            {
+              "name": "Chapter_03_Assembly_Language.pptx",
+              "type": "file",
+              "size": 1702.1943359375
+            },
+            {
+              "name": "Chapter_08_Processor_Design.pdf",
+              "type": "file",
+              "size": 1148.30078125
+            },
+            {
+              "name": "Chapter_08_Processor_Design.pptx",
+              "type": "file",
+              "size": 1183.087890625
+            },
+            {
+              "name": "Chapter_12_Input_Output_and_Storage_Devices.pptx",
+              "type": "file",
+              "size": 2028.3271484375
+            },
+            {
+              "name": "Computer Organization and Design - Patterson.pdf",
+              "type": "file",
+              "size": 17317.2900390625
+            },
+            {
+              "name": "Computer System Architecture-morris mano Third Edition.pdf",
+              "type": "file",
+              "size": 29520.7958984375
+            },
+            {
+              "name": "computer_arithmetic.pdf",
+              "type": "file",
+              "size": 975.5205078125
+            },
+            {
+              "name": "Computer_Organisation_and_Design_by_S._Sarangi_(McGraw_Hill)-2016-05-03.zip",
+              "type": "file",
+              "size": 16117.5205078125
+            },
+            {
+              "name": "Data_Representation.html",
+              "type": "file",
+              "size": 94.921875
+            },
+            {
+              "name": "Data_representation.pdf",
+              "type": "file",
+              "size": 69.314453125
+            },
+            {
+              "name": "emuArm.jar",
+              "type": "file",
+              "size": 376.4423828125
+            },
+            {
+              "name": "emuSimpleRisc",
+              "type": "directory",
+              "children": [
+                {
+                  "name": ".git",
+                  "type": "directory",
+                  "children": [
+                    {
+                      "name": "branches",
+                      "type": "directory",
+                      "children": []
+                    },
+                    {
+                      "name": "COMMIT_EDITMSG",
+                      "type": "file",
+                      "size": 0.0341796875
+                    },
+                    {
+                      "name": "config",
+                      "type": "file",
+                      "size": 0.2607421875
+                    },
+                    {
+                      "name": "description",
+                      "type": "file",
+                      "size": 0.0712890625
+                    },
+                    {
+                      "name": "HEAD",
+                      "type": "file",
+                      "size": 0.0224609375
+                    },
+                    {
+                      "name": "hooks",
+                      "type": "directory",
+                      "children": [
+                        {
+                          "name": "applypatch-msg.sample",
+                          "type": "file",
+                          "size": 0.44140625
+                        },
+                        {
+                          "name": "commit-msg.sample",
+                          "type": "file",
+                          "size": 0.875
+                        },
+                        {
+                          "name": "post-update.sample",
+                          "type": "file",
+                          "size": 0.1845703125
+                        },
+                        {
+                          "name": "pre-applypatch.sample",
+                          "type": "file",
+                          "size": 0.388671875
+                        },
+                        {
+                          "name": "pre-commit.sample",
+                          "type": "file",
+                          "size": 1.603515625
+                        },
+                        {
+                          "name": "pre-push.sample",
+                          "type": "file",
+                          "size": 1.3203125
+                        },
+                        {
+                          "name": "pre-rebase.sample",
+                          "type": "file",
+                          "size": 4.783203125
+                        },
+                        {
+                          "name": "prepare-commit-msg.sample",
+                          "type": "file",
+                          "size": 1.2099609375
+                        },
+                        {
+                          "name": "update.sample",
+                          "type": "file",
+                          "size": 3.5263671875
+                        }
+                      ]
+                    },
+                    {
+                      "name": "index",
+                      "type": "file",
+                      "size": 11.765625
+                    },
+                    {
+                      "name": "info",
+                      "type": "directory",
+                      "children": [
+                        {
+                          "name": "exclude",
+                          "type": "file",
+                          "size": 0.234375
+                        }
+                      ]
+                    },
+                    {
+                      "name": "logs",
+                      "type": "directory",
+                      "children": [
+                        {
+                          "name": "HEAD",
+                          "type": "file",
+                          "size": 0.517578125
+                        },
+                        {
+                          "name": "refs",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "heads",
+                              "type": "directory",
+                              "children": [
+                                {
+                                  "name": "master",
+                                  "type": "file",
+                                  "size": 0.517578125
+                                }
+                              ]
+                            },
+                            {
+                              "name": "remotes",
+                              "type": "directory",
+                              "children": [
+                                {
+                                  "name": "origin",
+                                  "type": "directory",
+                                  "children": [
+                                    {
+                                      "name": "HEAD",
+                                      "type": "file",
+                                      "size": 0.18359375
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "objects",
+                      "type": "directory",
+                      "children": [
+                        {
+                          "name": "07",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "732ba2de3b39c5d5849bd779811307d01b4569",
+                              "type": "file",
+                              "size": 0.16796875
+                            }
+                          ]
+                        },
+                        {
+                          "name": "14",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "238d3bc94610d3d7e88dd54d4669ca84faa725",
+                              "type": "file",
+                              "size": 0.1748046875
+                            }
+                          ]
+                        },
+                        {
+                          "name": "15",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "e1355fa33afb6e2103ad304607d019d9c0cc44",
+                              "type": "file",
+                              "size": 0.2294921875
+                            }
+                          ]
+                        },
+                        {
+                          "name": "1b",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "356009f734fbe25f00991aafb09a69ce655a23",
+                              "type": "file",
+                              "size": 0.4423828125
+                            }
+                          ]
+                        },
+                        {
+                          "name": "1c",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "323add5f137f60698b4b1dd01fbb83476f6738",
+                              "type": "file",
+                              "size": 0.09375
+                            }
+                          ]
+                        },
+                        {
+                          "name": "21",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "0f8a1f193141ee87b7171ca6035a16298578c6",
+                              "type": "file",
+                              "size": 132.9990234375
+                            }
+                          ]
+                        },
+                        {
+                          "name": "23",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "bea3022c818b80a4d12e72e5a9e38d17805770",
+                              "type": "file",
+                              "size": 421.77734375
+                            }
+                          ]
+                        },
+                        {
+                          "name": "32",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "87222d2649466c0eb42828a5c7b3b74b3426ed",
+                              "type": "file",
+                              "size": 0.1806640625
+                            }
+                          ]
+                        },
+                        {
+                          "name": "46",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "e4f1cb5767d365431c7691739ac27da633ea01",
+                              "type": "file",
+                              "size": 0.2734375
+                            }
+                          ]
+                        },
+                        {
+                          "name": "5f",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "2fb1f20b21020a02014e4723860bac9cae842b",
+                              "type": "file",
+                              "size": 7.90625
+                            }
+                          ]
+                        },
+                        {
+                          "name": "61",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "11afb0a85a610ac402c81adc20b22892ff3022",
+                              "type": "file",
+                              "size": 0.5849609375
+                            }
+                          ]
+                        },
+                        {
+                          "name": "86",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "8ce23e979e92b14b23f1a1e4b30cb609ded4ee",
+                              "type": "file",
+                              "size": 0.1220703125
+                            }
+                          ]
+                        },
+                        {
+                          "name": "91",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "22450a54ee5c33b4b692060a5d529a49213d4a",
+                              "type": "file",
+                              "size": 131.7353515625
+                            }
+                          ]
+                        },
+                        {
+                          "name": "9a",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "870cda1609d467fb7deaecd855af74d49b0168",
+                              "type": "file",
+                              "size": 0.1201171875
+                            }
+                          ]
+                        },
+                        {
+                          "name": "9c",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "603c6fec6b312f5f208639bcd61886b5c84bbe",
+                              "type": "file",
+                              "size": 2.966796875
+                            }
+                          ]
+                        },
+                        {
+                          "name": "a6",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "2000db83e51375e32fb19b5b26a25da141eb0d",
+                              "type": "file",
+                              "size": 140.7822265625
+                            }
+                          ]
+                        },
+                        {
+                          "name": "bc",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "50a6716885f288888d975c05e84c95dfd07d00",
+                              "type": "file",
+                              "size": 0.2998046875
+                            }
+                          ]
+                        },
+                        {
+                          "name": "c1",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "f85e0ebcfe98258e9bc1422fb199446a062ab9",
+                              "type": "file",
+                              "size": 0.4677734375
+                            }
+                          ]
+                        },
+                        {
+                          "name": "c4",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "e4ee65ffb1671a0ac126280ea6d083110197b7",
+                              "type": "file",
+                              "size": 0.640625
+                            }
+                          ]
+                        },
+                        {
+                          "name": "df",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "cb1e56c0af93eb4fcf9142368304b504c24e64",
+                              "type": "file",
+                              "size": 0.125
+                            }
+                          ]
+                        },
+                        {
+                          "name": "f7",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "06ae34d020090a6ea0455114063ed5c04578a0",
+                              "type": "file",
+                              "size": 0.115234375
+                            },
+                            {
+                              "name": "2b610bddbb504ae93fa99232cecd142b3c0698",
+                              "type": "file",
+                              "size": 137.0771484375
+                            }
+                          ]
+                        },
+                        {
+                          "name": "info",
+                          "type": "directory",
+                          "children": []
+                        },
+                        {
+                          "name": "pack",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "pack-08668921a1924d2acd2f214742d4cfb1a970360f.idx",
+                              "type": "file",
+                              "size": 8.83984375
+                            },
+                            {
+                              "name": "pack-08668921a1924d2acd2f214742d4cfb1a970360f.pack",
+                              "type": "file",
+                              "size": 635.2734375
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "packed-refs",
+                      "type": "file",
+                      "size": 0.1044921875
+                    },
+                    {
+                      "name": "refs",
+                      "type": "directory",
+                      "children": [
+                        {
+                          "name": "heads",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "master",
+                              "type": "file",
+                              "size": 0.0400390625
+                            }
+                          ]
+                        },
+                        {
+                          "name": "remotes",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "origin",
+                              "type": "directory",
+                              "children": [
+                                {
+                                  "name": "HEAD",
+                                  "type": "file",
+                                  "size": 0.03125
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "tags",
+                          "type": "directory",
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": ".gitignore",
+                  "type": "file",
+                  "size": 0.0068359375
+                },
+                {
+                  "name": "build.xml",
+                  "type": "file",
+                  "size": 3.623046875
+                },
+                {
+                  "name": "dist",
+                  "type": "directory",
+                  "children": [
+                    {
+                      "name": "emuSimpleRisc.jar",
+                      "type": "file",
+                      "size": 684.2001953125
+                    },
+                    {
+                      "name": "README.TXT",
+                      "type": "file",
+                      "size": 1.296875
+                    }
+                  ]
+                },
+                {
+                  "name": "emuSimpleRisc.jar",
+                  "type": "file",
+                  "size": 684.2001953125
+                },
+                {
+                  "name": "manifest.mf",
+                  "type": "file",
+                  "size": 0.0830078125
+                },
+                {
+                  "name": "nbproject",
+                  "type": "directory",
+                  "children": [
+                    {
+                      "name": "build-impl.xml",
+                      "type": "file",
+                      "size": 75.7138671875
+                    },
+                    {
+                      "name": "genfiles.properties",
+                      "type": "file",
+                      "size": 0.4638671875
+                    },
+                    {
+                      "name": "private",
+                      "type": "directory",
+                      "children": [
+                        {
+                          "name": "private.properties",
+                          "type": "file",
+                          "size": 0.1494140625
+                        },
+                        {
+                          "name": "private.xml",
+                          "type": "file",
+                          "size": 0.328125
+                        },
+                        {
+                          "name": "profiler",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "configurations.xml",
+                              "type": "file",
+                              "size": 8.9814453125
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "project.properties",
+                      "type": "file",
+                      "size": 2.5771484375
+                    },
+                    {
+                      "name": "project.sublime-workspace",
+                      "type": "file",
+                      "size": 1.712890625
+                    },
+                    {
+                      "name": "project.xml",
+                      "type": "file",
+                      "size": 0.5087890625
+                    }
+                  ]
+                },
+                {
+                  "name": "README.md",
+                  "type": "file",
+                  "size": 0.1875
+                },
+                {
+                  "name": "Screenshots",
+                  "type": "directory",
+                  "children": [
+                    {
+                      "name": "1.png",
+                      "type": "file",
+                      "size": 135.10546875
+                    },
+                    {
+                      "name": "2.png",
+                      "type": "file",
+                      "size": 140.8935546875
+                    },
+                    {
+                      "name": "3.png",
+                      "type": "file",
+                      "size": 136.0810546875
+                    },
+                    {
+                      "name": "4.png",
+                      "type": "file",
+                      "size": 144.9677734375
+                    }
+                  ]
+                },
+                {
+                  "name": "src",
+                  "type": "directory",
+                  "children": [
+                    {
+                      "name": "backend",
+                      "type": "directory",
+                      "children": [
+                        {
+                          "name": "Emit.java",
+                          "type": "file",
+                          "size": 15.0703125
+                        },
+                        {
+                          "name": "FirstPass.java",
+                          "type": "file",
+                          "size": 5.8232421875
+                        },
+                        {
+                          "name": "instructions",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "ADD.java",
+                              "type": "file",
+                              "size": 1.423828125
+                            },
+                            {
+                              "name": "AND.java",
+                              "type": "file",
+                              "size": 2.3291015625
+                            },
+                            {
+                              "name": "ASR.java",
+                              "type": "file",
+                              "size": 2.421875
+                            },
+                            {
+                              "name": "B.java",
+                              "type": "file",
+                              "size": 4.0439453125
+                            },
+                            {
+                              "name": "BEQ.java",
+                              "type": "file",
+                              "size": 3.1279296875
+                            },
+                            {
+                              "name": "BGT.java",
+                              "type": "file",
+                              "size": 3.6923828125
+                            },
+                            {
+                              "name": "calcop.java",
+                              "type": "file",
+                              "size": 1.673828125
+                            },
+                            {
+                              "name": "CALL.java",
+                              "type": "file",
+                              "size": 4.6279296875
+                            },
+                            {
+                              "name": "checkmod.java",
+                              "type": "file",
+                              "size": 0.927734375
+                            },
+                            {
+                              "name": "CMP.java",
+                              "type": "file",
+                              "size": 1.9287109375
+                            },
+                            {
+                              "name": "DIV.java",
+                              "type": "file",
+                              "size": 2.3046875
+                            },
+                            {
+                              "name": "InsInterface1.java",
+                              "type": "file",
+                              "size": 0.2431640625
+                            },
+                            {
+                              "name": "InsInterface2.java",
+                              "type": "file",
+                              "size": 0.2451171875
+                            },
+                            {
+                              "name": "InsInterface3.java",
+                              "type": "file",
+                              "size": 0.2607421875
+                            },
+                            {
+                              "name": "InsInterface4.java",
+                              "type": "file",
+                              "size": 0.275390625
+                            },
+                            {
+                              "name": "LD.java",
+                              "type": "file",
+                              "size": 1.6630859375
+                            },
+                            {
+                              "name": "LSL.java",
+                              "type": "file",
+                              "size": 2.412109375
+                            },
+                            {
+                              "name": "LSR.java",
+                              "type": "file",
+                              "size": 2.2822265625
+                            },
+                            {
+                              "name": "MOD.java",
+                              "type": "file",
+                              "size": 2.4072265625
+                            },
+                            {
+                              "name": "MOV.java",
+                              "type": "file",
+                              "size": 1.7548828125
+                            },
+                            {
+                              "name": "MUL.java",
+                              "type": "file",
+                              "size": 2.2626953125
+                            },
+                            {
+                              "name": "Myfunction.java",
+                              "type": "file",
+                              "size": 5.6865234375
+                            },
+                            {
+                              "name": "NOP.java",
+                              "type": "file",
+                              "size": 0.42578125
+                            },
+                            {
+                              "name": "NOT.java",
+                              "type": "file",
+                              "size": 2.0576171875
+                            },
+                            {
+                              "name": "OR.java",
+                              "type": "file",
+                              "size": 2.2958984375
+                            },
+                            {
+                              "name": "PRINT.java",
+                              "type": "file",
+                              "size": 1.396484375
+                            },
+                            {
+                              "name": "RET.java",
+                              "type": "file",
+                              "size": 1.353515625
+                            },
+                            {
+                              "name": "ST.java",
+                              "type": "file",
+                              "size": 1.5107421875
+                            },
+                            {
+                              "name": "SUB.java",
+                              "type": "file",
+                              "size": 1.212890625
+                            }
+                          ]
+                        },
+                        {
+                          "name": "InstructionSet.java",
+                          "type": "file",
+                          "size": 1.3837890625
+                        },
+                        {
+                          "name": "Memory.java",
+                          "type": "file",
+                          "size": 2.8369140625
+                        },
+                        {
+                          "name": "NFlagRegister.java",
+                          "type": "file",
+                          "size": 0.3193359375
+                        },
+                        {
+                          "name": "Register.java",
+                          "type": "file",
+                          "size": 2.9755859375
+                        },
+                        {
+                          "name": "Register_spec.java",
+                          "type": "file",
+                          "size": 0.80859375
+                        },
+                        {
+                          "name": "RemoveComments.java",
+                          "type": "file",
+                          "size": 4.623046875
+                        },
+                        {
+                          "name": "ScanFile.java",
+                          "type": "file",
+                          "size": 11.591796875
+                        },
+                        {
+                          "name": "SetBreakpoint.java",
+                          "type": "file",
+                          "size": 0.8486328125
+                        },
+                        {
+                          "name": "StepRun.java",
+                          "type": "file",
+                          "size": 17.2705078125
+                        },
+                        {
+                          "name": "step_out.java",
+                          "type": "file",
+                          "size": 8.4248046875
+                        },
+                        {
+                          "name": "step_over.java",
+                          "type": "file",
+                          "size": 8.1982421875
+                        }
+                      ]
+                    },
+                    {
+                      "name": "frontend",
+                      "type": "directory",
+                      "children": [
+                        {
+                          "name": "ButtonTabComponent.java",
+                          "type": "file",
+                          "size": 5.8505859375
+                        },
+                        {
+                          "name": "checkpoint.java",
+                          "type": "file",
+                          "size": 3.345703125
+                        },
+                        {
+                          "name": "FrontEnd.java",
+                          "type": "file",
+                          "size": 38.0908203125
+                        },
+                        {
+                          "name": "handlers.java",
+                          "type": "file",
+                          "size": 41.677734375
+                        },
+                        {
+                          "name": "JumpTable.java",
+                          "type": "file",
+                          "size": 1.537109375
+                        },
+                        {
+                          "name": "LinePainter.java",
+                          "type": "file",
+                          "size": 4.4931640625
+                        },
+                        {
+                          "name": "memorytable.java",
+                          "type": "file",
+                          "size": 4.533203125
+                        },
+                        {
+                          "name": "MyHighlighter.java",
+                          "type": "file",
+                          "size": 1.9580078125
+                        },
+                        {
+                          "name": "NumberedEditorKit.java",
+                          "type": "file",
+                          "size": 0.2568359375
+                        },
+                        {
+                          "name": "NumberedViewFactory.java",
+                          "type": "file",
+                          "size": 3.0537109375
+                        },
+                        {
+                          "name": "registerPane.java",
+                          "type": "file",
+                          "size": 11.09375
+                        },
+                        {
+                          "name": "resources",
+                          "type": "directory",
+                          "children": [
+                            {
+                              "name": "1309349207_player_play.png",
+                              "type": "file",
+                              "size": 3.5390625
+                            },
+                            {
+                              "name": "1309349523_folder_add.png",
+                              "type": "file",
+                              "size": 3.6455078125
+                            },
+                            {
+                              "name": "1309349552_diskette.png",
+                              "type": "file",
+                              "size": 3.1591796875
+                            },
+                            {
+                              "name": "1309349791_Copy.png",
+                              "type": "file",
+                              "size": 3.1806640625
+                            },
+                            {
+                              "name": "1309349801_Cut.png",
+                              "type": "file",
+                              "size": 3.470703125
+                            },
+                            {
+                              "name": "1309349865_edit-paste.png",
+                              "type": "file",
+                              "size": 3.3330078125
+                            },
+                            {
+                              "name": "about.png",
+                              "type": "file",
+                              "size": 0.5869140625
+                            },
+                            {
+                              "name": "Abstract Blue backgrounds 6.jpg",
+                              "type": "file",
+                              "size": 17.171875
+                            },
+                            {
+                              "name": "backgrnd.jpg",
+                              "type": "file",
+                              "size": 23.1396484375
+                            },
+                            {
+                              "name": "bug.png",
+                              "type": "file",
+                              "size": 3.60546875
+                            },
+                            {
+                              "name": "circle_red.png",
+                              "type": "file",
+                              "size": 0.794921875
+                            },
+                            {
+                              "name": "cleanconsole.jpg",
+                              "type": "file",
+                              "size": 312.208984375
+                            },
+                            {
+                              "name": "clear.png",
+                              "type": "file",
+                              "size": 1.6181640625
+                            },
+                            {
+                              "name": "clr.jpg",
+                              "type": "file",
+                              "size": 1.181640625
+                            },
+                            {
+                              "name": "contact.png",
+                              "type": "file",
+                              "size": 0.6396484375
+                            },
+                            {
+                              "name": "exit.png",
+                              "type": "file",
+                              "size": 3.4892578125
+                            },
+                            {
+                              "name": "Home-icon.png",
+                              "type": "file",
+                              "size": 0.9736328125
+                            },
+                            {
+                              "name": "key.jpg",
+                              "type": "file",
+                              "size": 0.962890625
+                            },
+                            {
+                              "name": "new.png",
+                              "type": "file",
+                              "size": 0.728515625
+                            },
+                            {
+                              "name": "Next.png",
+                              "type": "file",
+                              "size": 0.7744140625
+                            },
+                            {
+                              "name": "play.png",
+                              "type": "file",
+                              "size": 4.607421875
+                            },
+                            {
+                              "name": "refresh.png",
+                              "type": "file",
+                              "size": 0.880859375
+                            },
+                            {
+                              "name": "shrt.jpg",
+                              "type": "file",
+                              "size": 1.7900390625
+                            },
+                            {
+                              "name": "StepInto.png",
+                              "type": "file",
+                              "size": 0.787109375
+                            },
+                            {
+                              "name": "stepout.png",
+                              "type": "file",
+                              "size": 0.5771484375
+                            },
+                            {
+                              "name": "stepover.png",
+                              "type": "file",
+                              "size": 0.7314453125
+                            },
+                            {
+                              "name": "Terminal.png",
+                              "type": "file",
+                              "size": 1.4423828125
+                            },
+                            {
+                              "name": "Thumbs.db",
+                              "type": "file",
+                              "size": 17.0
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Main.java",
+                      "type": "file",
+                      "size": 0.818359375
+                    }
+                  ]
+                },
+                {
+                  "name": "Testcases",
+                  "type": "directory",
+                  "children": [
+                    {
+                      "name": "factorial_code.inp",
+                      "type": "file",
+                      "size": 0.3037109375
+                    },
+                    {
+                      "name": "factorial_code.out",
+                      "type": "file",
+                      "size": 0.005859375
+                    },
+                    {
+                      "name": "immediate.inp",
+                      "type": "file",
+                      "size": 0.0673828125
+                    },
+                    {
+                      "name": "immediate.out",
+                      "type": "file",
+                      "size": 0.0048828125
+                    },
+                    {
+                      "name": "instructions.inp",
+                      "type": "file",
+                      "size": 0.1376953125
+                    },
+                    {
+                      "name": "instructions.out",
+                      "type": "file",
+                      "size": 0.001953125
+                    },
+                    {
+                      "name": "loop.inp",
+                      "type": "file",
+                      "size": 0.1142578125
+                    },
+                    {
+                      "name": "loop.out",
+                      "type": "file",
+                      "size": 0.0048828125
+                    },
+                    {
+                      "name": "memory.inp",
+                      "type": "file",
+                      "size": 0.1435546875
+                    },
+                    {
+                      "name": "memory.out",
+                      "type": "file",
+                      "size": 0.0029296875
+                    },
+                    {
+                      "name": "modified test cases",
+                      "type": "directory",
+                      "children": [
+                        {
+                          "name": "armstrong.txt",
+                          "type": "file",
+                          "size": 0.291015625
+                        },
+                        {
+                          "name": "is_prime.txt",
+                          "type": "file",
+                          "size": 0.181640625
+                        }
+                      ]
+                    },
+                    {
+                      "name": "newtestcases",
+                      "type": "directory",
+                      "children": [
+                        {
+                          "name": "amrstrong.asm",
+                          "type": "file",
+                          "size": 0.3154296875
+                        },
+                        {
+                          "name": "factorial.asm",
+                          "type": "file",
+                          "size": 0.146484375
+                        },
+                        {
+                          "name": "isprime.asm",
+                          "type": "file",
+                          "size": 0.232421875
+                        },
+                        {
+                          "name": "loadstore.asm",
+                          "type": "file",
+                          "size": 0.1484375
+                        },
+                        {
+                          "name": "ramanujan.asm",
+                          "type": "file",
+                          "size": 0.5283203125
+                        }
+                      ]
+                    },
+                    {
+                      "name": "simple.inp",
+                      "type": "file",
+                      "size": 0.0673828125
+                    },
+                    {
+                      "name": "simple.out",
+                      "type": "file",
+                      "size": 0.00390625
+                    },
+                    {
+                      "name": "simple2.inp",
+                      "type": "file",
+                      "size": 0.02734375
+                    },
+                    {
+                      "name": "simple2.out",
+                      "type": "file",
+                      "size": 0.0029296875
+                    },
+                    {
+                      "name": "simplefunction.inp",
+                      "type": "file",
+                      "size": 0.123046875
+                    },
+                    {
+                      "name": "simplefunction.out",
+                      "type": "file",
+                      "size": 0.001953125
+                    },
+                    {
+                      "name": "simple_memory.inp",
+                      "type": "file",
+                      "size": 0.068359375
+                    },
+                    {
+                      "name": "simple_memory.out",
+                      "type": "file",
+                      "size": 0.001953125
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "emuSimpleRisc.zip",
+              "type": "file",
+              "size": 3432.4501953125
+            },
+            {
+              "name": "Icarus_Verilog_Tutorial.html",
+              "type": "file",
+              "size": 4.2216796875
+            },
+            {
+              "name": "L3-FP_Representation.pdf",
+              "type": "file",
+              "size": 326.35546875
+            },
+            {
+              "name": "lab5.pdf",
+              "type": "file",
+              "size": 28.876953125
+            },
+            {
+              "name": "lab5_1.pdf",
+              "type": "file",
+              "size": 29.169921875
+            },
+            {
+              "name": "lect1.pdf",
+              "type": "file",
+              "size": 47.8271484375
+            },
+            {
+              "name": "lect2.pdf",
+              "type": "file",
+              "size": 55.6123046875
+            },
+            {
+              "name": "lect9.pdf",
+              "type": "file",
+              "size": 227.044921875
+            },
+            {
+              "name": "memory_system.pdf",
+              "type": "file",
+              "size": 779.595703125
+            },
+            {
+              "name": "modelsim_tut.pdf",
+              "type": "file",
+              "size": 758.005859375
+            },
+            {
+              "name": "pipeline.pdf",
+              "type": "file",
+              "size": 370.4326171875
+            },
+            {
+              "name": "problem_set_ARM_assembly.pdf",
+              "type": "file",
+              "size": 41.2802734375
+            },
+            {
+              "name": "problem_set_Simple_RISC_assembly.pdf",
+              "type": "file",
+              "size": 27.7490234375
+            },
+            {
+              "name": "verilog.pdf",
+              "type": "file",
+              "size": 114.6552734375
+            },
+            {
+              "name": "verilog_class_notes.txt",
+              "type": "file",
+              "size": 0.1171875
+            },
+            {
+              "name": "William Stallings - Computer Organization and Architecture Designing for Performance (9th Edition).pdf",
+              "type": "file",
+              "size": 6208.00390625
+            }
+          ]
+        },
+        {
+          "name": "data_structures_and_algorithms",
+          "type": "directory",
+          "children": [
+            {
+              "name": "bss_course_materials",
+              "type": "directory",
+              "children": [
+                {
+                  "name": "idst-2016-BSS-01-postfix.pdf",
+                  "type": "file",
+                  "size": 457.3701171875
+                },
+                {
+                  "name": "idst-2016-BSS-02-recursion.pdf",
+                  "type": "file",
+                  "size": 251.7041015625
+                },
+                {
+                  "name": "idst-2016-BSS-03-BST.pdf",
+                  "type": "file",
+                  "size": 384.8828125
+                },
+                {
+                  "name": "idst-2016-BSS-04-heaps.pdf",
+                  "type": "file",
+                  "size": 577.396484375
+                },
+                {
+                  "name": "idst-2016-BSS-05-krsk-fw.pdf",
+                  "type": "file",
+                  "size": 716.9345703125
+                },
+                {
+                  "name": "idst-2016-BSS-05-krsk-fw.pptx",
+                  "type": "file",
+                  "size": 3221.50390625
+                },
+                {
+                  "name": "idst-2016-BSS-06-avl.pdf",
+                  "type": "file",
+                  "size": 813.16015625
+                },
+                {
+                  "name": "idst-2016-BSS-06-avl.pptx",
+                  "type": "file",
+                  "size": 3524.6982421875
+                },
+                {
+                  "name": "idst-2016-BSS-07-b-tree.pdf",
+                  "type": "file",
+                  "size": 590.2470703125
+                },
+                {
+                  "name": "idst-2016-BSS-07-b-tree.pptx",
+                  "type": "file",
+                  "size": 3424.2880859375
+                },
+                {
+                  "name": "idst-2016-BSS-08-dijk-rk.pptx",
+                  "type": "file",
+                  "size": 3231.515625
+                },
+                {
+                  "name": "idst-2016-SA-01-basics.pptx",
+                  "type": "file",
+                  "size": 787.009765625
+                },
+                {
+                  "name": "idst-2016-SA-02-adt.pptx",
+                  "type": "file",
+                  "size": 707.2138671875
+                },
+                {
+                  "name": "idst-2016-SA-03-stack.pptx",
+                  "type": "file",
+                  "size": 775.333984375
+                },
+                {
+                  "name": "idst-2016-SA-04-bst.pptx",
+                  "type": "file",
+                  "size": 7454.5009765625
+                },
+                {
+                  "name": "idst-2016-SA-05-hashing.ppt",
+                  "type": "file",
+                  "size": 2231.5
+                },
+                {
+                  "name": "show-presentation.sh",
+                  "type": "file",
+                  "size": 0.05859375
+                }
+              ]
+            },
+            {
+              "name": "CORMEN Introduction to Algorithms- 3rd Edition by Thomas h. Cormen.pdf",
+              "type": "file",
+              "size": 4957.77734375
+            },
+            {
+              "name": "expert_c_programming.pdf",
+              "type": "file",
+              "size": 1654.8623046875
+            },
+            {
+              "name": "idst-2016-SA-01-basics.pptx",
+              "type": "file",
+              "size": 787.009765625
+            },
+            {
+              "name": "idst-2016-SA-02-adt.pptx",
+              "type": "file",
+              "size": 707.2138671875
+            },
+            {
+              "name": "idst-2016-SA-03-stack.pptx",
+              "type": "file",
+              "size": 775.333984375
+            },
+            {
+              "name": "IDST-232C-2016-Syllabus.pdf",
+              "type": "file",
+              "size": 544.591796875
+            },
+            {
+              "name": "nautilus-send-gmail_0.1.1-1.tar.gz",
+              "type": "file",
+              "size": 28.046875
+            },
+            {
+              "name": "ProgrammingCampSyllabus.pdf",
+              "type": "file",
+              "size": 277.3720703125
+            },
+            {
+              "name": "quicksort_partitioning_algos.pdf",
+              "type": "file",
+              "size": 246.0810546875
+            },
+            {
+              "name": "The_C++-STL-Tutorial_and_Reference.pdf",
+              "type": "file",
+              "size": 4679.2626953125
+            }
+          ]
+        },
+        {
+          "name": "digital_electronics",
+          "type": "directory",
+          "children": [
+            {
+              "name": "Digital Design M Mano(book).pdf",
+              "type": "file",
+              "size": 13677.5654296875
+            },
+            {
+              "name": "digital_design-__morris_mano-fifth_edition.pdf",
+              "type": "file",
+              "size": 3062.046875
+            },
+            {
+              "name": "EDES232C.docx",
+              "type": "file",
+              "size": 11.7060546875
+            },
+            {
+              "name": "Floyd - Digital Fundamentals 9e.pdf",
+              "type": "file",
+              "size": 480523.4384765625
+            },
+            {
+              "name": "Foundation of Digital Electronics and Logic Design [2014].pdf",
+              "type": "file",
+              "size": 7173.1982421875
+            },
+            {
+              "name": "M. Morris Mano, Michael D. Ciletti-Digital Design (4th Edition)-Prentice Hall (2006).pdf",
+              "type": "file",
+              "size": 182276.525390625
+            }
+          ]
+        },
+        {
+          "name": "discrete-maths",
+          "type": "directory",
+          "children": [
+            {
+              "name": "ae_A11.pdf",
+              "type": "file",
+              "size": 201.041015625
+            },
+            {
+              "name": "Assignment2_IDMA(Logic).pdf",
+              "type": "file",
+              "size": 299.3134765625
+            },
+            {
+              "name": "dm3.pdf",
+              "type": "file",
+              "size": 123.5498046875
+            },
+            {
+              "name": "Elements of discrete mathematics Liu C. L.- .pdf",
+              "type": "file",
+              "size": 28577.0869140625
+            },
+            {
+              "name": "Graph.ppt",
+              "type": "file",
+              "size": 805.0
+            },
+            {
+              "name": "huth.pdf",
+              "type": "file",
+              "size": 2088.4697265625
+            },
+            {
+              "name": "notes_March_31.pdf",
+              "type": "file",
+              "size": 869.4814453125
+            },
+            {
+              "name": "Rosen_Discrete_Mathematics_and_Its_Applications_7th_Edition.pdf",
+              "type": "file",
+              "size": 37074.04296875
+            },
+            {
+              "name": "slides2.pdf",
+              "type": "file",
+              "size": 88.7978515625
+            }
+          ]
+        },
+        {
+          "name": "management",
+          "type": "directory",
+          "children": [
+            {
+              "name": ".~lock.management thoughts & school.pdf#",
+              "type": "file",
+              "size": 0.09375
+            },
+            {
+              "name": "1-2__Cap2_Management_Theory.ppt",
+              "type": "file",
+              "size": 949.5
+            },
+            {
+              "name": "Concept_of_Management__lecture_2.ppt",
+              "type": "file",
+              "size": 50.5
+            },
+            {
+              "name": "introduction_pma.lecture_1.ppt",
+              "type": "file",
+              "size": 864.0
+            },
+            {
+              "name": "management thoughts & school.jpg",
+              "type": "file",
+              "size": 2946.5244140625
+            },
+            {
+              "name": "management thoughts & school.pdf",
+              "type": "file",
+              "size": 2964.546875
+            },
+            {
+              "name": "management-11th-edn-by-stephen-p-robbins-mary-coulter-pdf-qwerty80.pdf",
+              "type": "file",
+              "size": 50282.55859375
+            },
+            {
+              "name": "Management_Basics_lecture1.ppt",
+              "type": "file",
+              "size": 303.5
+            },
+            {
+              "name": "management_notes.md",
+              "type": "file",
+              "size": 8.1337890625
+            },
+            {
+              "name": "MGT._History_&_Current.ppt",
+              "type": "file",
+              "size": 1883.5
+            },
+            {
+              "name": "mpom syllabus.pdf",
+              "type": "file",
+              "size": 1334.8037109375
+            },
+            {
+              "name": "pom_finalppt-3.ppt",
+              "type": "file",
+              "size": 327.5
+            },
+            {
+              "name": "principles-of-management_annotated.pdf",
+              "type": "file",
+              "size": 14141.5048828125
+            },
+            {
+              "name": "tax.iso",
+              "type": "file",
+              "size": 64618.0
+            }
+          ]
+        },
+        {
+          "name": "midsem-paper",
+          "type": "directory",
+          "children": [
+            {
+              "name": "12813992_1118708138173829_8403435130372281600_n.jpg",
+              "type": "file",
+              "size": 53.2353515625
+            },
+            {
+              "name": "1934034_1118708281507148_6945638565103404702_n.jpg",
+              "type": "file",
+              "size": 55.2822265625
+            },
+            {
+              "name": "3387_1118708111507165_1244300941355714874_n.jpg",
+              "type": "file",
+              "size": 36.8837890625
+            },
+            {
+              "name": "6843_1118708154840494_1188363278341596373_n.jpg",
+              "type": "file",
+              "size": 43.43359375
+            },
+            {
+              "name": "734_1118708251507151_6030799742074288156_n.jpg",
+              "type": "file",
+              "size": 63.162109375
+            },
+            {
+              "name": "7379_1118708218173821_2265068325277611447_n.jpg",
+              "type": "file",
+              "size": 56.39453125
+            }
+          ]
+        },
+        {
+          "name": "probability_and_statistics",
+          "type": "directory",
+          "children": [
+            {
+              "name": "An Introduction to Probability and Statistics 2nd ed. - V. Rohatgi, A. Saleh.pdf",
+              "type": "file",
+              "size": 19343.7705078125
+            },
+            {
+              "name": "Math--Bertsekas_Tsitsiklis_Introduction_to_probability.pdf",
+              "type": "file",
+              "size": 2088.177734375
+            },
+            {
+              "name": "module1.pdf",
+              "type": "file",
+              "size": 1300.513671875
+            },
+            {
+              "name": "module2.pdf",
+              "type": "file",
+              "size": 1434.6943359375
+            },
+            {
+              "name": "module3.pdf",
+              "type": "file",
+              "size": 1228.9345703125
+            },
+            {
+              "name": "module4.pdf",
+              "type": "file",
+              "size": 1500.244140625
+            },
+            {
+              "name": "module5.pdf",
+              "type": "file",
+              "size": 1981.8955078125
+            },
+            {
+              "name": "module6.pdf",
+              "type": "file",
+              "size": 3613.845703125
+            },
+            {
+              "name": "module7.pdf",
+              "type": "file",
+              "size": 328.4375
+            },
+            {
+              "name": "P5.pdf",
+              "type": "file",
+              "size": 71.90234375
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "syllabus_CNE.doc",
+      "type": "file",
+      "size": 39.0
+    }
+  ]
+}

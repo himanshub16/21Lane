@@ -1,0 +1,1 @@
+{"_default": {"1": {"port": 21, "max_cons_per_ip": 2, "max_download_speed": 10240, "server_banner": "Welcome to dFTP server", "max_upload_speed": 2097152, "max_cons": 10, "server_name": "Unnamed server"}}}

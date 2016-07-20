@@ -1,0 +1,1 @@
+{"_default": {"1": {"exchange_url": "http://localhost:8000/cgi-bin/actions.py", "max_cons_per_ip": 2, "max_download_speed": 10240, "port": 2121, "max_cons": 10, "server_name": "Test server", "server_banner": "Welcome to 21Lane ", "max_upload_speed": 5345280}}}

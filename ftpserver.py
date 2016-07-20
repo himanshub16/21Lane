@@ -1,4 +1,4 @@
-#!/usr/bin/python3 
+#!/usr/bin/python3
 from pyftpdlib.authorizers import DummyAuthorizer
 from pyftpdlib.handlers import FTPHandler
 from pyftpdlib.handlers import ThrottledDTPHandler
@@ -36,7 +36,7 @@ ls = os.listdir
 pwd = os.getcwd()
 
 
-# here the global key functions 
+# here the global key functions
 
 def mylog(ar):
 	f = open('log.txt', 'a')
@@ -66,12 +66,14 @@ def load_users():
 				if authorizer.has_user(username):
 					authorizer.remove_user(username)
 				authorizer.add_user(userobj.name, userobj.password, userobj.homedir, perm=userobj.permission, msg_login=userobj.msg_login, msg_quit=userobj.msg_quit)
+		print("returning authorizer object")
 		return authorizer
+
 	except Exception as e:
 		mylog("Error while creating authorizer object")
+		print(e)
 		raise e
 		sys.exit(1)
-
 
 def start_server():
 	server.serve_forever()
@@ -158,7 +160,7 @@ class generate_system_snapshot(threading.Thread):
 
 		f = open('snapshot.json', 'w')
 		f.write(json.dumps(self.dbdict, indent=2))
-		f.close()	
+		f.close()
 		mylog("Snapshot generated")
 
 	def getThreadName(self):
@@ -199,7 +201,8 @@ class myserver(threading.Thread):
 			authorizer = load_users()
 		except Exception as e:
 			mylog("My server caught an exception")
-			return 1
+			sys.exit(1)
+
 		ThrottledDTPHandler.write_limit = conf.max_upload_speed
 		ThrottledDTPHandler.read_limit = conf.max_download_speed
 		FTPHandler.dtp_handler = ThrottledDTPHandler
@@ -491,7 +494,7 @@ class MainUI(QMainWindow, QWidget):
 			self.toolbar.addAction(self.exchange)
 			self.appMenu.addAction(self.exchange)
 
-		
+
 
 	def exchange_connect(self):
 		global server, exchange_url
@@ -509,7 +512,7 @@ class MainUI(QMainWindow, QWidget):
 					u, pwd = None, None
 				else:
 					u, pwd = inp[1], inp[2]
-					
+
 				# url = '+str(p)
 				post_data = { 'username':u, 'password':pwd, 'action':'connect' }
 
@@ -547,7 +550,7 @@ class MainUI(QMainWindow, QWidget):
 				# 	f.close()
 				# 	print("snapshot file uploaded")
 
-				# check whether the file is ready to be uploaded and 
+				# check whether the file is ready to be uploaded and
 				# send a message to exchange_url, indicating the file is ready to be uploaded
 				# if 'snapshot.json' in ls(pwd) and exchange_url:
 				# 	r = requests.post(url='http://localhost:8000/cgi-bin/get_snapshot_file.py')
@@ -556,7 +559,7 @@ class MainUI(QMainWindow, QWidget):
 				# now trying to place the snapshot file in anonymous user's directory
 				# to be uploaded to the exchange.
 				# oh boy, you worked graciously, i'll keep you
-				# fuck all the above methods.. 
+				# fuck all the above methods..
 				# let them be in comments for future references
 				if 'anonymous' in userbase.get_user_list():
 					dest_dir = userbase.get_user_info('anonymous').homedir
@@ -603,5 +606,4 @@ if __name__ == "__main__":
 	app = QApplication([])
 	app.setWindowIcon(QIcon('icons/1468025361_cmyk-03.png'))
 	ex = MainUI()
-	sys.exit(app.exec_())
-	
+	(app.exec_())
