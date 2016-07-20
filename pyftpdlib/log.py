@@ -148,6 +148,7 @@ def config_logging(level=LEVEL, prefix=PREFIX, other_loggers=None):
         logging.logMultiprocessing = False
     if "%(thread)d" not in prefix and "%(threadName)s" not in prefix:
         logging.logThreads = False
+    # this is something that i've hardcoded
     handler = logging.FileHandler('log.txt', 'a')
     handler.setFormatter(LogFormatter())
     loggers = [logging.getLogger('pyftpdlib')]
