@@ -34,6 +34,8 @@ class User:
 
 	def save_details(self):
 		dbase = TinyDB('user_database.json')
+		if not (dbase.count(where('name') == self.record['name'])) == 0:
+			dbase.remove(where('name') == self.record['name'])
 		dbase.insert(self.record)
 		dbase.close()
 
@@ -65,6 +67,8 @@ class AnonymousUser:
 
 	def save_details(self):
 		dbase = TinyDB('user_database.json')
+		if not (dbase.count(where('name') == self.record['name'])) == 0:
+			dbase.remove(where('name') == self.record['name'])
 		dbase.insert(self.record)
 		dbase.close()
 
