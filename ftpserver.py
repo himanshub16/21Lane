@@ -66,7 +66,6 @@ def load_users():
 				if authorizer.has_user(username):
 					authorizer.remove_user(username)
 				authorizer.add_user(userobj.name, userobj.password, userobj.homedir, perm=userobj.permission, msg_login=userobj.msg_login, msg_quit=userobj.msg_quit)
-		print("returning authorizer object")
 		return authorizer
 
 	except Exception as e:
@@ -412,7 +411,7 @@ class MainUI(QMainWindow, QWidget):
 				self.snapshot_thread = None
 			self.statusBar().showMessage("Stopped")
 			server_running_status = False
-			self.mainbtn.setText("Start Server")
+			self.mainbtn.setText("Start Sharing")
 			self.mainbtn.setStyleSheet("background-color: #40e0d0; color: black; border: none")
 		else:
 			return
@@ -425,8 +424,6 @@ class MainUI(QMainWindow, QWidget):
 			if self.srv is not None:
 				self.statusBar().showMessage("Cleaning up")
 				server.close_all()
-				while(server_running_status):
-					print(threading.Thread.isAlive(self.srv))
 				del self.srv
 				global gen_snapshot
 				if self.snapshot_thread:
