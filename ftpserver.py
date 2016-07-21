@@ -386,9 +386,11 @@ class MainUI(QMainWindow, QWidget):
 		elif server and server_running_status:
 			self.statusBar().showMessage("Stopping, please wait...")
 			server.close_all()
+			server_running_status = False
 			# wait for the thread to exit
 			while( threading.Thread.isAlive(self.srv) ):
 				mylog("Waiting for server thread to end")
+				print(threading.Thread.isAlive(self.srv), server_running_status)
 				time.sleep(0.5)
 			self.srv = None
 			server = None
@@ -481,7 +483,7 @@ class MainUI(QMainWindow, QWidget):
 				f.close()
 			else:
 				sessionid = None
-			exchange_url = 'http://localhost:8000/cgi-bin/cgiauth.py'
+			
 			post_data = { 'action':'disconnect' }
 			r = requests.post(exchange_url, data=post_data, cookies={'session_id':sessionid})
 			if r.status_code == 200 and r.text.strip() == 'ok':

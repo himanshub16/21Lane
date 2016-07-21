@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 from tinydb import TinyDB, Query, where
 import cgi, cgitb
 import http.cookies as cookie
@@ -114,16 +115,17 @@ elif action=='disconnect':
 	if not ckstr:
 		print()
 		print('ok')
-		sys.exit()
-
-	ck.load(ckstr)
-	sessid = str(ck['session_id'].value)
-	# if is_logged_in(sessid):
-	# not checked because tinydb raises no error if record is not present
-	# check was required at login to prevent duplicate entries
-	logout_user(sessid)
-	print('Set-Cookie: session_id=""; expires=Thu, 01 Jan 1970 00:00:00 GMT;\r\n')
-	print('ok')
+		# sys.exit()
+	else:
+		ck.load(ckstr)
+		sessid = str(ck['session_id'].value)
+		# if is_logged_in(sessid):
+		# not checked because tinydb raises no error if record is not present
+		# check was required at login to prevent duplicate entries
+		logout_user(sessid)
+		print('Set-Cookie: session_id=""; expires=Thu, 01 Jan 1970 00:00:00 GMT')
+		print()
+		print('ok')
 
 elif action=='snapshot':
 	print()
