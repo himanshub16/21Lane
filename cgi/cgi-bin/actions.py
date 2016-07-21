@@ -35,13 +35,13 @@ def logout_user(sessid):
 		os.remove(userfile)
 
 
-def login_user(sessid, ip_addr, share_size=0, server_name):
+def login_user(sessid, ip_addr, share_size=0, server_name="Not Available"):
 	if not os.path.isfile(dbname):
 		return
 	if is_logged_in(sessid):
 		logout_user(sessid)
 	db = TinyDB(dbname)
-	db.insert({'SESSION_ID':sessid, 'SERVER_NAME':server_name, IP_ADDRESS':ip_addr, 'SHARED_SIZE':float(share_size), 'FILENAME':sessid+'.json'})
+	db.insert({'SESSION_ID':sessid, 'SERVER_NAME':server_name, 'IP_ADDRESS':ip_addr, 'SHARED_SIZE':float(share_size), 'FILENAME':sessid+'.json'})
 	if not sessid+'.json' in ls(datadir):
 		f = open(os.path.join(datadir, sessid+'.json'), 'w')
 		f.close()
