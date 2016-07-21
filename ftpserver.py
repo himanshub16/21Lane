@@ -106,7 +106,7 @@ def get_ip_address():
 		s.close()
 		return ip
 	except Exception as e:
-		return ''
+		return 'localhost'
 
 
 class generate_system_snapshot(threading.Thread):
@@ -343,6 +343,7 @@ class MainUI(QMainWindow, QWidget):
 		mylog("quit event caught", gen_snapshot)
 		if server:
 			server.close_all()
+			print(threading.Thread.isAlive(self.srv))
 		del self.srv
 		mylog(self.snapshot_thread)
 		if self.snapshot_thread:
@@ -354,7 +355,6 @@ class MainUI(QMainWindow, QWidget):
 		if len(userbase.get_user_list()) == 0:
 			QMessageBox.critical(self, "No users", "There are no users available.\nPlease add at least one user.", QMessageBox.Ok, QMessageBox.Ok)
 			return
-
 
 		global server, gen_snapshot, server_running_status, PORT
 		PORT = load_settings().port
@@ -373,6 +373,7 @@ class MainUI(QMainWindow, QWidget):
 			self.srv = myserver()
 			self.srv.start()
 			msg = "Sharing on " + get_ip_address() + ":" + str(self.srv.getport())
+			
 			while not server_running_status:
 				time.sleep(0.5)
 			self.mainbtn.setText("Stop Sharing")
@@ -387,11 +388,18 @@ class MainUI(QMainWindow, QWidget):
 			self.statusBar().showMessage("Stopping, please wait...")
 			server.close_all()
 			server_running_status = False
+			
 			# wait for the thread to exit
-			while( threading.Thread.isAlive(self.srv) ):
-				mylog("Waiting for server thread to end")
-				print(threading.Thread.isAlive(self.srv), server_running_status)
+			# if it doesn't within given time, close it forcibly
+			count = 4
+			mylog("Waiting for server thread to end")
+			while( threading.Thread.isAlive(self.srv) and count > 0):
 				time.sleep(0.5)
+				count -= 1
+			
+			if count == 0:
+				mylog("Shit happens! Shutting down server forcibly.")
+			del self.srv, server
 			self.srv = None
 			server = None
 			# end snapshot generation thread
@@ -417,6 +425,8 @@ class MainUI(QMainWindow, QWidget):
 			if self.srv is not None:
 				self.statusBar().showMessage("Cleaning up")
 				server.close_all()
+				while(server_running_status):
+					print(threading.Thread.isAlive(self.srv))
 				del self.srv
 				global gen_snapshot
 				if self.snapshot_thread:
@@ -608,4 +618,4 @@ if __name__ == "__main__":
 	app = QApplication([])
 	app.setWindowIcon(QIcon('icons/1468025361_cmyk-03.png'))
 	ex = MainUI()
-	(app.exec_())
+	sys.exit(app.exec_())
