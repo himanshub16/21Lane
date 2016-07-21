@@ -507,9 +507,9 @@ class MainUI(QMainWindow, QWidget):
 
 	def exchange_connect(self):
 		global server, exchange_url
-		# if not server:
-		# 	QMessageBox.warning(self, 'Sorry', "You must have sharing enabled to connect to an exchange.", QMessageBox.Ok, QMessageBox.Ok)
-		# 	return
+		if not server:
+			QMessageBox.warning(self, 'Sorry', "You must have sharing enabled to connect to an exchange.", QMessageBox.Ok, QMessageBox.Ok)
+			return
 		inp, ok = QInputDialog.getText(self, 'Connect to servers', 'Enter details as in given examples\n\n192.168.1.2:2020 user password (OR)\nexchange.url.com:2020 user password\n', QLineEdit.Normal, exchange_url)
 		try:
 			if ok:
