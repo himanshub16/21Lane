@@ -587,6 +587,8 @@ class MainUI(QMainWindow, QWidget):
 					if r.status_code==200 and r.text.strip()=='ok':
 						mylog('Snapshot file uploaded successfully.')
 						os.remove(dest_path)
+					else:
+						mylog("Some error occured while uploading snapshot.")
 
 
 		except (requests.exceptions.ConnectionError, ConnectionAbortedError) as e:
