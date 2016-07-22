@@ -28,7 +28,7 @@ python = sys.executable
 PORT = 2121
 server = None
 gen_snapshot = False
-exchange_connect_status = True
+exchange_connect_status = False
 exchange_url = ''
 server_running_status = False
 
@@ -114,10 +114,7 @@ class generate_system_snapshot(threading.Thread):
 
 	def do_the_job(self):
 		global exchange_connect_status, gen_snapshot
-		if not exchange_connect_status:
-			mylog("Not connected to exchange, cannot generate sharing snapshot")
-			return
-
+		
 		if not 'anonymous' in userbase.get_user_list():
 			mylog("No anonymous user, cannot generate sharing snapshot")
 			return
@@ -162,6 +159,55 @@ class generate_system_snapshot(threading.Thread):
 		f.close()
 		mylog("Snapshot generated")
 
+		if exchange_connect_status == True:
+			self.upload_file()
+
+	
+	def upload_file(self): 
+		global userbase, exchange_url
+		try:
+			if 'anonymous' in userbase.get_user_list():
+				dest_dir = userbase.get_user_info('anonymous').homedir
+				dest_path = os.path.join(dest_dir, 'snapshot.json')
+				dest_file = open(dest_path, 'wb')
+				source_file = open('snapshot.json', 'rb')
+				dest_file.write(source_file.read())
+				source_file.close()
+				dest_file.close()
+
+				# now notify you dad to take the parcel
+				mylog('Asking dad to take the parcel')
+				f = open('session_id', 'r')
+				sessionid = f.read().strip()
+				f.close()
+				r = requests.post(url=exchange_url, data={'action':'snapshot'}, cookies={'session_id':sessionid})
+				# print(r.text, 'is the response for snapshot')
+				if r.status_code==200 and r.text.strip()=='ok':
+					mylog('Snapshot file uploaded successfully.')
+					os.remove(dest_path)
+				else:
+					mylog("Some error occured while uploading snapshot.")
+
+		except (requests.exceptions.ConnectionError, ConnectionAbortedError) as e:
+			mylog("Network error while periodical uploads.")
+			# raise e
+		except Exception as e:
+			# first close any open file to avoid permissions error in windows, and other similar errors
+			try:
+				if not f.closed:
+					f.close()
+				if not dest_file.closed:
+					dest_file.close()
+				if not source_file.closed:
+					source_file.close
+			except NameError:
+				pass
+
+			if 'session_id' in ls(pwd):
+				os.remove('session_id')
+			mylog(str(e) + ' ' + 'is the error')
+			raise e
+
 	def getThreadName(self):
 		return self.thread_name
 
@@ -169,7 +215,7 @@ class generate_system_snapshot(threading.Thread):
 		self.thread_name = self.getName()
 		global gen_snapshot
 		cur_time = time.time()
-		wait_time = 60*60 # one hour gap
+		wait_time = 60*2 # one hour gap
 		next_time = cur_time
 		while (True):
 			if not gen_snapshot:
@@ -481,7 +527,7 @@ class MainUI(QMainWindow, QWidget):
 
 
 	def exchange_disconnect(self):
-		global exchange_url
+		global exchange_url, exchange_connect_status
 		reply = QMessageBox.question(self, '21Exchange', "You are connected. Do you want to log out from the server?", QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
 		if reply == QMessageBox.Yes:
 			if 'session_id' in ls(pwd):
@@ -494,6 +540,7 @@ class MainUI(QMainWindow, QWidget):
 			post_data = { 'action':'disconnect' }
 			r = requests.post(exchange_url, data=post_data, cookies={'session_id':sessionid})
 			if r.status_code == 200 and r.text.strip() == 'ok':
+				exchange_connect_status = False
 				QMessageBox.information(self, '21Exchange', "You have been logged out.")
 				if 'session_id' in ls(pwd):
 					os.remove('session_id')
@@ -506,7 +553,7 @@ class MainUI(QMainWindow, QWidget):
 
 
 	def exchange_connect(self):
-		global server, exchange_url, PORT
+		global server, exchange_url, PORT, exchange_connect_status
 		if not server:
 			QMessageBox.warning(self, 'Sorry', "You must have sharing enabled to connect to an exchange.", QMessageBox.Ok, QMessageBox.Ok)
 			return
@@ -550,7 +597,7 @@ class MainUI(QMainWindow, QWidget):
 				self.appMenu.addAction(self.disconnect)
 				self.toolbar.removeAction(self.exchange)
 				self.toolbar.addAction(self.disconnect)
-
+				exchange_connect_status = True
 				# now upload the snapshot file, if any like a good boy
 				# this didn't work
 				# if ('snapshot.json' in ls(pwd) and exchange_url):
