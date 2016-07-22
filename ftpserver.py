@@ -524,7 +524,7 @@ class MainUI(QMainWindow, QWidget):
 
 				# url = '+str(p)
 				server_name = load_settings().server_name
-				post_data = { 'username':u, 'password':wd, 'action':'connect', 'server_name':server_name, 'port':PORT }
+				post_data = { 'username':u, 'password':pwd, 'action':'connect', 'server_name':server_name, 'port':PORT }
 
 				if 'session_id' in ls(pwd):
 					f = open('session_id', 'r')
