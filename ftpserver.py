@@ -524,7 +524,7 @@ class MainUI(QMainWindow, QWidget):
 
 				# url = '+str(p)
 				server_name = load_settings().server_name
-				post_data = { 'username':u, 'password':pwd, 'action':'connect', 'server_name':server_name }
+				post_data = { 'username':u, 'password':wd, 'action':'connect', 'server_name':server_name, 'port':PORT }
 
 				if 'session_id' in ls(pwd):
 					f = open('session_id', 'r')
@@ -582,7 +582,7 @@ class MainUI(QMainWindow, QWidget):
 
 					# now notify you dad to take the parcel
 					mylog('Asking dad to take the parcel')
-					r = requests.post(url=exchange_url, data={'action':'snapshot', 'port':PORT}, cookies={'session_id':sessionid})
+					r = requests.post(url=exchange_url, data={'action':'snapshot'}, cookies={'session_id':sessionid})
 					# print(r.text, 'is the response for snapshot')
 					if r.status_code==200 and r.text.strip()=='ok':
 						mylog('Snapshot file uploaded successfully.')
