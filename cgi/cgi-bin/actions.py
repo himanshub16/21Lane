@@ -12,6 +12,7 @@ pwd = os.getcwd()
 datadir = os.path.join(pwd, 'data')
 dbname = os.path.join(datadir, 'connected_users.json')
 
+
 def is_logged_in(sessid):
 	if not os.path.isfile(dbname):
 		return
@@ -60,11 +61,13 @@ def get_snapshot_file(sessid):
 	rec = db.search(where('SESSION_ID') == sessid)[0]
 	filename = os.path.join(datadir, rec['FILENAME'])
 	ip = rec['IP_ADDRESS']
+	if ip.startswith('127.0.0'): 
+		ip='localhost'
 	port = rec['PORT']
-	if ip and port and os.path.isfile(filename):
+	if ip!=None and port!=None:
 		f = open(filename, 'wb')
 		ftp = ftplib.FTP()
-		ftp.connect(ip, port)
+		ftp.connect(ip, int(port))
 		ftp.login('anonymous')
 		ftp.retrbinary('RETR '+'snapshot.json', f.write)
 		ftp.quit()
@@ -72,6 +75,7 @@ def get_snapshot_file(sessid):
 	else:
 		db.close()
 		return
+	db.close()
 	# update user information
 	userdb = TinyDB(dbname)
 	db = TinyDB(filename)
@@ -103,7 +107,8 @@ port = form.getvalue('port')
 if not sharesize:
 	sharesize = 0
 
-print("Content-type:text/plain")
+
+print("Content-type:text/text")
 if action=='connect':
 	if not ckstr:
 		# first visit
@@ -127,6 +132,7 @@ elif action=='disconnect':
 		ck.load(ckstr)
 		if 'session_id' in ck.keys():
 			sessid = str(ck['session_id'].value)
+			logout_user(sessid)
 		# if is_logged_in(sessid):
 		# not checked because tinydb raises no error if record is not present
 		# check was required at login to prevent duplicate entries
