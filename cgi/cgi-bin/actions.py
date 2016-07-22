@@ -26,22 +26,23 @@ def is_logged_in(sessid):
 
 def logout_user(sessid):
 	if not os.path.isfile(dbname):
-		return
+		return False
 	db = TinyDB(dbname)
 	db.remove(where('SESSION_ID')==sessid)
 	db.close()
 	userfile = os.path.join(datadir, str(sessid)+'.json')
 	if os.path.isfile(userfile):
 		os.remove(userfile)
+	return True
 
 
-def login_user(sessid, ip_addr, share_size=0, server_name="Not Available"):
+def login_user(sessid, ip_addr, share_size=0, server_name="Not Available", port=2121):
 	if not os.path.isfile(dbname):
 		return
 	if is_logged_in(sessid):
 		logout_user(sessid)
 	db = TinyDB(dbname)
-	db.insert({'SESSION_ID':sessid, 'SERVER_NAME':server_name, 'IP_ADDRESS':ip_addr, 'SHARED_SIZE':float(share_size), 'FILENAME':sessid+'.json'})
+	db.insert({'SESSION_ID':sessid, 'SERVER_NAME':server_name, 'PORT':port, 'IP_ADDRESS':ip_addr, 'SHARED_SIZE':float(share_size), 'FILENAME':sessid+'.json'})
 	if not sessid+'.json' in ls(datadir):
 		f = open(os.path.join(datadir, sessid+'.json'), 'w')
 		f.close()
@@ -58,16 +59,20 @@ def get_snapshot_file(sessid):
 	db = TinyDB(dbname)
 	rec = db.search(where('SESSION_ID') == sessid)[0]
 	filename = os.path.join(datadir, rec['FILENAME'])
-	f = open(filename, 'wb')
-	ftp = ftplib.FTP()
-	ftp.connect('localhost', 2121)
-	ftp.login('anonymous')
-	ftp.retrbinary('RETR '+'snapshot.json', f.write)
-	ftp.quit()
-	f.close()
-	db.close()
+	ip = rec['IP_ADDRESS']
+	port = rec['PORT']
+	if ip and port and os.path.isfile(filename):
+		f = open(filename, 'wb')
+		ftp = ftplib.FTP()
+		ftp.connect(ip, port)
+		ftp.login('anonymous')
+		ftp.retrbinary('RETR '+'snapshot.json', f.write)
+		ftp.quit()
+		f.close()
+	else:
+		db.close()
+		return
 	# update user information
-
 	userdb = TinyDB(dbname)
 	db = TinyDB(filename)
 	filedb = db.table('metadata')
@@ -89,6 +94,7 @@ form = cgi.FieldStorage()
 sharesize = form.getvalue('sharesize')
 action = form.getvalue('action')
 server_name = form.getvalue('server_name')
+port = form.getvalue('port')
 # if not action:
 # 	print('Content-type:text/plain')
 # 	print()
@@ -102,12 +108,12 @@ if action=='connect':
 	if not ckstr:
 		# first visit
 		sessid = create_sessid(ip)
-		login_user(sessid, ip, sharesize, server_name)
+		login_user(sessid, ip, sharesize, server_name, port)
 	else:
 		ck.load(ckstr)
 		sessid = str(ck['session_id'].value)
 		if not is_logged_in(ckstr):
-			login_user(sessid, ip, sharesize)
+			login_user(sessid, ip, sharesize, port)
 
 	print('Set-Cookie:session_id=', sessid, "\r\n", sep='')
 	print(sessid)
@@ -119,11 +125,11 @@ elif action=='disconnect':
 		# sys.exit()
 	else:
 		ck.load(ckstr)
-		sessid = str(ck['session_id'].value)
+		if 'session_id' in ck.keys():
+			sessid = str(ck['session_id'].value)
 		# if is_logged_in(sessid):
 		# not checked because tinydb raises no error if record is not present
 		# check was required at login to prevent duplicate entries
-		logout_user(sessid)
 		print('Set-Cookie: session_id=""; expires=Thu, 01 Jan 1970 00:00:00 GMT')
 		print()
 		print('ok')
