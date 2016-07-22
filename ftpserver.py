@@ -506,7 +506,7 @@ class MainUI(QMainWindow, QWidget):
 
 
 	def exchange_connect(self):
-		global server, exchange_url
+		global server, exchange_url, PORT
 		if not server:
 			QMessageBox.warning(self, 'Sorry', "You must have sharing enabled to connect to an exchange.", QMessageBox.Ok, QMessageBox.Ok)
 			return
@@ -582,7 +582,7 @@ class MainUI(QMainWindow, QWidget):
 
 					# now notify you dad to take the parcel
 					mylog('Asking dad to take the parcel')
-					r = requests.post(url=exchange_url, data={'action':'snapshot'}, cookies={'session_id':sessionid})
+					r = requests.post(url=exchange_url, data={'action':'snapshot', 'port':PORT}, cookies={'session_id':sessionid})
 					# print(r.text, 'is the response for snapshot')
 					if r.status_code==200 and r.text.strip()=='ok':
 						mylog('Snapshot file uploaded successfully.')
