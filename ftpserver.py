@@ -159,12 +159,10 @@ class generate_system_snapshot(threading.Thread):
 		f.close()
 		mylog("Snapshot generated")
 
-		if exchange_connect_status == True:
-			self.upload_file()
 
-	
 	def upload_file(self): 
 		global userbase, exchange_url
+		mylog("Starting upload")
 		try:
 			if 'anonymous' in userbase.get_user_list():
 				dest_dir = userbase.get_user_info('anonymous').homedir
@@ -215,8 +213,9 @@ class generate_system_snapshot(threading.Thread):
 		self.thread_name = self.getName()
 		global gen_snapshot
 		cur_time = time.time()
-		wait_time = 60*2 # one hour gap
+		wait_time = 60*60 # one hour gap
 		next_time = cur_time
+		upload_time = time.time()
 		while (True):
 			if not gen_snapshot:
 				mylog("Ending snapshot thread")
@@ -225,6 +224,9 @@ class generate_system_snapshot(threading.Thread):
 				mylog('Generating snapshot')
 				self.do_the_job()
 				next_time += wait_time
+				if exchange_connect_status == True:
+					self.upload_file()
+	
 			# breathe, don't choke while you run
 			time.sleep(1)
 			cur_time += 1
@@ -629,7 +631,7 @@ class MainUI(QMainWindow, QWidget):
 
 					# now notify you dad to take the parcel
 					mylog('Asking dad to take the parcel')
-					r = requests.post(url=exchange_url, data={'action':'snapshot'}, cookies={'session_id':sessionid})
+					r = requests.post(url=exchange_url, data={'action':'snapshot'}, cookies={'session_id':sessionid}, timeout=5)
 					# print(r.text, 'is the response for snapshot')
 					if r.status_code==200 and r.text.strip()=='ok':
 						mylog('Snapshot file uploaded successfully.')
@@ -638,7 +640,7 @@ class MainUI(QMainWindow, QWidget):
 						mylog("Some error occured while uploading snapshot.")
 
 
-		except (requests.exceptions.ConnectionError, ConnectionAbortedError) as e:
+		except (requests.exceptions.ConnectionError, requests.exceptions.HTTPError, ConnectionAbortedError, requests.exceptions.TimeoutError) as e:
 			QMessageBox.critical(self, 'Error', 'Network error!', QMessageBox.Ok, QMessageBox.Ok)
 			# raise e
 		except Exception as e:
