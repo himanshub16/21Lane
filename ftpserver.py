@@ -667,6 +667,7 @@ class MainUI(QMainWindow, QWidget):
 
 if __name__ == "__main__":
 	app = QApplication([])
-	app.setWindowIcon(QIcon('icons/1468025361_cmyk-03.png'))
+	# app.setWindowIcon(QIcon('icons/myicon.png'))
+	app.setWindowIcon(QIcon("icons/icon_red_gfu_icon.ico"))
 	ex = MainUI()
 	sys.exit(app.exec_())
