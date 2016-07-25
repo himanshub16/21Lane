@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>IIITA 21Exchange</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width initial-scale=1.0" />
+	<link href="main.css" rel="stylesheet">
+</head>
+
+<body>
+
+<textarea id="secret-text"></textarea>
+
+<header id='supertop'>
+	<header id="top-banner">
+		<span id="logo">
+			<!--<img src="/images/logo-blue.png" alt="21Lane">-->
+		</span>
+		<span id="exchange-name">
+			Organisation name
+		</span>
+		<div class="clearfix"></div>
+	</header>
+
+	<header id='topnav'>
+		<nav>
+			<ul>
+				<li id="to-article-1">See connected users</li>
+				<li id="to-article-2">Search for a file</li>
+			</ul>
+		</nav>
+	</header>
+
+</header>
+<div id='alert-box'>
+	<!--error text here loaded by javascript-->
+	<span id='alert-text'></span>
+	<span id='dismiss-alert' onclick="dismiss_alert()">   Dismiss</span>
+</div>
+
+
+<section id="connected-users">
+	<article>
+		<div class="prompt">
+			Do you want to load the list of users connected to this Exchange?
+		</div>
+		<div class="response">
+			<span class="action" id='yes-action'>Yes</span>
+			<span class="action" id='no-action'>No</span>
+		</div>
+	</article>
+	<div class='clearfix'></div>
+</section>
+
+<section id="search">
+	<div class='clearfix'></div>
+	<article id='search-article'>
+		<div class="prompt" id='search-box-container'>
+			<!--Enter you search parameter? <br /> <br />-->
+			<form onsubmit="validate_search(); return false;">
+				<input type='text' id='searchbox' onfocus="hide_supertop()" onblur="show_supertop()" placeholder='Enter filename to search and press enter' />
+			</form>
+		</div>
+		<div id="search-results"></div>
+	</article>
+	<div class="clearfix"></div>
+</section>
+
+<footer id="footer">
+	<div class="clearfix"></div>
+	<div id="links">
+		<span class="footer-item">Visit 21Lane</span>
+		<span class="footer-item">Help</span>
+		<span class="footer-item">Fork</span>
+		<span class="footer-item">Contribute</span>
+	</div>
+	<div id='india'>
+		<span >With</span>
+		<span id="unicode-heart">&#10084;</span>
+		<span >from India</span>
+	</div>
+	<div class="clearfix"></div>
+	<!--<span id="india" class="footer-item">Made with <span id="unicode-heart">&#10084;</span> in India</span>-->
+</footer>
+
+<abbr title="Move to top"><span id="move-to-top-button"></span></abbr>
+
+<div id='copy-box'>
+	<abbr title="Close"><div id="toggle-copy-box">&#9776;</div></abbr>
+	Copy this link <br />
+	<abbr title="Copy link"><input type='text'  id='copy-text-holder' /></abbr>
+</div>
+
+<script type="text/javascript">
+
+function scrollTo (element, to, duration) {
+	var start = element.scrollTop,
+		change = to - start,
+		increment = 20;
+	var animateScroll = function(elapsedTime) {
+		elapsedTime += increment;
+		var position = easeInOut (elapsedTime, start, change, duration);
+		element.scrollTop = position;
+		if (elapsedTime < duration) {
+			setTimeout (function() {
+				animateScroll(elapsedTime);
+			});
+		}
+	};
+
+	animateScroll(0);
+}
+
+function easeInOut(currentTime, start, change, duration) {
+	currentTime /= duration/2;
+	if (currentTime < 1) {
+		return change / 2 * currentTime * currentTime + start;
+	}
+	currentTime -= 1;
+	return -change / 2 * (currentTime * (currentTime - 2) - 1) + start;
+}
+
+
+function addNavListeners() {
+	document.getElementById('to-article-1').addEventListener('click', function() {
+		scrollTo(document.body, document.documentElement.clientHeight*0, 2000);
+	});
+	document.getElementById('to-article-2').addEventListener('click', function() {
+		scrollTo(document.body, document.documentElement.clientHeight*1, 2000);
+		document.getElementById('searchbox').focus();
+	});
+	
+	document.getElementById('yes-action').addEventListener('click', function() {
+		load_users();
+	});
+	document.getElementById('no-action').addEventListener('click', function() {
+		var elem = document.getElementById('no-action-response');
+		if (elem != null) {
+			elem.remove();
+		}
+		// elem.parentElement.removeChild(elem)
+		var resp = document.createElement('div')
+		resp.setAttribute('class', 'prompt')
+		resp.setAttribute('id', 'no-action-response')
+		resp.innerHTML = "Ok. As you wish."
+		this.parentElement.appendChild(resp);
+	});
+
+	document.getElementById('searchbox').parentElement.addEventListener('onsubmit', validate_search);
+
+	document.getElementById('move-to-top-button').addEventListener('click', function() {
+		show_supertop();
+		scrollTo(document.body, document.documentElement.clientHeight*0, 2000);
+	});
+
+	document.getElementById('toggle-copy-box').addEventListener("click", function() {
+		document.getElementById('copy-box').style.opacity = '0';
+		document.getElementById('copy-box').style.width = '0';
+	});
+}
+
+addNavListeners();
+
+function alertUser(text) {
+	if (text.length == 0) return;
+	var elem = document.getElementById('alert-text');
+	elem.innerHTML = text;
+	var alertBox = document.getElementById('alert-box');
+	alertBox.style.height = "30px";
+	alertBox.style.opacity = '0.8';
+	if (window.matchMedia("(max-height:500px)")) {
+		alertBox.style.position = 'fixed';
+		alertBox.style.top = '0';
+	}
+}
+
+function dismiss_alert() {
+	document.getElementById('alert-box').style.opacity = "0";
+	document.getElementById('alert-box').style.height = "0";
+}
+
+function convert_size(size) {
+	var KB = 1024, MB = 1024*1024, GB = 1024*1024*1024;
+	if ( (size/GB).toFixed(0) == 0 ) {
+		if ( (size/MB).toFixed(0) == 0) {
+			if ( (size/KB).toFixed(0) == 0) {
+				return size+" bytes";
+			} else {
+				return (size/KB).toFixed(2)+" kB";
+			}
+		} else {
+			return (size/MB).toFixed(2)+" MB";
+		}
+	} else {
+		return (size/GB).toFixed(2)+" GB";
+	}
+}
+
+function hide_supertop() {
+	// document.getElementById('supertop').style.zIndex='-1';
+	document.getElementById('supertop').style.display='none';
+	// document.getElementById('search-box-container').style.marginTop = '0px';
+}
+
+function show_supertop() {
+	// document.getElementById('supertop').style.zIndex='11';
+	document.getElementById('supertop').style.display='block';
+	// document.getElementById('search-box-container').style.marginTop = '150 px';
+}
+
+function is_copy_supported() {
+	var status = document.queryCommandSupported('copy');
+	if (status == false) {
+		console.log("Copy is not supported in this browser");
+	} else {
+		console.log("Yeah! copy is supported.");
+	}
+	return status;
+}
+
+function copy_to_clipboard(uri) {
+	console.log("got link ", uri);
+	document.getElementById("copy-text-holder").value = uri;
+	document.getElementById("copy-text-holder").select();
+	document.getElementById("copy-box").style.opacity = "1";
+	document.getElementById("copy-box").style.width = 'auto';
+	document.execCommand('copy');
+}
+
+function createXmlHttpRequestObject() {
+	var xmlhttp;
+	// IE compatibility
+	if (window.ActiveXObject) {
+		try {
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		} catch (e) {
+			xmlhttp = false;
+		}
+	} else {
+		try {
+			xmlhttp = new XMLHttpRequest()
+		} catch (e) {
+			xmlhttp = false;
+		}
+	}
+	if (!xmlhttp) {
+		console.log("Cannot create XHR object.")
+	} else {
+		return xmlhttp;
+	}
+}
+
+function makeXHRQuery(url, callerid) {
+	var xmlhttp = createXmlHttpRequestObject();
+	xmlhttp.addEventListener('error', function() {
+		alertUser('Network error!');
+	});
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			if (callerid == 1) displayUsers(xmlhttp);
+			else if (callerid == 2) displaySearchResults(xmlhttp);
+			else return;
+		}
+	};
+	xmlhttp.open("GET", url, true);
+	xmlhttp.send();
+}
+
+function load_users() {
+	var url = "/cgi-bin/get_connected_users.py";
+	alertUser('Loading...');
+	makeXHRQuery(url, 1);
+}
+
+
+function displayUsers(xmlhttp) {
+	responseJSON = JSON.parse(xmlhttp.response)
+	var keys = [];
+	for (var k in responseJSON) { keys.push(k); }
+	if (keys.length == 0) {
+		var elem = document.getElementById('no-action-response');
+		if (elem != null) {
+			elem.remove();
+		}
+		var resp = document.createElement('div');
+		resp.setAttribute('class', 'prompt');
+		resp.setAttribute('id', 'no-action-response');
+		resp.style.marginTop = "20px";
+		resp.innerHTML = "There are no users connected. You can be the first. :)";
+		document.getElementById('connected-users').getElementsByTagName('article')[0].appendChild(resp);
+		return;
+	}
+
+	// else create a display layout for the attained data
+	var elems = document.getElementsByClassName('prompt');
+	for (var i=0; i < elems.length; i++) { elems[i].remove(); }
+	elems = document.getElementsByClassName('response');
+	for (var i=0; i < elems.length; i++) { elems[i].remove(); }
+
+	// creating a new element to insert data
+	var hdr = document.createElement('header');
+	hdr.innerHTML = "This is the list of systems that are connected to this exchange.";
+	hdr.setAttribute('class', 'response');
+
+	var tbl = document.createElement('table');
+	tbl.setAttribute('class', 'response-table');
+	tbl.setAttribute('id', 'userlist-table');
+	tbl.innerHTML += "<tr><th abbr='IP address of the system'>IP address</th><th abbr='Name set by the person for the sharing'>Server name</th><th abbr='Last known size of public share available'>Available shared size</th></tr>";
+	for (sessid in responseJSON) {
+		tbl.innerHTML += "<tr><td>"+responseJSON[sessid].IP_ADDRESS+"</td><td>"+responseJSON[sessid].SERVER_NAME+"</td><td>"+convert_size(responseJSON[sessid].SHARED_SIZE)+"</td></tr>";
+	}
+	tbl.innerHTML += "</table>";
+
+	document.getElementById('connected-users').getElementsByTagName('article')[0].appendChild(hdr);
+	document.getElementById('connected-users').getElementsByTagName('article')[0].appendChild(tbl);
+
+	dismiss_alert();
+	var results_height = document.getElementById('userlist-table').offsetHeight;
+	var client_height = document.documentElement.clientHeight;
+	if (results_height > client_height) {
+		document.getElementById('connected-users').style.height = results_height+200+'px';
+	} else {
+		document.getElementById('connected-users').style.height = '100vh';
+	}
+}
+
+function validate_search() {
+	dismiss_alert();
+	show_supertop();
+	var s = document.getElementById('searchbox');
+	if (s.value.length == 0) {
+		s.setAttribute('placeholder', "You are asking me to search nothing! What's that? :P");
+		setTimeout(function() {
+			s.setAttribute('placeholder', "Enter filename to search and press enter");
+		}, 4000);
+		return;
+	} else {
+		var url = "/cgi-bin/search.py?q=" + encodeURIComponent(s.value);
+		alertUser('Loading...');
+		makeXHRQuery(url, 2);
+	}
+}
+
+function displaySearchResults(xmlhttp) {
+	// otherwise process the form 
+	hide_supertop();
+	try {
+		var json = JSON.parse(xmlhttp.response);
+		var keys = []
+		for (var k in json) { keys.push(k); }
+		if (keys.length == 0) {
+			show_supertop();
+			alertUser('No results found');
+			return;
+		}
+		document.getElementById('search-box-container').style.marginTop = "0px";
+		if (keys.length == 1) { text = "1 user found.<hr />";}
+		else { text = keys.length+" users found <hr/>"; }
+	} catch (e) {
+		show_supertop();
+		alertUser("Some error occured");
+		console.log("Caught exception ,", e);
+		return;
+	}
+
+	// text += "<div class='table-row'>";
+	// 	text += "<span class='table-data table-header ipaddr'>IP Address</span>" +
+	// 			"<span class='table-data table-header filesize'>Size</span>"+
+	// 			"<span class='table-data table-header filename'>Filename</span>" +
+	// 			"<span class='table-data table-header downloadlink'>Link</span>";
+	// text += "</div>";
+	var copy_supported = is_copy_supported();
+	text += "<table class='response-table'>"+
+				"<tr><th class='ipaddr'>IP Address</th>"+
+					"<th class='filesize'>Size</th>"+
+					"<th class='filename'>File type</th>"+
+					"<th class='filename'>Filename</th>"+
+					"<th class='downloadlink'>Link</th>"+
+				"</tr>";
+	try {
+		for (var ip in json) {
+			var x = ip.split('#');
+			var url = x[0];
+			var timestamp = x[1].slice(0,-7);
+			// text += "<div class='table-row'>"+
+			// 			"<span class='table-data' style='font-weight:bold'>From "+url+"   last updated at : "+timestamp+"</span>"+
+			// 		"</div>";
+			text += "<tr><th colspan=4>From "+url+"   |   Last updated : "+timestamp+"</th></tr>";
+			for (var res in json[ip]) {
+				var link = 'ftp://'+url+json[ip][res].fullpath;
+				// text += "<div class='table-row'>";
+				// 	text += "<span class='table-data ipaddr'>"+url+"</span>" +
+				// 			"<span class='table-data filesize'>"+convert_size(json[ip][res].size)+"</span>"+
+				// 			"<span class='table-data filename'>"+json[ip][res].filename+"</span>" +
+				// 			"<span class='table-data downloadlink'>"+
+				// 			"<a href='"+link+"'><abbr title='Download'><img class='download-icon' src='/images/download.png' alt='download' /></abbr>"+"</a>"+
+				// 			"<abbr title='Copy link to clipboard'><img class='copy-icon' src='/images/copy.png' alt='copy' onclick=\"is_copy_supported('"+link+"')\" /></abbr>"+
+				// 			"</span>";
+				// text += "</div>";
+
+				text += "<tr>"+
+							"<td class='ipaddr'>"+url+"</td>"+
+							"<td class='filesize'>"+convert_size(json[ip][res].size)+"</td>"+
+							"<td class='mimetype'>"+json[ip][res].mimetype+"</td>"+
+							"<td class='filename'>"+json[ip][res].filename+"</td>"+
+							"<td class='downloadlink'>"+
+								"<a href='"+link+"'><abbr title='Download'><img class='download-icon' src='/images/download.png' alt='download' /></abbr>"+"</a>";
+					if (copy_supported == true) {
+								text += "<abbr title='Copy link to clipboard'><img class='copy-icon' src='/images/copy.png' alt='copy' onclick=\"copy_to_clipboard(\'"+link+"\')\" /></abbr>";
+					}
+						text+= "</td>"+
+						"</tr>";
+			}
+		}
+		text+="</table>"
+	} catch (e) {
+		show_supertop();
+		alertUser("Some error occured");
+		console.log("Caught exception ", e)
+	}
+	document.getElementById('search-results').innerHTML = text;
+	dismiss_alert();
+	document.getElementById('search-box-container').style.marginTop = '10px';
+	document.getElementById('search-article').style.marginTop = '10px';
+
+	var results_height = document.getElementById('search-results').offsetHeight;
+	var client_height = document.documentElement.clientHeight;
+	if (results_height > client_height) {
+		document.getElementById('search').style.height = results_height+200+'px';
+	} else {
+		document.getElementById('search').style.height = '100vh';
+	}
+	// show_supertop();
+}
+		
+</script>
+
+</body>
+
+</html>
