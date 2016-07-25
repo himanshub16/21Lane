@@ -382,7 +382,7 @@ class MainUI(QMainWindow, QWidget):
 
 		self.setGeometry(200, 100, 280, 170)
 		self.setFixedSize(280, 170)
-		self.setWindowTitle("FTP server")
+		self.setWindowTitle("21Lane")
 		self.statusBar().showMessage("Welcome")
 		self.show()
 

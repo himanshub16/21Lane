@@ -111,7 +111,7 @@ class SettingsUI(QWidget):
 		self.sett = FTPSettings()
 
 		# all the labels
-		self.nameLabel = QLabel(self); self.nameLabel.setText("Server Name");
+		self.nameLabel = QLabel(self); self.nameLabel.setText("Public Name");
 		self.portLabel = QLabel(self); self.portLabel.setText("Port")
 		self.bannerLabel = QLabel(self); self.bannerLabel.setText("Welcome Message")
 		self.maxconLabel = QLabel(self); self.maxconLabel.setText("Max. connections (total) allowed")
@@ -176,7 +176,7 @@ class SettingsUI(QWidget):
 		# starting the main application
 		self.move(200, 100)
 		self.setFixedSize(500, 300)
-		self.setWindowTitle("FTP Settings")
+		self.setWindowTitle("Settings")
 		self.show()
 
 
