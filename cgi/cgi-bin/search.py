@@ -20,7 +20,6 @@ if not search_arg:
 	print('Invalid')
 	sys.exit()
 
-query_str = "(?i)"+search_arg
 print("Content-type:text/html")
 print()
 
@@ -31,7 +30,9 @@ db = TinyDB(dbname)
 for rec in db.all():
 	filename = rec['FILENAME']
 	sessid = rec['SESSION_ID']
-	ip = rec['IP_ADDRESS']
+	if rec['IP_ADDRESS'].startswith('127.0.0'):
+		rec['IP_ADDRESS'] = 'localhost'
+	ip = rec['IP_ADDRESS']+':'+str(rec['PORT'])+'#'+str(rec['MODIFIED_TIME'])
 	filepath = os.path.join(datadir, filename)
 	userdb = TinyDB(filepath)
 	tbl = userdb.table('filedata')
