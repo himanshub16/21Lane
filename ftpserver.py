@@ -16,6 +16,7 @@ import subprocess
 import time
 import requests
 import json
+import mimetypes
 from tinydb import TinyDB, where, Query
 
 from datetime import datetime
@@ -135,7 +136,8 @@ class generate_system_snapshot(threading.Thread):
 				else:
 					self.filecount += 1
 					size = os.path.getsize(path)
-					self.dbtable[str(self.filecount)] = { "filename":os.path.basename(path), "size":size, "fullpath":path[l:], "size":os.path.getsize(path) }
+					filename = os.path.basename(path)
+					self.dbtable[str(self.filecount)] = { "filename":filename, "size":size, "fullpath":path[l:], "mimetype":mimetypes.guess_type(filename)[0] }
 					# self.dic[os.path.basename(path)] = { "size" : os.path.getsize(path), "fullpath" : path[l:] }
 					self.totalsize += size
 			except Exception as e:
