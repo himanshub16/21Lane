@@ -5,6 +5,7 @@ import cgi, cgitb
 import http.cookies as cookie
 import time, os, sys, hashlib
 import ftplib
+from datetime import datetime
 
 cgitb.enable()
 ls = os.listdir
@@ -43,7 +44,7 @@ def login_user(sessid, ip_addr, share_size=0, server_name="Not Available", port=
 	if is_logged_in(sessid):
 		logout_user(sessid)
 	db = TinyDB(dbname)
-	db.insert({'SESSION_ID':sessid, 'SERVER_NAME':server_name, 'PORT':port, 'IP_ADDRESS':ip_addr, 'SHARED_SIZE':float(share_size), 'FILENAME':sessid+'.json'})
+	db.insert({'SESSION_ID':sessid, 'SERVER_NAME':server_name, 'PORT':port, 'IP_ADDRESS':ip_addr, 'SHARED_SIZE':float(share_size), 'FILENAME':sessid+'.json', 'MODIFIED_TIME':'0'})
 	if not sessid+'.json' in ls(datadir):
 		f = open(os.path.join(datadir, sessid+'.json'), 'w')
 		f.close()
@@ -83,7 +84,7 @@ def get_snapshot_file(sessid):
 	data = filedb.all()[0]
 	sharesize = data['totalsize']
 	q = Query()
-	userdb.update({"SHARED_SIZE":float(sharesize)}, q.SESSION_ID == sessid)
+	userdb.update({"SHARED_SIZE":float(sharesize), "MODIFIED_TIME":str(datetime.now())}, q.SESSION_ID == sessid)
 	userdb.close()
 	db.close()
 
