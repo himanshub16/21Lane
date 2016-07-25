@@ -154,6 +154,15 @@ section article {
 	background-color: #FFC107;
 }
 
+#intro  {
+	display: block;
+	width: 100vw;
+	max-width: 100%;
+	min-height: 100vh;
+	height: auto;
+	background-color: #00BCD4;
+}
+
 #search  {
 	display: block;
 	width: 100vw;
@@ -161,6 +170,21 @@ section article {
 	min-height: 100vh;
 	height: auto;
 	background-color: #FF5722;
+}
+
+#exchange-url {
+	height: 4em;
+	border-radius: 10px;
+	box-sizing: border-box;
+	text-align: center;
+	font-size: 80px;
+	border: none;
+	background-color: rgba(0,0,0,0.6);
+	color: white;
+	font-size: 15px;
+	width: 40%;
+	padding: 10px;
+	overflow-x: visible;
 }
 
 .prompt, .response {

@@ -4,13 +4,13 @@
 <head>
 	<title>IIITA 21Exchange</title>
 	<meta charset="UTF-8">
+	<link rel='shortcut icon' type='image/x-icon' href='/images/icon_red_favicon.ico' />
 	<meta name="viewport" content="width=device-width initial-scale=1.0" />
 	<link href="main.css" rel="stylesheet">
 </head>
 
 <body>
 
-<textarea id="secret-text"></textarea>
 
 <header id='supertop'>
 	<header id="top-banner">
@@ -39,6 +39,16 @@
 	<span id='dismiss-alert' onclick="dismiss_alert()">   Dismiss</span>
 </div>
 
+<section id="intro">
+	<article>
+		<div class="prompt">
+			Hello, use this link in the exchange link for 21Lane File Sharing.
+		</div>
+		<div class="response">
+			<input style='font-size: 2em' type="text" id="exchange-url" value="http://192.168.1.5:8000/cgi-bin/actions.py" onclick="this.setSelectionRange(0, this.value.length)" />
+		</div>
+	</article>
+</section>
 
 <section id="connected-users">
 	<article>
@@ -124,10 +134,10 @@ function easeInOut(currentTime, start, change, duration) {
 
 function addNavListeners() {
 	document.getElementById('to-article-1').addEventListener('click', function() {
-		scrollTo(document.body, document.documentElement.clientHeight*0, 2000);
+		scrollTo(document.body, document.documentElement.clientHeight*1, 2000);
 	});
 	document.getElementById('to-article-2').addEventListener('click', function() {
-		scrollTo(document.body, document.documentElement.clientHeight*1, 2000);
+		scrollTo(document.body, document.documentElement.clientHeight*2, 2000);
 		document.getElementById('searchbox').focus();
 	});
 	
@@ -221,8 +231,9 @@ function is_copy_supported() {
 
 function copy_to_clipboard(uri) {
 	console.log("got link ", uri);
-	document.getElementById("copy-text-holder").value = uri;
-	document.getElementById("copy-text-holder").select();
+	var txtholder = document.getElementById('copy-text-holder');
+	txtholder.value = uri;
+	txtholder.setSelectionRange(0, txtholder.value.length)();
 	document.getElementById("copy-box").style.opacity = "1";
 	document.getElementById("copy-box").style.width = 'auto';
 	document.execCommand('copy');
