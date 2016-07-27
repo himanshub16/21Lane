@@ -6,7 +6,7 @@
 	<meta charset="UTF-8">
 	<link rel='shortcut icon' type='image/x-icon' href='/images/icon_red_favicon.ico' />
 	<meta name="viewport" content="width=device-width initial-scale=1.0" />
-	<link href="main.css" rel="stylesheet">
+	<link href="/main.css" rel="stylesheet">
 </head>
 
 <body>
@@ -25,11 +25,18 @@
 
 	<header id='topnav'>
 		<nav>
-			<ul>
-				<li id="to-article-1">See connected users</li>
-				<li id="to-article-2">Search for a file</li>
+			<ul class="noselect">
+				<li class="to-article-1">See connected users</li>
+				<li class="to-article-2">Search for a file</li>
 			</ul>
 		</nav>
+		<div id="hamburger-menu">
+			<div class='hamburger noselect'>&#9776;</div>
+			<ul class='hamburger-menu-hide'>
+				<li class="to-article-1">See connected users</li>
+				<li class="to-article-2">Search for a file</li>
+			</ul>
+		</div>
 	</header>
 
 </header>
@@ -45,7 +52,7 @@
 			Hello, use this link in the exchange link for 21Lane File Sharing.
 		</div>
 		<div class="response">
-			<input style='font-size: 2em' type="text" id="exchange-url" value="http://192.168.1.5:8000/cgi-bin/actions.py" onclick="this.setSelectionRange(0, this.value.length)" />
+			<input id='exchange-url' style='font-size: 2em' type="text" id="exchange-url" value="http://192.168.1.5:8000/cgi-bin/actions.py" onclick="this.setSelectionRange(0, this.value.length)" readonly />
 		</div>
 	</article>
 </section>
@@ -69,7 +76,7 @@
 		<div class="prompt" id='search-box-container'>
 			<!--Enter you search parameter? <br /> <br />-->
 			<form onsubmit="validate_search(); return false;">
-				<input type='text' id='searchbox' onfocus="hide_supertop()" onblur="show_supertop()" placeholder='Enter filename to search and press enter' />
+				<input type='text' id='searchbox' onfocus="hide_supertop()" onblur="show_supertop()" placeholder='Enter filename to search and press enter' autocomplete="off" />
 			</form>
 		</div>
 		<div id="search-results"></div>
@@ -94,12 +101,12 @@
 	<!--<span id="india" class="footer-item">Made with <span id="unicode-heart">&#10084;</span> in India</span>-->
 </footer>
 
-<abbr title="Move to top"><span id="move-to-top-button"></span></abbr>
+<abbr title="Move to top"><span id="move-to-top-button"><img src="/images/up-arrow.png"/></span></abbr>
 
 <div id='copy-box'>
 	<abbr title="Close"><div id="toggle-copy-box">&#9776;</div></abbr>
 	Copy this link <br />
-	<abbr title="Copy link"><input type='text'  id='copy-text-holder' /></abbr>
+	<abbr title="Copy link"><input type='text'  id='copy-text-holder' readonly /></abbr>
 </div>
 
 <script type="text/javascript">
@@ -133,14 +140,22 @@ function easeInOut(currentTime, start, change, duration) {
 
 
 function addNavListeners() {
-	document.getElementById('to-article-1').addEventListener('click', function() {
+	var elems = document.getElementsByClassName('to-article-1');
+	elems[0].addEventListener('click', function() {
 		scrollTo(document.body, document.documentElement.clientHeight*1, 2000);
 	});
-	document.getElementById('to-article-2').addEventListener('click', function() {
+	elems[1].addEventListener('click', function() {
+		scrollTo(document.body, document.documentElement.clientHeight*1, 2000);
+		document.getElementById('searchbox').focus();
+	});
+	elems = document.getElementsByClassName('to-article-2');
+	elems[0].addEventListener('click', function() {
+		scrollTo(document.body, document.documentElement.clientHeight*2, 2000);
+	});
+	elems[1].addEventListener('click', function() {
 		scrollTo(document.body, document.documentElement.clientHeight*2, 2000);
 		document.getElementById('searchbox').focus();
 	});
-	
 	document.getElementById('yes-action').addEventListener('click', function() {
 		load_users();
 	});
@@ -167,6 +182,10 @@ function addNavListeners() {
 	document.getElementById('toggle-copy-box').addEventListener("click", function() {
 		document.getElementById('copy-box').style.opacity = '0';
 		document.getElementById('copy-box').style.width = '0';
+	});
+	document.getElementById('hamburger-menu').getElementsByClassName('hamburger')[0].addEventListener("click", function () {
+		var elem = this.parentElement.getElementsByTagName('ul')[0];
+		elem.classList.toggle('hamburger-menu-hide');
 	});
 }
 
@@ -233,9 +252,9 @@ function copy_to_clipboard(uri) {
 	console.log("got link ", uri);
 	var txtholder = document.getElementById('copy-text-holder');
 	txtholder.value = uri;
-	txtholder.setSelectionRange(0, txtholder.value.length)();
+	txtholder.setSelectionRange(0, txtholder.value.length);
+	document.getElementById("copy-box").style.width = '20vw';
 	document.getElementById("copy-box").style.opacity = "1";
-	document.getElementById("copy-box").style.width = 'auto';
 	document.execCommand('copy');
 }
 
@@ -300,19 +319,20 @@ function displayUsers(xmlhttp) {
 		resp.style.marginTop = "20px";
 		resp.innerHTML = "There are no users connected. You can be the first. :)";
 		document.getElementById('connected-users').getElementsByTagName('article')[0].appendChild(resp);
+		dismiss_alert();
 		return;
 	}
 
 	// else create a display layout for the attained data
-	var elems = document.getElementsByClassName('prompt');
+	var elems = document.getElementById('connected-users').getElementsByClassName('prompt');
 	for (var i=0; i < elems.length; i++) { elems[i].remove(); }
-	elems = document.getElementsByClassName('response');
+	elems = document.getElementById('connected-users').getElementsByClassName('response');
 	for (var i=0; i < elems.length; i++) { elems[i].remove(); }
 
 	// creating a new element to insert data
 	var hdr = document.createElement('header');
-	hdr.innerHTML = "This is the list of systems that are connected to this exchange.";
-	hdr.setAttribute('class', 'response');
+	hdr.innerHTML = "This is the list of systems that are connected to this exchange." + "<div class=\"refresh-icon\" onclick='load_users'></div>";
+	hdr.setAttribute('class', 'response'); 
 
 	var tbl = document.createElement('table');
 	tbl.setAttribute('class', 'response-table');
@@ -383,11 +403,11 @@ function displaySearchResults(xmlhttp) {
 	// text += "</div>";
 	var copy_supported = is_copy_supported();
 	text += "<table class='response-table'>"+
-				"<tr><th class='ipaddr'>IP Address</th>"+
+					"<th class='downloadlink'>Link</th>"+
 					"<th class='filesize'>Size</th>"+
 					"<th class='filename'>File type</th>"+
 					"<th class='filename'>Filename</th>"+
-					"<th class='downloadlink'>Link</th>"+
+				"<tr><th class='ipaddr'>IP Address</th>"+
 				"</tr>";
 	try {
 		for (var ip in json) {
@@ -411,16 +431,16 @@ function displaySearchResults(xmlhttp) {
 				// text += "</div>";
 
 				text += "<tr>"+
-							"<td class='ipaddr'>"+url+"</td>"+
-							"<td class='filesize'>"+convert_size(json[ip][res].size)+"</td>"+
-							"<td class='mimetype'>"+json[ip][res].mimetype+"</td>"+
-							"<td class='filename'>"+json[ip][res].filename+"</td>"+
 							"<td class='downloadlink'>"+
-								"<a href='"+link+"'><abbr title='Download'><img class='download-icon' src='/images/download.png' alt='download' /></abbr>"+"</a>";
+								"<a href='"+link+"' target='_blank' download><abbr title='Download'><img class='download-icon' src='/images/download.png' alt='download' /></abbr>"+"</a>";
 					if (copy_supported == true) {
 								text += "<abbr title='Copy link to clipboard'><img class='copy-icon' src='/images/copy.png' alt='copy' onclick=\"copy_to_clipboard(\'"+link+"\')\" /></abbr>";
 					}
 						text+= "</td>"+
+							"<td class='filesize'>"+convert_size(json[ip][res].size)+"</td>"+
+							"<td class='mimetype'>"+json[ip][res].mimetype+"</td>"+
+							"<td class='filename'>"+json[ip][res].filename+"</td>"+
+							"<td class='ipaddr'>"+url+"</td>"+
 						"</tr>";
 			}
 		}
