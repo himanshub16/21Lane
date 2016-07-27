@@ -6,8 +6,14 @@ body {
 	background-color: white;
 }
 
-#secret-text {
-	display: none;
+.noselect {
+	-webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
 }
 
 #supertop {
@@ -109,6 +115,31 @@ a {
 	border-bottom: 5px solid #2196F3;
 }
 
+.hamburger {
+	font-size: 1.2em;
+	color: rgba(255,255,255,0.7);
+	cursor: pointer;
+	padding: 10px;
+	float: right;
+}
+
+.hamburger:hover {
+	color: rgba(255,255,255,1);
+}
+
+#hamburger-menu {
+	top: 10;
+	width: 100%;
+	position: fixed;
+	display: none;
+	float: right;
+}
+
+.hamburger-menu-hide {
+	display: none;
+}
+
+
 #alert-box {
 	height: 0px;
 	font-size: 20px;
@@ -143,6 +174,23 @@ section article {
 	justify-content: space-around;
 	align-content: center;
 	box-sizing: border-box;
+}
+
+.refresh-icon {
+	display: inline-block;
+	background: url('images/reload.png');
+	background-size: cover;
+	background-color: rgba(255,255,255,0.4);
+	border-radius: 40px;
+	height: 30px;
+	width: 30px;
+	cursor: pointer;
+	margin-left: 50px;
+	box-shadow: 0 0 2px 1px;
+}
+
+.refresh-icon:hover {
+	background-color: rgba(255,255,255,1);
 }
 
 #connected-users {
@@ -185,6 +233,7 @@ section article {
 	width: 40%;
 	padding: 10px;
 	overflow-x: visible;
+	box-shadow: 1px 1px 2px 1px rgba(0,0,0,0.6);
 }
 
 .prompt, .response {
@@ -237,11 +286,14 @@ section article {
 }
 
 .response-table tr {
-	overflow-wrap: break-word;
+	overflow-x: scroll;
+	overflow: scroll;
+	background-color: #FF5722;
 }
 
 .response-table tr:hover {
-	border-left: 1px solid blue;
+	/*border-left: 1px solid blue;*/
+	background-color: rgba(255,255,255,0.3)
 }
 
 .response-table td, .response-table th {
@@ -260,6 +312,7 @@ section article {
 	clear: both;
 	text-align: center;
 	font-weight: lighter;
+	box-shadow: 1px 1px 2px 1px rgba(0,0,0,0.6);
 }
 
 #searchbox:focus #supertop {
@@ -284,12 +337,16 @@ section article {
 #search-results {
 	text-align: center;
 	/*max-height: 80vh;*/
-	overflow-x: hidden;
+	overflow-wrap: wrap;;
 	overflow-y: visible;
 	width: 80%;
 	left: 0;
 	right: 0;
 	margin: auto;
+	background-color: #FF5722;
+}
+
+#search-resutls #response-table {
 	background-color: #FF5722;
 }
 
@@ -410,8 +467,8 @@ section article {
 }
 
 #move-to-top-button {
-	background: url('images/download.png') no-repeat 0 10px;
-	background-size: cover;
+	/*background: url('images/up-arrow.png') no-repeat 0 10px;*/
+	/*background-size: cover;*/
 	border-radius: 10px;
 	width: 35px;
 	height: 35px;
@@ -419,13 +476,19 @@ section article {
 	position: fixed;
 	bottom: 50px;
 	right: 50px;
-	transform: rotate(180deg);
+	/*transform: rotate(180deg);*/
 	cursor: pointer;
 	opacity: 0.6;
+	box-shadow: 0 0 2px 1px;
 }
 
 #move-to-top-button:hover {
 	opacity: 1;
+}
+
+#move-to-top-button img {
+	height: 35px;
+	width: 35px;
 }
 
 #copy-box {
@@ -471,10 +534,28 @@ section article {
 
 @media screen and (max-width:1000px) {
 	#exchange-name {
+		text-align: center;
 		display: block;
 		width: 100%;
 		font-size: 20px;
 		padding-top: 5px;
+	}
+	#hamburger-menu {
+		display: block;
+	}
+	#top-header .navbar {
+		display: none;
+	}
+	#hamburger-menu li {
+		display: block;
+		margin: 0;
+		padding: 0;
+		color: black;
+		width: 100%;
+		background-color: rgba(255,255,255,0.7); 
+	}
+	#topnav nav {
+		display: none;
 	}
 	#links {
 		display: block;
@@ -486,6 +567,11 @@ section article {
 		text-align: center;
 		float: none;
 		width: 100%;
+	}
+	#exchange-url {
+		height: auto;
+		width: 80%;
+		overflow-wrap: break-word;
 	}
 }
 
