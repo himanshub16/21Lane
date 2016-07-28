@@ -43,7 +43,7 @@ class FTPSettings:
 			self.max_download_speed = 10	# to resrtict uploads from public on server,
 											# when write permission is allowed
 			# self.permit_outside_lan = False
-			self.exchange_url = ''
+			self.exchange_url = ""
 
 		else:
 			try:
