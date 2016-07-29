@@ -1,9 +1,0 @@
-[Desktop Entry]
-Version=1.0
-Name=21Lane
-Comment=Share data between computers on your network over FTP.
-Exec=MAINDIR/ftpserver.py
-Icon=MAINDIR/icons/favicon.ico
-Terminal=false
-Type=Application
-Categories=Utility;Application;
