@@ -81,7 +81,7 @@ for file in required_files:
 
 if 'linux' in platform.platform().lower():
 	# create menu entry
-	f = open('~/.local/share/applications/21Lane.desktop', 'w')
+	f = open(os.path.join(homedir, '/.local/share/applications/21Lane.desktop'), 'w')
 	desktop_entry_linux = desktop_entry_linux.replace("$MAINDIR$", destdir)
 	f.write(desktop_entry_linux)
 	f.close()
