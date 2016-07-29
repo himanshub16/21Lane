@@ -561,7 +561,7 @@ class MainUI(QMainWindow, QWidget):
 		if not server:
 			QMessageBox.warning(self, 'Sorry', "You must have sharing enabled to connect to an exchange.", QMessageBox.Ok, QMessageBox.Ok)
 			return
-		inp, ok = QInputDialog.getText(self, 'Connect to servers', 'Enter details as in given examples\n\n192.168.1.2:2020 user password (OR)\nexchange.url.com:2020 user password\n', QLineEdit.Normal, exchange_url)
+		inp, ok = QInputDialog.getText(self, 'Connect to servers', 'Enter the link obtained from 21Exchange on your network\n', QLineEdit.Normal, exchange_url)
 		try:
 			if ok:
 				inp = inp.split(' ')
@@ -668,6 +668,7 @@ class MainUI(QMainWindow, QWidget):
 if __name__ == "__main__":
 	app = QApplication([])
 	# app.setWindowIcon(QIcon('icons/myicon.png'))
-	app.setWindowIcon(QIcon("icons/icon_red_gfu_icon.ico"))
+	# app.setWindowIcon(QIcon("icons/icon_red_gfu_icon.ico"))
+	app.setWindowIcon(QIcon('icons/1468025361_cmyk-03.png'))
 	ex = MainUI()
 	sys.exit(app.exec_())
