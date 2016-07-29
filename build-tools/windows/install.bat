@@ -14,8 +14,9 @@ if errorlevel 1 (
 	) else (
 		start /wait python setup.py install
 		echo Installing required modules
-		pip install PyQt5==5.6
-		pip install requests, tinydb, json, deepcopy
+		REM pip install PyQt5==5.6
+		REM pip install requests, tinydb, json, deepcopy
+		pip install -r requirements.txt
 		pause
 	)
 )
