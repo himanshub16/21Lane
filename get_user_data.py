@@ -163,7 +163,7 @@ class userconfigUI(QWidget):
 		# QMessageBox.question(self, message_label, text_in_dialog, combination_of_buttons_appearing_in_dialog, default_button)
 		# closing the widget generates QCloseEvent
 		# to modify the widget behavior, we need to reimplement closeEvent() event handler
-		reply = QMessageBox.question(self, 'Message', "Are you aure to exit ?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+		reply = QMessageBox.question(self, 'Message', "Are you sure to exit ?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 
 		if reply == QMessageBox.Yes:
 			event.accept()
