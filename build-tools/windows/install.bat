@@ -14,9 +14,10 @@ if errorlevel 1 (
 	) else (
 		start /wait python setup.py install
 		echo Installing required modules
-		REM pip install PyQt5==5.6
-		REM pip install requests, tinydb, json, deepcopy
 		pip install -r requirements.txt
+		REM Don't create desktop shortcut .. execution issues
+		REM cscript create_shortcut.vbs
+		REM del create_shortcut.vbs
 		pause
 	)
 )
