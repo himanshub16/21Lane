@@ -127,7 +127,6 @@ class ListUserUI(QWidget):
 		QMessageBox.information(self, "Message", "Restart sharing for changes to be effective.", QMessageBox.Ok, QMessageBox.Ok)
 
 	def anon_state_changed(self, state):
-		print("anon state changed")
 		if state == Qt.Checked:
 			self.modify_user()
 		else:
