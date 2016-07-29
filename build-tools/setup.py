@@ -56,7 +56,7 @@ if (os.path.isdir(destdir)):
 	if (reply == 'n' or reply == 'N'):
 		shutil.rmtree(destdir)
 		print("21Lane removed from ", destdir)
-		if (sys.argv[1] == 'uninstall')
+		if (sys.argv[1] == 'uninstall'):
 			try:
 				input("Press Enter to exit...")
 			except:
@@ -86,8 +86,10 @@ if 'linux' in platform.platform().lower():
 	f.write(desktop_entry_linux)
 	f.close()
 	shutil.copy2('21lane.sh', destdir)
+	shutil.copy2('monitor-log.sh', destdir)
 	os.system('chmod +x '+destdir+'/21lane.sh')
 	os.system('chmod +x ~/.local/share/applications/21Lane.desktop')
+	os.system('chmod +x '+destdir+'/monitor-log.sh')
 
 elif 'windows' in platform.platform().lower():
 	# create vbscript file to create desktop shortcut
@@ -102,4 +104,5 @@ elif 'windows' in platform.platform().lower():
 	# create start menu entry
 	# todo for next version
 	shutil.copy2('21lane.bat', destdir)
-
+	shutil.copy2('monitor-log-win7.bat', destdir)
+	shutil.copy2('monitor-log-win8-10.bat', destdir)
