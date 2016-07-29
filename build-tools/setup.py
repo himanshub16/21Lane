@@ -81,7 +81,7 @@ for file in required_files:
 
 if 'linux' in platform.platform().lower():
 	# create menu entry
-	f = open('~/.local/share/applications/21Lane.desktop')
+	f = open('~/.local/share/applications/21Lane.desktop', 'w')
 	desktop_entry_linux = desktop_entry_linux.replace("$MAINDIR$", destdir)
 	f.write(desktop_entry_linux)
 	f.close()
@@ -93,7 +93,7 @@ if 'linux' in platform.platform().lower():
 
 elif 'windows' in platform.platform().lower():
 	# create vbscript file to create desktop shortcut
-	f = open('create_shortcut.vbs')
+	f = open('create_shortcut.vbs', 'w)
 	desktop_entry_windows = desktop_entry_windows.replace("$MAINDIR$", destdir)
 	desktop_entry_windows = desktop_entry_windows.replace("$DESKTOPDIR$", os.path.join(homedir,'Desktop'))
 	f.write(desktop_entry_windows)
