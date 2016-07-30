@@ -115,8 +115,8 @@ elif 'windows' in platform.platform().lower():
 	desktop_entry_windows = desktop_entry_windows.replace("$DESKTOPDIR$", os.path.join(homedir,'Desktop'))
 	f.write(desktop_entry_windows)
 	f.close()
-	os.system("cscript create_shortcut.vbs")
-	os.remove("create_shortcut.vbs")
+	# os.system("cscript create_shortcut.vbs")
+	# os.remove("create_shortcut.vbs")
 
 	# create start menu entry
 	# todo for next version
