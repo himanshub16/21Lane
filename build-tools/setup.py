@@ -125,7 +125,7 @@ elif 'windows' in platform.platform().lower():
 	# todo for next version
 	shutil.copy2(os.path.join(pwd, '21lane.bat'), destdir)
 	shutil.copy2(os.path.join(pwd, 'monitor-log-win7.bat'), destdir)
-	shutil.copy2(os.path.join(pwd, 'monitor-log-win8-10.bat'), destdir)
+	# shutil.copy2(os.path.join(pwd, 'monitor-log-win8-10.bat'), destdir)
 
 
 generate_requirements()
