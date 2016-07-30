@@ -542,7 +542,7 @@ class MainUI(QMainWindow, QWidget):
 				sessionid = None
 			
 			post_data = { 'action':'disconnect' }
-			r = requests.post(exchange_url, data=post_data, cookies={'session_id':sessionid})
+			r = requests.post(exchange_url, data=post_data, cookies={'session_id':sessionid}, proxies=None)
 			if r.status_code == 200 and r.text.strip() == 'ok':
 				exchange_connect_status = False
 				QMessageBox.information(self, '21Exchange', "You have been logged out.")
