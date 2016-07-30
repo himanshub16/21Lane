@@ -208,7 +208,7 @@ section article {
 	max-width: 100%;
 	min-height: 100vh;
 	height: auto;
-	background-color: #FFC107;
+	background-color: #446cb3;
 }
 
 #intro  {
@@ -217,7 +217,7 @@ section article {
 	max-width: 100%;
 	min-height: 100vh;
 	height: auto;
-	background-color: #00BCD4;
+	background-color: #f62459;
 }
 
 #search  {
@@ -226,7 +226,7 @@ section article {
 	max-width: 100%;
 	min-height: 100vh;
 	height: auto;
-	background-color: #FF5722;
+	background-color: #019875;
 }
 
 #exchange-url {
