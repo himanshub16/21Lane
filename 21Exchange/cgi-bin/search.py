@@ -30,8 +30,8 @@ db = TinyDB(dbname)
 for rec in db.all():
 	filename = rec['FILENAME']
 	sessid = rec['SESSION_ID']
-	if rec['IP_ADDRESS'].startswith('127.0.0'):
-		rec['IP_ADDRESS'] = 'localhost'
+	# if rec['IP_ADDRESS'].startswith('127.0.0'):
+	# 	rec['IP_ADDRESS'] = 'localhost'
 	ip = rec['IP_ADDRESS']+':'+str(rec['PORT'])+'#'+str(rec['MODIFIED_TIME'])
 	filepath = os.path.join(datadir, filename)
 	userdb = TinyDB(filepath)

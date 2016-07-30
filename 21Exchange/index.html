@@ -54,7 +54,7 @@
 			Hey, copy this link and paste in your settings, wherever asked.
 		</div>
 		<div class="response">
-			<input id='exchange-url' style='font-size: 2em' type="text" id="exchange-url" value="http://192.168.1.5:8000/cgi-bin/actions.py" onclick="this.setSelectionRange(0, this.value.length)" readonly />
+			<input id='exchange-url' style='font-size: 2em' type="text" id="exchange-url" value="http://172.26.40.12:8000/cgi-bin/actions.py" onclick="this.setSelectionRange(0, this.value.length)" readonly />
 		</div>
 	</article>
 </section>
@@ -337,17 +337,45 @@ function displayUsers(xmlhttp) {
 	hdr.innerHTML = "This is the list of systems that are connected to this exchange."; //+ "<div class=\"refresh-icon\" onclick='load_users'></div>";
 	hdr.setAttribute('class', 'response'); 
 
-	var tbl = document.createElement('table');
-	tbl.setAttribute('class', 'response-table');
-	tbl.setAttribute('id', 'userlist-table');
-	tbl.innerHTML += "<tr><th abbr='IP address of the system'>IP address</th><th abbr='Name set by the person for the sharing'>Server name</th><th abbr='Last known size of public share available'>Available shared size</th></tr>";
-	for (sessid in responseJSON) {
-		tbl.innerHTML += "<tr><td>"+responseJSON[sessid].IP_ADDRESS+"</td><td>"+responseJSON[sessid].SERVER_NAME+"</td><td>"+convert_size(responseJSON[sessid].SHARED_SIZE)+"</td></tr>";
+	// var tbl = document.createElement('table');
+	// tbl.setAttribute('class', 'response-table');
+	// tbl.setAttribute('id', 'userlist-table');
+	// tbl.innerHTML += "<tr><th abbr='IP address of the system'>IP address</th><th abbr='Name set by the person for the sharing'>Server name</th><th abbr='Last known size of public share available'>Available shared size</th></tr>";
+	// for (sessid in responseJSON) {
+	// 	tbl.innerHTML += "<tr>" + 
+	// 					 "<td>"+responseJSON[sessid].IP_ADDRESS+':'+responseJSON[sessid].PORT+"</td><td>"+responseJSON[sessid].SERVER_NAME+"</td><td>"+convert_size(responseJSON[sessid].SHARED_SIZE)+"</td>" +
+	// 					 "<a href='ftp://"+responseJSON[sessid].IP_ADDRESS+':'+responseJSON[sessid].PORT+"/' target='_blank'>" +
+	// 			'<td style="cursor: pointer"> \
+	// 			<svg fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"> \
+	// 			<path d="M0 0h24v24H0z" fill="none"/> \
+	// 			<path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/> \
+	// 		</svg> ' +
+	// 		 "</td></a>" +
+	// 	 "</tr>";
+	// }
+	// tbl.innerHTML += "</table>";
+
+	var svg_icon = ' <svg fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"> \
+				<path d="M0 0h24v24H0z" fill="none"/> \
+				<path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/> \
+			</svg> ' ;
+
+	var text = "<table class='response-table'>"+
+					"<th class='downloadlink'>Open</th>"+
+					"<th class='ipaddr'>IP Address</th>"+
+					"<th class='filename'>Share Name</th>"+
+					"<th class='filesize'>Available share size</th>"+
+				"</tr>";
+	for (var sessid in responseJSON) {
+		text += "<tr>" + 
+					"<td> <a href='ftp://"+responseJSON[sessid].IP_ADDRESS+':'+responseJSON[sessid].PORT+"' target='_blank'>"+svg_icon+"</a></td>"+
+					"<td>"+responseJSON[sessid].IP_ADDRESS+':'+responseJSON[sessid].PORT+"</td>" +
+					"<td>"+responseJSON[sessid].SERVER_NAME+"</td>"+
+					"<td>"+convert_size(responseJSON[sessid].SHARED_SIZE)+"</td>";
 	}
-	tbl.innerHTML += "</table>";
 
 	document.getElementById('connected-users').getElementsByTagName('article')[0].appendChild(hdr);
-	document.getElementById('connected-users').getElementsByTagName('article')[0].appendChild(tbl);
+	document.getElementById('connected-users').getElementsByTagName('article')[0].innerHTML += text;
 
 	dismiss_alert();
 	var results_height = document.getElementById('userlist-table').offsetHeight;

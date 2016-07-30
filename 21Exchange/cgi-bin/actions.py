@@ -62,8 +62,8 @@ def get_snapshot_file(sessid):
 	rec = db.search(where('SESSION_ID') == sessid)[0]
 	filename = os.path.join(datadir, rec['FILENAME'])
 	ip = rec['IP_ADDRESS']
-	if ip.startswith('127.0.0'): 
-		ip='localhost'
+	# if ip.startswith('127.0.0'): 
+	# 	ip='localhost'
 	port = rec['PORT']
 	if ip!=None and port!=None:
 		f = open(filename, 'wb')
@@ -90,12 +90,13 @@ def get_snapshot_file(sessid):
 
 
 # here, the script starts
-ip = os.environ['REMOTE_ADDR'].strip()
+# ip = os.environ['REMOTE_ADDR'].strip()
 
 ckstr = os.environ.get('HTTP_COOKIE').strip()
 ck = cookie.SimpleCookie()
 
 form = cgi.FieldStorage()
+ip = form.getValue('IP')
 sharesize = form.getvalue('sharesize')
 action = form.getvalue('action')
 server_name = form.getvalue('server_name')
