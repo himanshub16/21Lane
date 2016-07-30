@@ -100,10 +100,7 @@ def is_port_available(port):
 
 def get_ip_address():
 	try:
-		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-		s.connect(("8.8.8.8",80))
-		ip = s.getsockname()[0]
-		s.close()
+		ip = socket.gethostbyname(socket.getfqdn())
 		return ip
 	except Exception as e:
 		return 'localhost'
@@ -575,7 +572,7 @@ class MainUI(QMainWindow, QWidget):
 
 				# url = '+str(p)
 				server_name = load_settings().server_name
-				post_data = { 'username':u, 'password':pwd, 'action':'connect', 'server_name':server_name, 'port':PORT }
+				post_data = { 'username':u, 'password':pwd, 'action':'connect', 'server_name':server_name, 'port':PORT, 'IP':get_ip_address() }
 
 				if 'session_id' in ls(pwd):
 					f = open('session_id', 'r')

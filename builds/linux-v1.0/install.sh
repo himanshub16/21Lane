@@ -15,11 +15,11 @@ else
 		read -n1 -p "Press any key to exit... "
 		exit 1
 	else
-		python3 setup.py install 
+		python3 setup.py install && pip3 install -r requirements.txt
 		# install required modules
 		# pip3 install PyQt5==5.6
 		# pip3 install requests, tinydb, json, deepcopy
-		pip3 install -r requirements.txt
+		# pip3 install -r requirements.txt
 	fi
 fi
 echo "Setup complete"

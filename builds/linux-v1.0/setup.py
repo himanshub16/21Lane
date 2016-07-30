@@ -71,9 +71,9 @@ oLink.Save
 # destination directory
 destdir = os.path.join(homedir, '21Lane')
 if (os.path.isdir(destdir)):
-	print("21Lane is already installed. Press 'n' to remove it.")
+	print("21Lane is already installed. Press 'y' to remove it.")
 	reply = input("Press any other key and enter to continue : ")
-	if (reply == 'n' or reply == 'N'):
+	if (reply == 'y' or reply == 'Y'):
 		shutil.rmtree(destdir)
 		print("21Lane removed from ", destdir)
 		if (sys.argv[1] == 'uninstall'):
@@ -125,7 +125,7 @@ elif 'windows' in platform.platform().lower():
 	# todo for next version
 	shutil.copy2(os.path.join(pwd, '21lane.bat'), destdir)
 	shutil.copy2(os.path.join(pwd, 'monitor-log-win7.bat'), destdir)
-	shutil.copy2(os.path.join(pwd, 'monitor-log-win8-10.bat'), destdir)
+	# shutil.copy2(os.path.join(pwd, 'monitor-log-win8-10.bat'), destdir)
 
 
 generate_requirements()
