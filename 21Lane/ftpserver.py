@@ -180,7 +180,7 @@ class generate_system_snapshot(threading.Thread):
 				f = open('session_id', 'r')
 				sessionid = f.read().strip()
 				f.close()
-				r = requests.post(url=exchange_url, data={'action':'snapshot'}, cookies={'session_id':sessionid})
+				r = requests.post(url=exchange_url, data={'action':'snapshot'}, cookies={'session_id':sessionid}, timeout=5, proxies=None)
 				# print(r.text, 'is the response for snapshot')
 				if r.status_code==200 and r.text.strip()=='ok':
 					mylog('Snapshot file uploaded successfully.')
@@ -188,7 +188,7 @@ class generate_system_snapshot(threading.Thread):
 				else:
 					mylog("Some error occured while uploading snapshot.")
 
-		except (requests.exceptions.ConnectionError, ConnectionAbortedError) as e:
+		except (requests.exceptions.ConnectionError, ConnectionAbortedError, requests.exceptions.Timeout) as e:
 			mylog("Network error while periodical uploads.")
 			# raise e
 		except Exception as e:
@@ -584,7 +584,7 @@ class MainUI(QMainWindow, QWidget):
 					ck = {'session_id':ckstr.strip()}
 				else:
 					ck = None
-				r = requests.post(exchange_url, data=post_data, cookies=ck)
+				r = requests.post(exchange_url, data=post_data, cookies=ck, proxies=None)
 				sessionid = None
 				# print(r.status_code, r.text)
 				if r.status_code == 200:
@@ -633,7 +633,7 @@ class MainUI(QMainWindow, QWidget):
 
 					# now notify you dad to take the parcel
 					mylog('Asking dad to take the parcel')
-					r = requests.post(url=exchange_url, data={'action':'snapshot'}, cookies={'session_id':sessionid}, timeout=5)
+					r = requests.post(url=exchange_url, data={'action':'snapshot'}, cookies={'session_id':sessionid}, timeout=5, proxies=None)
 					# print(r.text, 'is the response for snapshot')
 					if r.status_code==200 and r.text.strip()=='ok':
 						mylog('Snapshot file uploaded successfully.')
@@ -642,7 +642,7 @@ class MainUI(QMainWindow, QWidget):
 						mylog("Some error occured while uploading snapshot.")
 
 
-		except (requests.exceptions.ConnectionError, requests.exceptions.HTTPError, ConnectionAbortedError, requests.exceptions.TimeoutError) as e:
+		except (requests.exceptions.ConnectionError, requests.exceptions.HTTPError, ConnectionAbortedError, requests.exceptions.Timeout) as e:
 			QMessageBox.critical(self, 'Error', 'Network error!', QMessageBox.Ok, QMessageBox.Ok)
 			# raise e
 		except Exception as e:

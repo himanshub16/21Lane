@@ -31,7 +31,7 @@ class ListUserUI(QWidget):
 		blankLabel = QLabel(self)
 		blankLabel.setText("")
 
-		self.anonLabel = QLabel(self); self.anonLabel.setText("Allow Anonymous Login")
+		self.anonLabel = QLabel(self); self.anonLabel.setText("Allow Pubilc Share")
 		self.anonLabel.setToolTip("Any general user can login to anyone without password")
 
 		self.anonCheck = QCheckBox("", self);
@@ -188,7 +188,7 @@ class ListUserUI(QWidget):
 
 
 	def display_help_anon(self):
-		QMessageBox.information(self, "Help", "Anonymous are the public users who can access your share without any id or password.", QMessageBox.Ok, QMessageBox.Ok)
+		QMessageBox.information(self, "Help", "Public users access your share without any id or password.", QMessageBox.Ok, QMessageBox.Ok)
 
 	def display_help_user(self):
 		QMessageBox.information(self, "Help", "Users are the users you set up.\nThey can access your share only using the set of username and password you create.\nClick on plus sign to add users.", QMessageBox.Ok, QMessageBox.Ok)
