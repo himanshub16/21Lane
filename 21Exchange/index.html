@@ -14,9 +14,11 @@
 
 <header id='supertop'>
 	<header id="top-banner">
-		<span id="logo">
-			<!--<img src="/images/logo-blue.png" alt="21Lane">-->
-		</span>
+		<a href="https://21lane.github.io" target="_blank" style="text-decoration: none">
+			<span id="logo">
+				<!--<img src="/images/logo-blue.png" alt="21Lane">-->
+			</span>
+		</a>
 		<span id="exchange-name">
 			Organisation name
 		</span>
@@ -49,7 +51,7 @@
 <section id="intro">
 	<article>
 		<div class="prompt">
-			Hello, use this link in the exchange link for 21Lane File Sharing.
+			Hey, copy this link and paste in your settings, wherever asked.
 		</div>
 		<div class="response">
 			<input id='exchange-url' style='font-size: 2em' type="text" id="exchange-url" value="http://192.168.1.5:8000/cgi-bin/actions.py" onclick="this.setSelectionRange(0, this.value.length)" readonly />
@@ -84,13 +86,14 @@
 	<div class="clearfix"></div>
 </section>
 
+
 <footer id="footer">
 	<div class="clearfix"></div>
 	<div id="links">
-		<span class="footer-item">Visit 21Lane</span>
-		<span class="footer-item">Help</span>
-		<span class="footer-item">Fork</span>
-		<span class="footer-item">Contribute</span>
+		<a href="https://github.com/21lane/" class='footer-links' target='_blank'><span class="footer-item">Github</span></a>
+		<a href="https://21lane.github.io/howto.html" class='footer-links' target='_blank'><span class="footer-item">Help</span></a>
+		<a href="https://github.com/21lane/21Lane/issues" class='footer-links' target='_blank'><span class="footer-item">Report Issue</span></a>
+		<a href="https://github.com/himanshub16/" class='footer-links' target='_blank'><span class="footer-item">Creator</span></a>
 	</div>
 	<div id='india'>
 		<span >With</span>
@@ -417,7 +420,7 @@ function displaySearchResults(xmlhttp) {
 			// text += "<div class='table-row'>"+
 			// 			"<span class='table-data' style='font-weight:bold'>From "+url+"   last updated at : "+timestamp+"</span>"+
 			// 		"</div>";
-			text += "<tr><th colspan=4>From "+url+"   |   Last updated : "+timestamp+"</th></tr>";
+			text += "<tr><th colspan=5>From "+url+"   |   Last updated : "+timestamp+"</th></tr>";
 			for (var res in json[ip]) {
 				var link = 'ftp://'+url+json[ip][res].fullpath;
 				// text += "<div class='table-row'>";
