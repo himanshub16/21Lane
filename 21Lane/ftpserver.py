@@ -293,8 +293,9 @@ class userui_thread(threading.Thread):
 
 # handling with GUI
 from PyQt5.QtWidgets import (QWidget, QAction, qApp, QPushButton, QApplication,
-	QMainWindow, QTextEdit, QMessageBox, QInputDialog, QLineEdit)
+	QMainWindow, QTextEdit, QMessageBox, QInputDialog, QLineEdit, QLabel)
 from PyQt5.QtGui import QIcon, QFont
+from PyQt5.Qt import QDesktopServices, QUrl
 
 
 class MainUI(QMainWindow, QWidget):
@@ -305,6 +306,12 @@ class MainUI(QMainWindow, QWidget):
 
 	def initUI(self):
 		mylog ("Starting ui")
+
+		self.itHurtsLabel = QLabel(self)
+		self.itHurtsLabel.setText("Don't randomly hit your mouse. It hurts!'")
+		self.itHurtsLabel.setFixedWidth(10000)
+		self.itHurtsLabel.setWordWrap(True)
+		self.itHurtsLabel.move(30,60)
 
 		self.mainbtn = QPushButton("Start sharing", self)
 		self.mainbtn.setStyleSheet("background-color: blue; color: white; border: none")
@@ -356,6 +363,25 @@ class MainUI(QMainWindow, QWidget):
 		self.disconnect.setStatusTip("Connect to 21Exchange servers on local network.")
 		self.disconnect.triggered.connect(self.exchange_disconnect)
 
+		# help 
+		self.helpAction = QAction(QIcon(''), '&Help', self)
+		self.helpAction.setToolTip("Help")
+		self.helpAction.setShortcut("F1")
+		self.helpAction.setStatusTip("Help")
+		self.helpAction.triggered.connect(self.show_help)
+
+		# about action
+		self.aboutAction = QAction(QIcon(''), '&About', self)
+		self.aboutAction.setToolTip("About")
+		self.aboutAction.setStatusTip("21Lane's website'")
+		self.aboutAction.triggered.connect(self.show_about)
+
+		# git action
+		self.gitAction = QAction(QIcon(''), 'View on &Github', self)
+		self.gitAction.setToolTip("See code")
+		self.gitAction.setStatusTip("Github repo")
+		self.gitAction.triggered.connect(self.show_git)
+
 		self.menubar = self.menuBar()
 		self.appMenu = self.menubar.addMenu('&App')
 		self.appMenu.addAction(portCheck)
@@ -364,6 +390,11 @@ class MainUI(QMainWindow, QWidget):
 		configMenu = self.menubar.addMenu('&Config')
 		configMenu.addAction(sett_conf)
 		configMenu.addAction(userui)
+
+		miscMenu = self.menubar.addMenu('&Help')
+		miscMenu.addAction(self.helpAction)
+		miscMenu.addAction(self.gitAction)
+		miscMenu.addAction(self.aboutAction)
 
 
 		self.toolbar = self.addToolBar("Quick Access")
@@ -526,6 +557,18 @@ class MainUI(QMainWindow, QWidget):
 		except ValueError:
 			QMessageBox.warning(self, 'Error', "Port number should be a number between 0 and 65535", QMessageBox.Ok, QMessageBox.Ok)
 
+
+	def show_help(self):
+		url = QUrl("https://21lane.github.io/howto.html")
+		QDesktopServices.openUrl(url)
+
+	def show_about(self):
+		url = QUrl("https://21lane.github.io")
+		QDesktopServices.openUrl(url)
+
+	def show_git(self):
+		url = QUrl("https://github.com/21lane/21Lane")
+		QDesktopServices.openUrl(url)
 
 	def exchange_disconnect(self):
 		global exchange_url, exchange_connect_status
