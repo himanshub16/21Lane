@@ -177,7 +177,7 @@ class generate_system_snapshot(threading.Thread):
 				f = open('session_id', 'r')
 				sessionid = f.read().strip()
 				f.close()
-				r = requests.post(url=exchange_url, data={'action':'snapshot'}, cookies={'session_id':sessionid}, timeout=10, proxies=None)
+				r = requests.post(url=exchange_url, data={'action':'snapshot'}, cookies={'session_id':sessionid}, timeout=5, proxies=None)
 				# print(r.text, 'is the response for snapshot')
 				if r.status_code==200 and r.text.strip()=='ok':
 					mylog('Snapshot file uploaded successfully.')
@@ -539,7 +539,7 @@ class MainUI(QMainWindow, QWidget):
 				sessionid = None
 			
 			post_data = { 'action':'disconnect' }
-			r = requests.post(exchange_url, data=post_data, cookies={'session_id':sessionid}, proxies=None, timeout=10)
+			r = requests.post(exchange_url, data=post_data, cookies={'session_id':sessionid}, proxies=None, timeout=5)
 			if r.status_code == 200 and r.text.strip() == 'ok':
 				exchange_connect_status = False
 				QMessageBox.information(self, '21Exchange', "You have been logged out.")
@@ -581,7 +581,7 @@ class MainUI(QMainWindow, QWidget):
 					ck = {'session_id':ckstr.strip()}
 				else:
 					ck = None
-				r = requests.post(exchange_url, data=post_data, cookies=ck, proxies=None, timeout=10)
+				r = requests.post(exchange_url, data=post_data, cookies=ck, proxies=None, timeout=5)
 				sessionid = None
 				# print(r.status_code, r.text)
 				if r.status_code == 200:
@@ -630,7 +630,7 @@ class MainUI(QMainWindow, QWidget):
 
 					# now notify you dad to take the parcel
 					mylog('Asking dad to take the parcel')
-					r = requests.post(url=exchange_url, data={'action':'snapshot'}, cookies={'session_id':sessionid}, timeout=10, proxies=None)
+					r = requests.post(url=exchange_url, data={'action':'snapshot'}, cookies={'session_id':sessionid}, timeout=5, proxies=None)
 					# print(r.text, 'is the response for snapshot')
 					if r.status_code==200 and r.text.strip()=='ok':
 						mylog('Snapshot file uploaded successfully.')
