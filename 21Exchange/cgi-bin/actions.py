@@ -97,7 +97,7 @@ if os.environ.get('HTTP_COOKIE'):
 ck = cookie.SimpleCookie()
 
 form = cgi.FieldStorage()
-ip = form.getValue('IP')
+ip = form.getvalue('IP')
 sharesize = form.getvalue('sharesize')
 action = form.getvalue('action')
 server_name = form.getvalue('server_name')
@@ -106,6 +106,13 @@ port = form.getvalue('port')
 # 	print('Content-type:text/plain')
 # 	print()
 # 	print('Action required')
+
+if not ip:
+	print('Content-type:text/html')
+	print()
+	print("Please send your IP address as form field")
+	print("This helps to identify you if you are behind NAT/Firewall")
+	sys.exit()
 
 if not sharesize:
 	sharesize = 0
