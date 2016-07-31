@@ -22,5 +22,5 @@ else
 		# pip3 install -r requirements.txt
 	fi
 fi
-echo "Setup complete"
+echo "Setup complete. An entry has been made to the applications menu."
 read -n1 -p "Press any key to exit... "
