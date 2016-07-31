@@ -103,7 +103,7 @@ def get_ip_address():
 		ip = socket.gethostbyname(socket.getfqdn())
 		return ip
 	except Exception as e:
-		return 'localhost'
+		mylog("cannot determine ip address")
 
 
 class generate_system_snapshot(threading.Thread):
