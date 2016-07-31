@@ -91,8 +91,9 @@ def get_snapshot_file(sessid):
 
 # here, the script starts
 # ip = os.environ['REMOTE_ADDR'].strip()
-
-ckstr = os.environ.get('HTTP_COOKIE').strip()
+ckstr=None
+if os.environ.get('HTTP_COOKIE'):
+	ckstr = os.environ.get('HTTP_COOKIE').strip()
 ck = cookie.SimpleCookie()
 
 form = cgi.FieldStorage()
