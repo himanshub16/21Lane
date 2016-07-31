@@ -181,6 +181,8 @@ class userconfigUI(QWidget):
 			self.passwordInput.setText(usrobj.password)
 		else:
 			self.usernameInput.setReadOnly(True)
+			self.usernameInput.setHidden(True)
+			self.usernameLabel.setHidden(True)
 		self.usernameInput.setText(usrobj.name)
 		self.homedirInput.setText(usrobj.homedir)
 		self.loginmsgInput.setText(usrobj.msg_login)
