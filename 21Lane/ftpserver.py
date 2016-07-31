@@ -582,17 +582,41 @@ class MainUI(QMainWindow, QWidget):
 				sessionid = None
 			
 			post_data = { 'action':'disconnect' }
-			r = requests.post(exchange_url, data=post_data, cookies={'session_id':sessionid}, proxies=None, timeout=5)
-			if r.status_code == 200 and r.text.strip() == 'ok':
-				exchange_connect_status = False
-				QMessageBox.information(self, '21Exchange', "You have been logged out.")
-				if 'session_id' in ls(pwd):
-					os.remove('session_id')
-					mylog("session_id file removed")
-			self.toolbar.removeAction(self.disconnect)
-			self.appMenu.removeAction(self.disconnect)
-			self.toolbar.addAction(self.exchange)
-			self.appMenu.addAction(self.exchange)
+			
+			try:
+				r = requests.post(exchange_url, data=post_data, cookies={'session_id':sessionid}, proxies=None, timeout=5)
+				if r.status_code == 200 and r.text.strip() == 'ok':
+					exchange_connect_status = False
+					QMessageBox.information(self, '21Exchange', "You have been logged out.")
+					if 'session_id' in ls(pwd):
+						os.remove('session_id')
+						mylog("session_id file removed")
+				self.toolbar.removeAction(self.disconnect)
+				self.appMenu.removeAction(self.disconnect)
+				self.toolbar.addAction(self.exchange)
+				self.appMenu.addAction(self.exchange)
+
+			except (requests.exceptions.ConnectionError, requests.exceptions.HTTPError, ConnectionAbortedError, requests.exceptions.Timeout) as e:
+			QMessageBox.critical(self, 'Error', 'Network error!', QMessageBox.Ok, QMessageBox.Ok)
+			# raise e
+		except Exception as e:
+			# first close any open file to avoid permissions error in windows, and other similar errors
+			try:
+				if not f.closed:
+					f.close()
+				if not dest_file.closed:
+					dest_file.close()
+				if not source_file.closed:
+					source_file.close
+			except NameError:
+				pass
+
+			if 'session_id' in ls(pwd):
+				os.remove('session_id')
+			QMessageBox.critical(self, 'Error', "Some error occured!", QMessageBox.Ok, QMessageBox.Ok)
+			mylog(str(e) + ' ' + 'is the error')
+			raise e
+
 
 
 
