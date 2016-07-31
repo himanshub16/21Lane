@@ -78,6 +78,8 @@ class userconfigUI(QWidget):
 			grid.addWidget(self.passwordInput, 1, 2, 1, 2)
 		else:
 			self.usernameInput.setText("anonymous")
+			self.usernameInput.setHidden(True)
+			self.usernameLabel.setHidden(True)
 
 		grid.addWidget(self.usernameLabel, 0, 0, 1, 2)
 		grid.addWidget(self.usernameInput, 0, 2, 1, 2)
@@ -181,8 +183,8 @@ class userconfigUI(QWidget):
 			self.passwordInput.setText(usrobj.password)
 		else:
 			self.usernameInput.setReadOnly(True)
-			self.usernameInput.setHidden(True)
-			self.usernameLabel.setHidden(True)
+			
+
 		self.usernameInput.setText(usrobj.name)
 		self.homedirInput.setText(usrobj.homedir)
 		self.loginmsgInput.setText(usrobj.msg_login)
