@@ -3,4 +3,4 @@
 ### [Sayantan Chatterjee](https://github.com/illuminatus)
 * Suggestions for UX improvements.
 * Design improvement suggestions for 21lane.github.io
-* Testing of software.
+* Testing of software on Windows.
