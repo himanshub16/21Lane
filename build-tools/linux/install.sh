@@ -4,16 +4,26 @@
 var="$(which python3)"
 if [ "$var" = "" ]; then
 	echo "Python3 is not installed."
-	echo "Make sure Python 3.5.x is installed on your system and configured."
-	read -n1 -p "Press any key to exit... "
-	exit 1
+	read -pr "Do you want to install Python3 ? (y/n) " pythonresp
+	if [ "$pythonresp" = "y"] || [ "$pythonresp" = "Y" ]; then
+		sudo apt-get install python3.5
+	else
+		echo "Make sure Python 3.5.x is installed on your system and configured."
+		read -n1 -p "Press any key to exit... "
+		exit 1
+	fi
 else
 	var="$(which pip3)"
 	if [ "$var" = "" ]; then
 		echo "pip3 is missing."
-		echo "Make sure your Python installation is complete."
-		read -n1 -p "Press any key to exit... "
-		exit 1
+		read -pr "Do you want to install pip ? (y/n) " pipresp
+		if [ "$pipresp" = "y"] || [ "$pipresp" = "Y" ]; then
+			sudo apt-get install pip3
+		else
+			echo "Make sure your Python installation is complete."
+			read -n1 -p "Press any key to exit... "
+			exit 1
+		fi
 	else
 		python3 setup.py install && pip3 install -r requirements.txt
 		# install required modules
