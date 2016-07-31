@@ -598,7 +598,7 @@ class MainUI(QMainWindow, QWidget):
 
 			except (requests.exceptions.ConnectionError, requests.exceptions.HTTPError, ConnectionAbortedError, requests.exceptions.Timeout) as e:
 				QMessageBox.critical(self, 'Error', 'Network error!', QMessageBox.Ok, QMessageBox.Ok)
-			# raise e
+				# raise e
 			except Exception as e:
 				# first close any open file to avoid permissions error in windows, and other similar errors
 				try:
