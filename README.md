@@ -1,6 +1,6 @@
-## 21LANE (https://21lane.github.io)
+#21LANE (https://21lane.github.io)
 
-# Creator: Himanshu Shekhar ( http://github.com/himanshub16 )
+## Creator: Himanshu Shekhar ( http://github.com/himanshub16 )
 This is a file sharing software which sets up an FTP server on your system.
 
 For usage manual, refer to [this link](21lane.github.io/howto.html)
