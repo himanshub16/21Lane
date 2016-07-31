@@ -107,19 +107,17 @@ port = form.getvalue('port')
 # 	print()
 # 	print('Action required')
 
-if not ip:
-	print('Content-type:text/html')
-	print()
-	print("Please send your IP address as form field")
-	print("This helps to identify you if you are behind NAT/Firewall")
-	sys.exit()
-
 if not sharesize:
 	sharesize = 0
 
 
 print("Content-type:text/text")
 if action=='connect':
+	if not ip:
+		print()
+		print("Please send your IP address as form field")
+		print("This helps to identify you if you are behind NAT/Firewall")
+		sys.exit()
 	if not ckstr:
 		# first visit
 		sessid = create_sessid(ip)
