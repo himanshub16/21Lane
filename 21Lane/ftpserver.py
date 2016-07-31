@@ -18,6 +18,7 @@ import requests
 import json
 import mimetypes
 from tinydb import TinyDB, where, Query
+from urllib.parse import urlparse 
 
 from datetime import datetime
 
@@ -319,6 +320,13 @@ class MainUI(QMainWindow, QWidget):
 		self.mainbtn.move(85, 100)
 		self.mainbtn.clicked[bool].connect(self.check_server)
 
+		self.exchangebtn = QPushButton("Walk the lane", self)
+		self.exchangebtn.setStyleSheet("background-color: #bdc3c7; color: white; border: none")
+		self.exchangebtn.setCheckable(True)
+		self.exchangebtn.setEnabled(False)
+		self.exchangebtn.move(85, 140)
+		self.exchangebtn.clicked[bool].connect(self.open_exchange)
+
 		# exit action
 		# exitAction = QAction(QIcon('icons/exit.png'), '&Exit', self)
 		# exitAction.setShortcut('Alt+F4')
@@ -408,8 +416,8 @@ class MainUI(QMainWindow, QWidget):
 		# self.snapshot_thread = None
 		# self.srv = None
 
-		self.setGeometry(200, 100, 280, 170)
-		self.setFixedSize(280, 170)
+		self.setGeometry(200, 100, 280, 220)
+		self.setFixedSize(280, 200)
 		self.setWindowTitle("21Lane")
 		self.statusBar().showMessage("Welcome")
 		self.show()
@@ -570,6 +578,16 @@ class MainUI(QMainWindow, QWidget):
 		url = QUrl("https://github.com/21lane/21Lane")
 		QDesktopServices.openUrl(url)
 
+	def open_exchange(self):
+		global exchange_url
+		x = urlparse(exchange_url)
+		url = QUrl(x.scheme+'://'+x.netloc)
+		print(url)
+		QDesktopServices.openUrl(url)
+	
+	def dummy_func(self):
+		return
+
 	def exchange_disconnect(self):
 		global exchange_url, exchange_connect_status
 		reply = QMessageBox.question(self, '21Exchange', "You are connected. Do you want to log out from the server?", QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
@@ -595,6 +613,10 @@ class MainUI(QMainWindow, QWidget):
 				self.appMenu.removeAction(self.disconnect)
 				self.toolbar.addAction(self.exchange)
 				self.appMenu.addAction(self.exchange)
+
+				self.exchangebtn.setEnabled(False)
+				self.exchangebtn.setStyleSheet("background-color: #bdc3c7; color: black; border: none")
+				# self.exchangebtn.clicked[bool].connect(self.dummy_func)
 
 			except (requests.exceptions.ConnectionError, requests.exceptions.HTTPError, ConnectionAbortedError, requests.exceptions.Timeout) as e:
 				QMessageBox.critical(self, 'Error', 'Network error!', QMessageBox.Ok, QMessageBox.Ok)
@@ -665,6 +687,11 @@ class MainUI(QMainWindow, QWidget):
 				self.toolbar.removeAction(self.exchange)
 				self.toolbar.addAction(self.disconnect)
 				exchange_connect_status = True
+
+				self.exchangebtn.setEnabled(True)
+				self.exchangebtn.setStyleSheet("background-color: blue; color: white; border: none")
+				# self.exchangebtn.clicked[bool].connect(self.open_exchange)
+
 				# now upload the snapshot file, if any like a good boy
 				# this didn't work
 				# if ('snapshot.json' in ls(pwd) and exchange_url):

@@ -12,36 +12,33 @@
 <body>
 
 
-<header id='supertop'>
-	<header id="top-banner">
-		<a href="https://21lane.github.io" target="_blank" style="text-decoration: none">
-			<span id="logo">
-				<!--<img src="/images/logo-blue.png" alt="21Lane">-->
-			</span>
-		</a>
-		<span id="exchange-name">
-			Organisation name
-		</span>
-		<div class="clearfix"></div>
-	</header>
-
-	<header id='topnav'>
-		<nav>
-			<ul class="noselect">
-				<li class="to-article-1">See connected users</li>
-				<li class="to-article-2">Search for a file</li>
-			</ul>
-		</nav>
-		<div id="hamburger-menu">
-			<div class='hamburger noselect'>&#9776;</div>
-			<ul class='hamburger-menu-hide'>
-				<li class="to-article-1">See connected users</li>
-				<li class="to-article-2">Search for a file</li>
+<header id="top-header">
+	<div class="row">
+		<a href="https://21lane.github.io"><span class="logo"></span></a>
+		<div class="navbar">
+			<ul>
+				<li class="to-article-1">See Connected Users</li>
+				<!--<li id='search-button'> &#128269; Search for files</li>-->
+				<li id='search-box'>
+					<form onsubmit="validate_search(); return false;" style="width:auto; display: inline-block;">
+						<input type='text' id='searchbox' placeholder='&#128269; Search for files' autocomplete="off" />
+					</form>	
+				</li>
+				<li>
+					<a href="http://geekhaven.iiita.ac.in" style="color:inherit; text-decoration:none;">geekhaven iiita</a>
+				</li>
 			</ul>
 		</div>
-	</header>
+		
+	</div>
 
+	<!--<div style="left: 0; right: 0; margin: auto;">
+		<form onsubmit="validate_search(); return false;" style="width: 100vw">
+			<input type='text' id='searchbox' onfocus="hide_supertop()" onblur="show_supertop()" placeholder='Enter filename to search and press enter' autocomplete="off" />
+		</form>	
+	</div>-->
 </header>
+
 <div id='alert-box'>
 	<!--error text here loaded by javascript-->
 	<span id='alert-text'></span>
@@ -77,9 +74,9 @@
 	<article id='search-article'>
 		<div class="prompt" id='search-box-container'>
 			<!--Enter you search parameter? <br /> <br />-->
-			<form onsubmit="validate_search(); return false;">
+			<!--<form onsubmit="validate_search(); return false;">
 				<input type='text' id='searchbox' onfocus="hide_supertop()" onblur="show_supertop()" placeholder='Enter filename to search and press enter' autocomplete="off" />
-			</form>
+			</form>-->
 		</div>
 		<div id="search-results"></div>
 	</article>
@@ -147,18 +144,7 @@ function addNavListeners() {
 	elems[0].addEventListener('click', function() {
 		scrollTo(document.body, document.documentElement.clientHeight*1, 2000);
 	});
-	elems[1].addEventListener('click', function() {
-		scrollTo(document.body, document.documentElement.clientHeight*1, 2000);
-		document.getElementById('searchbox').focus();
-	});
-	elems = document.getElementsByClassName('to-article-2');
-	elems[0].addEventListener('click', function() {
-		scrollTo(document.body, document.documentElement.clientHeight*2, 2000);
-	});
-	elems[1].addEventListener('click', function() {
-		scrollTo(document.body, document.documentElement.clientHeight*2, 2000);
-		document.getElementById('searchbox').focus();
-	});
+	
 	document.getElementById('yes-action').addEventListener('click', function() {
 		load_users();
 	});
@@ -185,10 +171,6 @@ function addNavListeners() {
 	document.getElementById('toggle-copy-box').addEventListener("click", function() {
 		document.getElementById('copy-box').style.opacity = '0';
 		document.getElementById('copy-box').style.width = '0';
-	});
-	document.getElementById('hamburger-menu').getElementsByClassName('hamburger')[0].addEventListener("click", function () {
-		var elem = this.parentElement.getElementsByTagName('ul')[0];
-		elem.classList.toggle('hamburger-menu-hide');
 	});
 }
 
