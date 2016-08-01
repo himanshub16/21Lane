@@ -4,3 +4,4 @@
 * Suggestions for UX improvements.
 * Design improvement suggestions for 21lane.github.io
 * Testing of software on Windows.
+* Don't randomly hit your mouse. It hurts.
