@@ -104,7 +104,16 @@ def get_ip_address():
 		ip = socket.gethostbyname(socket.getfqdn())
 		return ip
 	except Exception as e:
-		mylog("cannot determine ip address")
+		try:
+			s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+			s.connect(("8.8.8.8",80))
+			ip = s.getsockname()[0]
+			s.close()
+			return ip
+		except Exception as e:
+			mylog("cannot determine ip address" + str(e))
+			return ""
+		return ""
 
 
 class generate_system_snapshot(threading.Thread):
@@ -204,7 +213,7 @@ class generate_system_snapshot(threading.Thread):
 			if 'session_id' in ls(pwd):
 				os.remove('session_id')
 			mylog(str(e) + ' ' + 'is the error')
-			raise e
+			# raise e
 
 	def getThreadName(self):
 		return self.thread_name
