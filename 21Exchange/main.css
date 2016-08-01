@@ -12,6 +12,7 @@ body {
 	width: 100vw;
 	max-width: 100%;
 	background-color: white;
+	color: white;
 	font-family: 'Roboto', sans-serif;
 }
 
@@ -262,8 +263,7 @@ section article {
 	display: block;
 	width: 100vw;
 	max-width: 100%;
-	min-height: 100vh;
-	height: auto;
+	/*min-height: 100vh;*/
 	background-color: #019875;
 }
 
@@ -277,7 +277,7 @@ section article {
 	background-color: rgba(0,0,0,0.6);
 	color: white;
 	font-size: 15px;
-	width: 40%;
+	width: 80%;
 	padding: 10px;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -299,8 +299,9 @@ section article {
 
 .action {
 	border: 0.2px solid;
-	padding: 5px;
+	padding: 5px 15px;
 	box-sizing: border-box;
+	border-radius: 5px;
 	cursor: pointer;
 	box-shadow: 1px 1px 1px 1px;
 }
@@ -351,18 +352,24 @@ section article {
 
 #searchbox {
 	padding: 20px;
+	padding-left: 0;
 	border-radius: 5px;
-	border: 0.1px solid transparent;
+	/*border: 0.1px solid transparent;*/
+	border: none;
 	font-size: 1.2em;
 	background-color: transparent;
-	width: 100%;
+	width: auto;
 	box-sizing: border-box;	
 	color: inherit;
 	clear: both;
-	text-align: center;
+	text-align: right;
 	font-weight: lighter;
 	/*box-shadow: 1px 1px 2px 1px rgba(0,0,0,0.6);*/
-	animation: 
+	/*animation: */
+}
+
+#searchbox:focus {
+	outline: none;
 }
 
 #search-results {
