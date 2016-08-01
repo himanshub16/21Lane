@@ -24,6 +24,12 @@
 
 * Exchange URL : You can find it on your exchange's website.
 
+* To know what's happening with your share in real time, 
+  execute the following commands in command prompt:
+  
+     cd %userprofile%\21Lane\
+	 monitor-log.bat
+
 HAPPY SHARING.
 
 https://21lane.github.io/
