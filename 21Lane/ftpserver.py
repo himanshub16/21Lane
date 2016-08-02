@@ -101,14 +101,14 @@ def is_port_available(port):
 
 def get_ip_address():
 	try:
-		ip = socket.gethostbyname(socket.getfqdn())
+		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+		s.connect(("8.8.8.8",80))
+		ip = s.getsockname()[0]
+		s.close()
 		return ip
 	except Exception as e:
 		try:
-			s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-			s.connect(("8.8.8.8",80))
-			ip = s.getsockname()[0]
-			s.close()
+			ip = socket.gethostbyname(socket.getfqdn())
 			return ip
 		except Exception as e:
 			mylog("cannot determine ip address" + str(e))
