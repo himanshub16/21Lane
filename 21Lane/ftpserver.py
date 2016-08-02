@@ -303,7 +303,7 @@ class userui_thread(threading.Thread):
 
 # handling with GUI
 from PyQt5.QtWidgets import (QWidget, QAction, qApp, QPushButton, QApplication,
-	QMainWindow, QTextEdit, QMessageBox, QInputDialog, QLineEdit, QLabel)
+	QMainWindow, QTextEdit, QMessageBox, QInputDialog, QLineEdit, QLabel, QVBoxLayout)
 from PyQt5.QtGui import QIcon, QFont
 from PyQt5.Qt import QDesktopServices, QUrl
 
@@ -319,22 +319,29 @@ class MainUI(QMainWindow, QWidget):
 
 		self.itHurtsLabel = QLabel(self)
 		self.itHurtsLabel.setText("Don't randomly hit your mouse. It hurts!'")
+		self.itHurtsLabel.setFont(QFont('SansSerif', 10))
 		self.itHurtsLabel.setFixedWidth(10000)
-		self.itHurtsLabel.setWordWrap(True)
-		self.itHurtsLabel.move(30,60)
+		self.itHurtsLabel.setWordWrap(False)
+		self.itHurtsLabel.move(40,60)
 
 		self.mainbtn = QPushButton("Start sharing", self)
 		self.mainbtn.setStyleSheet("background-color: blue; color: white; border: none")
 		self.mainbtn.setCheckable(True)
-		self.mainbtn.move(85, 100)
+		self.mainbtn.move(120, 100)
 		self.mainbtn.clicked[bool].connect(self.check_server)
 
 		self.exchangebtn = QPushButton("Walk the lane", self)
 		self.exchangebtn.setStyleSheet("background-color: #bdc3c7; color: white; border: none")
 		self.exchangebtn.setCheckable(True)
 		self.exchangebtn.setEnabled(False)
-		self.exchangebtn.move(85, 140)
+		self.exchangebtn.move(120, 140)
 		self.exchangebtn.clicked[bool].connect(self.open_exchange)
+
+		# self.mainlayout.addWidget(self.itHurtsLabel)
+		# self.mainlayout.addWidget(self.mainbtn)
+		# self.mainlayout.addWidget(self.exchangebtn)
+
+		# self.setLayout(self.mainlayout)
 
 		# exit action
 		# exitAction = QAction(QIcon('icons/exit.png'), '&Exit', self)
@@ -425,8 +432,8 @@ class MainUI(QMainWindow, QWidget):
 		# self.snapshot_thread = None
 		# self.srv = None
 
-		self.setGeometry(200, 100, 280, 220)
-		self.setFixedSize(280, 200)
+		self.setGeometry(200, 100, 350, 220)
+		self.setFixedSize(350, 200)
 		self.setWindowTitle("21Lane")
 		self.statusBar().showMessage("Welcome")
 		self.show()
