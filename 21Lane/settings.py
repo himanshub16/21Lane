@@ -34,8 +34,8 @@ class FTPSettings:
 		"""read data from settings file"""
 		dbase = TinyDB('settings.json')
 		if len(dbase.all()) == 0:
-			self.server_name = 'Unnamed server'
-			self.server_banner = "Welcome to dFTP server"
+			self.server_name = 'whoami'
+			self.server_banner = "Welcome..."
 			self.port = 2121
 			self.max_cons = 10
 			self.max_cons_per_ip = 2
@@ -130,7 +130,7 @@ class SettingsUI(QWidget):
 		self.maxconperipInput = QSpinBox(self)
 		self.uploadInput = QSlider(Qt.Horizontal, self); self.uploadInput.setFocusPolicy(Qt.NoFocus)
 		self.downloadInput = QSlider(Qt.Horizontal, self); self.downloadInput.setFocusPolicy(Qt.NoFocus)
-		self.exchangeInput = QLineEdit(self); self.exchangeInput.setPlaceholderText("URL of the exchange you connect the most")
+		self.exchangeInput = QLineEdit(self); self.exchangeInput.setPlaceholderText("Get it from the exchange website.")
 
 		# control buttons
 		self.restoreBtn = QPushButton("Restore Defaults", self)
