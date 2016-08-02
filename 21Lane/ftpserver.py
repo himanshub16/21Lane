@@ -646,7 +646,7 @@ class MainUI(QMainWindow, QWidget):
 					os.remove('session_id')
 				QMessageBox.critical(self, 'Error', "Some error occured!", QMessageBox.Ok, QMessageBox.Ok)
 				mylog(str(e) + ' ' + 'is the error')
-				raise e
+				# raise e
 
 
 
