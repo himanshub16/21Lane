@@ -231,7 +231,7 @@ class SettingsUI(QWidget):
 			self.uploadDisplay.setToolTip("")
 
 
-	def saveData(self):
+	def saveData(self, event):
 		self.sett.server_name = self.nameInput.text()
 		self.sett.server_banner = self.bannerInput.text()
 		self.sett.port = self.portInput.value()
@@ -251,7 +251,7 @@ class SettingsUI(QWidget):
 
 		self.sett.save_settings()
 		QMessageBox.information(self, 'Settings saved', "Restart sharing to load new settings.", QMessageBox.Ok, QMessageBox.Ok)
-
+		qApp.quit()
 
 	def restoreDefaults(self):
 		self.sett.restore_default_settings()
