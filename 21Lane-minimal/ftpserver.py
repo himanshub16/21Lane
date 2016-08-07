@@ -488,7 +488,7 @@ class MainUI(QWidget):
 
 		self.maxconInput.setMinimum(3); self.maxconInput.setMaximum(100)
 		self.maxconperipInput.setMinimum(3); self.maxconperipInput.setMaximum(10)
-		self.speedInput.setMinimum(10); 
+		self.speedInput.setMinimum(1536); 
 		self.speedInput.setMaximum(5632);
 
 
