@@ -30,9 +30,12 @@ PORT = 2121
 server = None
 gen_snapshot = False
 exchange_connect_status = False
+CAPERROR = False
 exchange_url = ''
 total_share_size = 0
 server_running_status = False
+
+app_is_running = True
 
 ls = os.listdir
 pwd = os.getcwd()
@@ -160,12 +163,6 @@ def mylog(ar):
 def load_settings():
 	return FTPSettings()
 
-
-
-
-
-
-
 def start_server():
 	server.serve_forever()
 
@@ -211,8 +208,7 @@ class generate_system_snapshot(threading.Thread):
 		threading.Thread.__init__(self)
 
 	def do_the_job(self):
-		global exchange_connect_status, gen_snapshot, total_share_size
-		exchange_eligibility = False
+		global exchange_connect_status, gen_snapshot, total_share_size, app_is_running
 
 		self.dbdict = {}
 		self.dbdict["filedata"] = {}
@@ -221,7 +217,8 @@ class generate_system_snapshot(threading.Thread):
 		self.totalsize = 0
 		self.filecount = 0
 		def path_to_dict(path, l):
-			if not gen_snapshot:
+			if ( not gen_snapshot ) or (not app_is_running ):
+				# not generating snapshot
 				return
 			try:
 				if os.path.isdir(path):
@@ -231,11 +228,11 @@ class generate_system_snapshot(threading.Thread):
 					self.filecount += 1
 					size = os.path.getsize(path)
 					filename = os.path.basename(path)
-					self.dbtable[str(self.filecount)] = { "filename":filename, "size":size, "fullpath":path[l:], "mimetype":mimetypes.guess_type(filename)[0] }
+					self.dbtable[str(self.filecount)] = { "filename":filename, "size":size, "fullpath":path[l:-len(filename)], "mimetype":mimetypes.guess_type(filename)[0] }
 					# self.dic[os.path.basename(path)] = { "size" : os.path.getsize(path), "fullpath" : path[l:] }
 					self.totalsize += size
 			except Exception as e:
-				pass
+				raise e
 
 		if not gen_snapshot:
 			return
@@ -259,11 +256,7 @@ class generate_system_snapshot(threading.Thread):
 
 
 	def upload_file(self): 
-		global exchange_url, exchange_eligibility
-
-		if (exchange_eligibility == False):
-			mylog("Minimum cap not satisfied. Connect failed.")
-			return
+		global exchange_url, CAPERROR
 		mylog("Starting upload")
 		try:
 			dest_dir = load_settings().homedir
@@ -279,17 +272,22 @@ class generate_system_snapshot(threading.Thread):
 			f = open('session_id', 'r')
 			sessionid = f.read().strip()
 			f.close()
-			r = requests.post(url=exchange_url, data={'action':'snapshot'}, cookies={'session_id':sessionid}, timeout=5, proxies=None)
+			uri=exchange_url+'/cgi-bin/actions.py'
+			headers = {'user-agent':'21Lane'}
+			r = requests.post(url=uri, data={'action':'snapshot'}, cookies={'session_id':sessionid}, headers=headers, timeout=5, proxies=None)
 			# print(r.text, 'is the response for snapshot')
-			if r.status_code==200 and r.text.strip()=='ok':
-				mylog('Snapshot file uploaded successfully.')
-				os.remove(dest_path)
+			if r.status_code==200:
+				if r.text.strip() == 'ok':
+					mylog('Snapshot file uploaded successfully.')
+					os.remove(dest_path)
+				elif r.text.strip() == 'CAPERROR':
+					CAPERROR = True
 			else:
 				mylog("Some error occured while uploading snapshot.")
 
 		except (requests.exceptions.ConnectionError, ConnectionAbortedError, requests.exceptions.Timeout) as e:
 			mylog("Network error while periodical uploads.")
-			# raise e
+			raise e
 		except Exception as e:
 			# first close any open file to avoid permissions error in windows, and other similar errors
 			try:
@@ -305,19 +303,19 @@ class generate_system_snapshot(threading.Thread):
 			if 'session_id' in ls(pwd):
 				os.remove('session_id')
 			mylog(str(e) + ' ' + 'is the error')
-			# raise e
+			raise e
 
 	def getThreadName(self):
 		return self.thread_name
 
 	def run(self):
 		self.thread_name = self.getName()
-		global gen_snapshot
+		global gen_snapshot, app_is_running
 		cur_time = time.time()
 		wait_time = 60*60 # one hour gap
 		next_time = cur_time
 		upload_time = time.time()
-		while (True):
+		while True and app_is_running:
 			if not gen_snapshot:
 				mylog("Ending snapshot thread")
 				break
@@ -327,6 +325,8 @@ class generate_system_snapshot(threading.Thread):
 				next_time += wait_time
 				if exchange_connect_status == True:
 					self.upload_file()
+				else:
+					print("not uploading file")
 	
 			# breathe, don't choke while you run
 			time.sleep(1)
@@ -390,6 +390,8 @@ class MainUI(QWidget):
 	def __init__(self):
 		super().__init__()
 		self.srv = None
+		self.exchange_process = None
+		self.capThread = None
 		self.initUI()
 
 	def initUI(self):
@@ -402,15 +404,14 @@ class MainUI(QWidget):
 		self.itHurtsLabel.setWordWrap(False)
 
 		self.mainbtn = QPushButton("Start sharing", self)
-		self.mainbtn.setStyleSheet("background-color: blue; color: white; border: none; padding: 5px;")
+		self.mainbtn.setStyleSheet("background-color: #22a7f0; color: white; border: none; padding: 5px;")
 		self.mainbtn.setCheckable(True)
 		self.mainbtn.clicked[bool].connect(self.check_server)
 
 		self.exchangebtn = QPushButton("Walk the lane", self)
-		self.exchangebtn.setStyleSheet("background-color: #bdc3c7; color: white; border: none; padding: 5px;")
+		self.exchangebtn.setStyleSheet("background-color: #bdc3c7; color: white; border: none; padding: 5px 15px;")
 		self.exchangebtn.setCheckable(True)
 		self.exchangebtn.setEnabled(False)
-		self.exchangebtn.clicked[bool].connect(self.open_exchange)
 
 
 		# port check tool
@@ -533,9 +534,15 @@ class MainUI(QWidget):
 
 		self.sett = load_settings()
 		self.populateForm()
-		self.setFixedSize(450, 300)
+		# self.setFixedSize(450, 300)
+		self.setFixedSize(self.minimumSizeHint())
 		self.setWindowTitle("21Lane")
 		# self.statusBar().showMessage("Welcome")
+
+		# start cap monitoring thread
+		self.mainbtn.setEnabled(True)
+		self.capThread = threading.Thread(target=self.capMonitor)
+		self.capThread.start()
 		self.show()
 
 
@@ -550,16 +557,19 @@ class MainUI(QWidget):
 	def getSpeedText(self, value):
 		if value < 1024:
 			return str(value)+" KBPS"
-		elif value < 5220:
+		elif value < 5625:
 			return str(round(value/1024, 2))+" MBPS"
 		else:
+			self.speedInput.setValue(5620)
 			return "No Limit"
 
 	
 
 	def downSpeedChanged(self, value):
 		self.speedDisplay.setText(self.getSpeedText(value))
-		if value > 5220:
+		if value > 5625:
+			if self.speedDisplay.text() == 'No Limit':
+				return
 			self.speedInput.setValue(5220)
 			self.speedDisplay.setToolTip("May slow down your system.")
 			QMessageBox.warning(self, 'Message', "No Limits on Download speed.\nThis may slow down your system if many people connect to it.", QMessageBox.Ok, QMessageBox.Ok)
@@ -607,11 +617,10 @@ class MainUI(QWidget):
 		return True
 
 	def quitapp(self):
-		global server, gen_snapshot
+		global server, gen_snapshot, app_is_running
 		mylog("quit event caught", gen_snapshot)
 		if server:
 			server.close_all()
-			print(threading.Thread.isAlive(self.srv))
 		del self.srv
 		mylog(self.snapshot_thread)
 		if self.snapshot_thread:
@@ -624,7 +633,6 @@ class MainUI(QWidget):
 		global server, gen_snapshot, server_running_status, PORT
 		PORT = self.sett.port
 		self.mainbtn.setEnabled(False)
-
 		if not server and not server_running_status:
 			if (self.saveData() == False):
 				self.mainbtn.setEnabled(True)
@@ -647,15 +655,16 @@ class MainUI(QWidget):
 			while not server_running_status:
 				time.sleep(0.5)
 			self.mainbtn.setText("Stop Sharing")
-			self.mainbtn.setStyleSheet("background-color: #ff7373; color: black; border: none; padding: 5px;")
+			self.mainbtn.setStyleSheet("background-color: #f62459; color: white; border: none; padding: 5px;")
 			self.setStatusTip(msg)
 
 			gen_snapshot = True
+			self.exchange_connect()
 			self.snapshot_thread = generate_system_snapshot()
 			self.snapshot_thread.start()
-			self.exchange_connect()
 
 		elif server and server_running_status:
+			mylog("stopping server")
 			self.setStatusTip("Stopping, please wait...")
 			server.close_all()
 			server_running_status = False
@@ -664,6 +673,7 @@ class MainUI(QWidget):
 			# if it doesn't within given time, close it forcibly
 			count = 4
 			mylog("Waiting for server thread to end")
+
 			while( threading.Thread.isAlive(self.srv) and count > 0):
 				time.sleep(0.5)
 				count -= 1
@@ -681,18 +691,23 @@ class MainUI(QWidget):
 					mylog("Waiting for snapshot thread to end.")
 					time.sleep(1)
 				self.snapshot_thread = None
+
+
 			self.setStatusTip("Stopped")
 			server_running_status = False
 			self.exchange_disconnect()
 			self.mainbtn.setText("Start Sharing")
-			self.mainbtn.setStyleSheet("background-color: #40e0d0; color: black; border: none; padding: 5px;")
-		else:
-			return
+			self.mainbtn.setStyleSheet("background-color: #40e0d0; color: black; border: none; padding: 5px;")\
 
+		else:
+			print('doing nothing')
+			return
 		self.mainbtn.setEnabled(True)
 
 
 	def closeEvent(self, event):
+		global app_is_running
+		app_is_running = False
 		try:
 			if self.srv is not None:
 				self.setStatusTip("Cleaning up")
@@ -702,15 +717,34 @@ class MainUI(QWidget):
 				if self.snapshot_thread:
 					gen_snapshot = False
 					del self.snapshot_thread
+				if self.exchange_process:
+					self.exchange_process.poll()
+					if not self.exchange_process.returnCode:
+						self.exchange_process.kill()
+					del self.exchange_process
+					self.exchange_process = None
+					mylog('Exchange UI closed.')
+
 				mylog("Cleaned up")
+
 		except:
 			pass
 		finally:
 			reply = QMessageBox.question(self, 'Close', "Are you sure to exit ?", QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
 			if reply == QMessageBox.Yes:
 				event.accept()
+				raise KeyboardInterrupt
 			else:
 				event.ignore()
+
+	def capMonitor(self):
+		global CAPERROR
+		while True and app_is_running:
+			if CAPERROR:
+				self.setStatusTip("You must satisfy the minimum cap as per your exchange.")
+			# don't choke while you run
+			time.sleep(1)
+		mylog("Cap monitor thread quits.")
 
 
 	def checkPortUI(self):
@@ -737,43 +771,47 @@ class MainUI(QWidget):
 		QDesktopServices.openUrl(url)
 
 	def open_exchange(self):
-		global exchange_url
-		x = urlparse(exchange_url)
-		url = QUrl(x.scheme+'://'+x.netloc)
-		print(url)
-		QDesktopServices.openUrl(url)
-	
+		global exchange_url 		
+		uri = exchange_url
+		self.exchange_process = subprocess.Popen([python, "exchange_client.py", uri])
 	
 
-	def exchange_disconnect(self):
+	def exchange_disconnect(self, signalFrom=None):
 		global exchange_url, exchange_connect_status
-		reply = QMessageBox.question(self, '21Exchange', "You are connected. Do you want to log out from the server?", QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
-		if reply == QMessageBox.Yes:
+		if not exchange_connect_status:
+			return
+		if not signalFrom:
+			reply = QMessageBox.question(self, '21Exchange', "You are connected. Do you want to log out from the server?", QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
+		else:
+			reply = QMessageBox.information(self, '21Exchange', "You will now be disconnected from the exchange.", QMessageBox.Ok, QMessageBox.Ok)
+		if (reply == QMessageBox.Yes) or (reply == QMessageBox.Ok):
 			if 'session_id' in ls(pwd):
 				f = open('session_id', 'r')
 				sessionid = f.read().strip()
 				f.close()
 			else:
-				sessionid = None
+				sessionid = ''
 			
 			post_data = { 'action':'disconnect' }
-			
+			uri = exchange_url+'/cgi-bin/actions.py'
 			try:
-				r = requests.post(exchange_url, data=post_data, cookies={'session_id':sessionid}, proxies=None, timeout=5)
+				headers = {'user-agent':'21Lane'}
+				r = requests.post(url=uri, data=post_data, cookies={'session_id':sessionid}, headers=headers, proxies=None, timeout=5)
 				if r.status_code == 200 and r.text.strip() == 'ok':
 					exchange_connect_status = False
 					QMessageBox.information(self, '21Exchange', "You have been logged out.")
 					if 'session_id' in ls(pwd):
 						os.remove('session_id')
 						mylog("session_id file removed")
+
+				if self.exchangebtn.isEnabled():
+					self.exchangebtn.setEnabled(False)
+					self.exchangebtn.setStyleSheet("background-color: #bdc3c7; color: white; border: none; padding: 5px 15px;")
+					self.exchangebtn.disconnect()
+					
 				
-
-				self.exchangebtn.setEnabled(False)
-				self.exchangebtn.setStyleSheet("background-color: #bdc3c7; color: black; border: none; padding: 5px")
-				# self.exchangebtn.clicked[bool].connect(self.dummy_func)
-
 			except (requests.exceptions.ConnectionError, requests.exceptions.HTTPError, ConnectionAbortedError, requests.exceptions.Timeout) as e:
-				QMessageBox.critical(self, 'Error', 'Network error!', QMessageBox.Ok, QMessageBox.Ok)
+				QMessageBox.critical(self, 'Network error', 'Cannot connect to exchange. Sharing is up!', QMessageBox.Ok, QMessageBox.Ok)
 				# raise e
 			except Exception as e:
 				# first close any open file to avoid permissions error in windows, and other similar errors
@@ -791,12 +829,12 @@ class MainUI(QWidget):
 					os.remove('session_id')
 				QMessageBox.critical(self, 'Error', "Some error occured!", QMessageBox.Ok, QMessageBox.Ok)
 				mylog(str(e) + ' ' + 'is the error')
-				# raise e
+				raise e
 
 
 
 	def exchange_connect(self):
-		global server, exchange_url, PORT, exchange_connect_status, exchange_eligibility
+		global server, exchange_url, PORT, exchange_connect_status
 		if len(self.sett.exchange_url) == 0:
 			return
 		if not server:
@@ -804,28 +842,29 @@ class MainUI(QWidget):
 			return
 		try:
 			exchange_url = self.sett.exchange_url
-			exchange_url = exchange_url+"/cgi-bin/actions.py"
+			url = exchange_url+"/cgi-bin/actions.py"
 
 			server_name = self.sett.server_name
-			post_data = { 'total_share_size':total_share_size, 'action':'connect', 'server_name':server_name, 'port':PORT, 'IP':get_ip_address() }
+			post_data = { 'action':'connect', 'server_name':server_name, 'port':PORT, 'IP':get_ip_address() }
 
 			if 'session_id' in ls(pwd):
 				f = open('session_id', 'r')
 				ckstr = f.read()
 				f.close()
-				ck = {'session_id':ckstr.strip()}
+				ck = ckstr.strip()
 			else:
 				ck = None
-			r = requests.post(exchange_url, data=post_data, cookies=ck, proxies=None, timeout=5)
+			if not ck is None:
+				cookie_dic = {'session_id':ck}
+			else:
+				cookie_dic = None
+
+			headers = {'user-agent':'21Lane'}			
+			r = requests.post(url, data=post_data, cookies=cookie_dic, headers=headers, proxies=None, timeout=5)
 			sessionid = None
-			# print(r.status_code, r.text)
 			if r.status_code == 200:
-				if (r.text == 'CAPERROR'):
-					QMessageBox.information(self, 'Underlimit', "You need to satisfy the minimum limit as per your exchagne.", QMessageBox.Ok, QMessageBox.Ok)
-					return
 				f = open('session_id', 'w')
-				f.write(r.cookies['session_id'])
-				sessionid = r.cookies['session_id']
+				f.write(r.text.strip())
 				f.close()
 			if r.status_code == 404:
 				QMessageBox.warning(self, "Invalid URL", "Oops... You entered an invalid URL / host.", QMessageBox.Ok, QMessageBox.Ok)
@@ -833,8 +872,13 @@ class MainUI(QWidget):
 
 			exchange_connect_status = True
 
-			self.exchangebtn.setEnabled(True)
-			self.exchangebtn.setStyleSheet("background-color: blue; color: white; border: none; padding: 5px;")
+			if not self.exchangebtn.isEnabled():
+				self.exchangebtn.setEnabled(True)
+				self.exchangebtn.setStyleSheet("background-color: #0a2c9b; color: white; border: none; padding: 5px 15px;")
+				self.exchangebtn.clicked.connect(self.open_exchange)
+
+			# self.exchangebtn.setEnabled(True)
+			# self.exchangebtn.setStyleSheet("background-color: blue; color: white; border: none; padding: 5px;")
 			# self.exchangebtn.clicked[bool].connect(self.open_exchange)
 
 			# now upload the snapshot file, if any like a good boy
@@ -857,28 +901,30 @@ class MainUI(QWidget):
 			# oh boy, you worked graciously, i'll keep you
 			# fuck all the above methods..
 			# let them be in comments for future references
-			dest_dir = self.sett.homedir
-			dest_path = os.path.join(dest_dir, 'snapshot.json')
-			dest_file = open(dest_path, 'wb')
-			source_file = open('snapshot.json', 'rb')
-			dest_file.write(source_file.read())
-			source_file.close()
-			dest_file.close()
+			# dest_dir = self.sett.homedir
+			# dest_path = os.path.join(dest_dir, 'snapshot.json')
+			# dest_file = open(dest_path, 'wb')
+			# source_file = open('snapshot.json', 'rb')
+			# dest_file.write(source_file.read())
+			# source_file.close()
+			# dest_file.close()
 
-			# now notify you dad to take the parcel
-			mylog('Asking dad to take the parcel')
-			r = requests.post(url=exchange_url, data={'action':'snapshot'}, cookies={'session_id':sessionid}, timeout=5, proxies=None)
-			# print(r.text, 'is the response for snapshot')
-			if r.status_code==200 and r.text.strip()=='ok':
-				mylog('Snapshot file uploaded successfully.')
-				os.remove(dest_path)
-			else:
-				mylog("Some error occured while uploading snapshot.")
+			# # now notify you dad to take the parcel
+			# mylog('Asking dad to take the parcel')
+			# r = requests.post(url=exchange_url, data={'action':'snapshot'}, cookies={'session_id':sessionid}, timeout=5, proxies=None)
+			# # print(r.text, 'is the response for snapshot')
+			# if r.status_code==200 and r.text.strip()=='ok':
+			# 	mylog('Snapshot file uploaded successfully.')
+			# 	os.remove(dest_path)
+			# else:
+			# 	mylog("Some error occured while uploading snapshot.")
+
+			# uploading of snapshot is to be handled solely by snapshot thread
 
 
 		except (requests.exceptions.ConnectionError, requests.exceptions.HTTPError, ConnectionAbortedError, requests.exceptions.Timeout) as e:
 			QMessageBox.critical(self, 'Error', 'Network error!', QMessageBox.Ok, QMessageBox.Ok)
-			# raise e
+			raise e
 		except Exception as e:
 			# first close any open file to avoid permissions error in windows, and other similar errors
 			try:
@@ -895,8 +941,10 @@ class MainUI(QWidget):
 				os.remove('session_id')
 			QMessageBox.critical(self, 'Error', "Some error occured!", QMessageBox.Ok, QMessageBox.Ok)
 			mylog(str(e) + ' ' + 'is the error')
-			# raise e
+			raise e
 
+
+		
 
 
 if __name__ == "__main__":
