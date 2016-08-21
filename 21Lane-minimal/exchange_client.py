@@ -220,7 +220,8 @@ class ExchangeClient(QWidget):
 			# first close any open file to avoid permissions error in windows, and other similar errors
 			QMessageBox.critical(self, 'Error', "Some error occured!", QMessageBox.Ok, QMessageBox.Ok)
 			mylog(str(e) + ' ' + 'is the error')
-			raise e
+			# raise e
+
 
 
 	def updateDownloadPath(self):
@@ -353,7 +354,7 @@ class ExchangeClient(QWidget):
 			# first close any open file to avoid permissions error in windows, and other similar errors
 			QMessageBox.critical(self, 'Error', "Some error occured!", QMessageBox.Ok, QMessageBox.Ok)
 			mylog(str(e) + ' ' + 'is the error')
-			raise e
+			# raise e
 
 
 	def open_exchange(self, host, port, server_name):
