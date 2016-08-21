@@ -485,7 +485,7 @@ class MainUI(QWidget):
 		self.portInput.setToolTip("Between 0 and 65535 (integer only)")
 		self.maxconInput.setToolTip("Total users which can connect to your system")
 		self.maxconperipInput.setToolTip("Total connections one user can make to your system")
-		self.speedInput.setToolTip("This is the max.speed at which \nyou allow download to your system \n(For users with write permission) \nHigher values can freeze your system.")
+		self.speedInput.setToolTip("This is the max.speed at which \nyou allow uploads from your system \n(For users with write permission) \nHigher values can freeze your system.")
 
 		self.maxconInput.setMinimum(3); self.maxconInput.setMaximum(100)
 		self.maxconperipInput.setMinimum(3); self.maxconperipInput.setMaximum(10)
@@ -923,8 +923,8 @@ class MainUI(QWidget):
 
 
 		except (requests.exceptions.ConnectionError, requests.exceptions.HTTPError, ConnectionAbortedError, requests.exceptions.Timeout) as e:
-			QMessageBox.critical(self, 'Error', 'Network error!', QMessageBox.Ok, QMessageBox.Ok)
-			raise e
+			QMessageBox.critical(self, 'Error', 'Network error!\nCannot connect to exchange.', QMessageBox.Ok, QMessageBox.Ok)
+			# raise e
 		except Exception as e:
 			# first close any open file to avoid permissions error in windows, and other similar errors
 			try:
@@ -941,7 +941,7 @@ class MainUI(QWidget):
 				os.remove('session_id')
 			QMessageBox.critical(self, 'Error', "Some error occured!", QMessageBox.Ok, QMessageBox.Ok)
 			mylog(str(e) + ' ' + 'is the error')
-			raise e
+			# raise e
 
 
 		
