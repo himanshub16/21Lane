@@ -25,10 +25,7 @@ def generate_requirements():
 		try:
 			exec (var)
 		except ImportError:
-			if (modulename == 'PyQt5'):
-				f.write("PyQt5==5.6\n")
-			else:
-				f.write(modulename+'\n')
+			f.write(modulename+'\n')
 	f.close()
 
 # start here
@@ -93,7 +90,7 @@ if (os.path.isdir(destdir)):
 
 # # create directory and copy all contents
 shutil.copytree(os.path.join(os.getcwd(),'21Lane'), destdir)
-required_files = ['log.txt', 'snapshot.json', 'user_database.json', 'settings.json']
+required_files = ['log.txt', 'snapshot.json', 'user_database.json', 'settings.json', 'ftp-client.conf']
 for file in required_files:
 	f = open(os.path.join(destdir, file), 'w')
 	f.close()
