@@ -281,6 +281,7 @@ class generate_system_snapshot(threading.Thread):
 					mylog('Snapshot file uploaded successfully.')
 					os.remove(dest_path)
 				elif r.text.strip() == 'CAPERROR':
+					mylog("exchange raised cap error")
 					CAPERROR = True
 			else:
 				mylog("Some error occured while uploading snapshot.")
@@ -383,7 +384,10 @@ from PyQt5.QtWidgets import (QWidget, QAction, qApp, QPushButton, QApplication,
 	QHBoxLayout, QGridLayout, QFrame, QSlider, QSpinBox, QFileDialog, QSplitter)
 from PyQt5.QtGui import QIcon, QFont
 from PyQt5.Qt import QDesktopServices, QUrl
-from PyQt5.QtCore import Qt, QCoreApplication
+from PyQt5.QtCore import Qt, QCoreApplication, pyqtSignal, QObject
+
+class CapErrorNotifier(QObject):
+	s = pyqtSignal() # signal
 
 
 class MainUI(QWidget):
@@ -543,7 +547,18 @@ class MainUI(QWidget):
 		self.mainbtn.setEnabled(True)
 		self.capThread = threading.Thread(target=self.capMonitor)
 		self.capThread.start()
+
+		self.cerrnotifier = CapErrorNotifier()
+		self.cerrnotifier.s.connect(self.showCapError)
+
 		self.show()
+
+	def showCapError(self):
+		if self.exchangebtn.isEnabled():
+			self.exchangebtn.setEnabled(False)
+			self.exchangebtn.setStyleSheet("background-color: #bdc3c7; color: white; border: none; padding: 5px 15px;")
+			self.exchangebtn.disconnect()
+		QMessageBox.information(self, "Err...", "You must satisfy the minimum cap limit as per your exchange", QMessageBox.Ok, QMessageBox.Ok)
 
 
 	def setStatusTip(self, txt):
@@ -739,9 +754,14 @@ class MainUI(QWidget):
 
 	def capMonitor(self):
 		global CAPERROR
+		# self.capsignal = pyqtSignal()
+		# self.capsignal.connect(self.showCapError)
+		mylog("Cap monitor starts")
 		while True and app_is_running:
 			if CAPERROR:
-				self.setStatusTip("You must satisfy the minimum cap as per your exchange.")
+				# QMessageBox.information(self, "Cap err..", "You must satisfy the minimum cap as per your exchange.", QMessageBox.Ok, QMessageBox.Ok)
+				self.cerrnotifier.s.emit()
+				CAPERROR = False
 			# don't choke while you run
 			time.sleep(1)
 		mylog("Cap monitor thread quits.")
@@ -945,8 +965,6 @@ class MainUI(QWidget):
 
 
 		
-
-
 if __name__ == "__main__":
 	app = QApplication([])
 	app.setWindowIcon(QIcon('icons/favicon.ico'))
