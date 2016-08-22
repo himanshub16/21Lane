@@ -294,7 +294,7 @@ class ExchangeClient(QWidget):
 
 				try:
 					responseJSON = json.loads(r.text)
-				except JSONDecodeError:
+				except Exception as e:
 					QMessageBox.critical(self, 'Decode error', "Couldn't understand response. Please report at the exchange.", QMessageBox.Ok, QMessageBox.Ok)
 					return
 
@@ -354,7 +354,7 @@ class ExchangeClient(QWidget):
 			# first close any open file to avoid permissions error in windows, and other similar errors
 			QMessageBox.critical(self, 'Error', "Some error occured!", QMessageBox.Ok, QMessageBox.Ok)
 			mylog(str(e) + ' ' + 'is the error')
-			# raise e
+			raise e
 
 
 	def open_exchange(self, host, port, server_name):
