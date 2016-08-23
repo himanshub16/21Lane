@@ -54,21 +54,24 @@ class Downloader:
 	def downloader(self):
 		completion = False
 
-		def stats_monitor(filename, total_size, guiwidget, destpath):
-			if destpath.startswith('/'):
-				destpath = destpath[1:]
-			downloadPath = self.downloadPath
-			if (destpath != ''):
-				downloadPath = os.path.join(downloadPath, destpath)
-			destination = os.path.join(downloadPath, destpath)
-			guiwidget['state'] = 'running'
-			while guiwidget['state'] =='running':
-				try:
-					size = os.path.getsize(os.path.join(destination, filename))
-					guiwidget['label'].setText( str(100 * int(size//total_size))+' % Running' )
-					time.sleep(2)
-				except Exception as e:
-					pass
+		# Thread to monitor download stats
+		# ... commented as it caused lags.
+		# will try to implement in future versions
+		# def stats_monitor(filename, total_size, guiwidget, destpath):
+		# 	if destpath.startswith('/'):
+		# 		destpath = destpath[1:]
+		# 	downloadPath = self.downloadPath
+		# 	if (destpath != ''):
+		# 		downloadPath = os.path.join(downloadPath, destpath)
+		# 	destination = os.path.join(downloadPath, destpath)
+		# 	guiwidget['state'] = 'running'
+		# 	while guiwidget['state'] =='running':
+		# 		try:
+		# 			size = os.path.getsize(os.path.join(destination, filename))
+		# 			guiwidget['label'].setText( str(100 * int(size//total_size))+' % Running' )
+		# 			time.sleep(2)
+		# 		except Exception as e:
+		# 			pass
 
 		while True and self.execute:
 			self.lock.acquire()
@@ -77,6 +80,7 @@ class Downloader:
 			completion = False
 			total_size = node.filesize
 			guiwidget = node.guiwidget
+			guiwidget['statusicon'].setText("In Queue")
 			client = FTPClient(node.hostname, node.port)
 			filename = node.filename
 			destpath = node.destpath

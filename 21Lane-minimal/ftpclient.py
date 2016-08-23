@@ -88,7 +88,7 @@ class FTPClient:
 			if (len(self.downloadPath) == 0):
 				raise IOError
 		except IOError:
-			self.downloadPath = os.path.join(os.path.expanduser('~'), 'Download')
+			self.downloadPath = os.path.join(os.path.expanduser('~'), 'Downloads')
 
 	def downloadFile(self, pathname, filename, destpath=''):
 		if (len(filename) == 0 or len(pathname) == 0):
@@ -125,8 +125,10 @@ class FTPClient:
 
 		write_stream = open(targetFile, 'wb')
 		try:
+			print('trying to connect to', self.hostname, self.port)
 			ftp.connect(host=self.hostname, port=self.port)
 			ftp.login()
+			print('retrieving ', pathname,'/', filename)
 			ftp.retrbinary('RETR %s' % pathname+'/'+filename, write_stream.write)
 			ftp.quit()
 			write_stream.close()

@@ -175,7 +175,7 @@ class FTPBrowser(QWidget):
 			dilayout = QHBoxLayout()
 			downloadItem.setLayout(dilayout)
 			statusIcon = QLabel('')
-			self.statusIcon.setPixmap(QPixmap('icons/wait.svg'))
+			statusIcon.setPixmap(QPixmap('icons/wait.svg'))
 			completionLabel = QLabel('In Queue')
 			dilayout.addWidget(statusIcon)
 			dilayout.addWidget(completionLabel)
@@ -189,8 +189,8 @@ class FTPBrowser(QWidget):
 			dilayout.addWidget(btn)
 			self.dbLayout.addWidget(downloadItem)
 
-			for file in filelist:
-				self.downman.addEntry(pathname=file['pathname'], destpath=file['pathname'], filesize=file['filesize'], filename=file['filename'], guiwidget={"state":'in queue', "statusicon":statusIcon, 'btn':btn, 'label':completionLabel })
+			for file in filelist: 
+				self.downman.addEntry(hostname=self.hostname, port=self.port, pathname=file['pathname'], destpath=file['pathname'], filesize=file['filesize'], filename=file['filename'], guiwidget={"state":'in queue', "statusicon":statusIcon, 'btn':btn, 'label':completionLabel })
 			
 		return callDownloadClient
 		
