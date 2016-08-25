@@ -6,8 +6,8 @@ from datetime import datetime
 import time
 
 from PyQt5.QtWidgets import (QWidget, QApplication, QPushButton, QLabel, QAction, \
-		QGroupBox, QHBoxLayout, QVBoxLayout, QFormLayout, QLineEdit, QFileDialog, \
-		QScrollArea, QMessageBox, QGridLayout, QSpacerItem, QSizePolicy )
+		QGroupBox, QHBoxLayout, QVBoxLayout, QFormLayout, QLineEdit, QFileDialog, QMessageBox, \
+		QScrollArea, QGridLayout, QSpacerItem, QSizePolicy, QRadioButton, QButtonGroup )
 from PyQt5.QtGui import QIcon, QCloseEvent, QPixmap
 from PyQt5.QtCore import Qt
 
@@ -94,6 +94,23 @@ class ExchangeClient(QWidget):
 		self.aBLayout.addWidget(self.goBtn)
 		self.actionsBox.setLayout(self.aBLayout)
 
+		self.searchCategoryBox = QGroupBox("Select file type to search")
+		self.sCLayout = QHBoxLayout()
+		self.searchCategoryBox.setLayout(self.sCLayout)
+		self.radioButtonGroup = QButtonGroup()
+		self.categoryList = ['Application', 'Video', 'Audio', 'Document', 'Other']
+		self.categoryRadioList = []
+		for each in self.categoryList:
+			self.categoryRadioList.append(QRadioButton(each))
+
+		counter = 1
+		# 1 : Application, 2 : Video, 3 : Audio, 4 : Docuement, 5 : Other
+		for each in self.categoryRadioList:
+			self.sCLayout.addWidget(each)
+			self.radioButtonGroup.addButton(each)
+			self.radioButtonGroup.setId(each, counter)
+			counter += 1
+
 
 		self.clientBox = QGroupBox("File listing")
 		self.cBLayout = QGridLayout()
@@ -116,6 +133,7 @@ class ExchangeClient(QWidget):
 		mainLayout = QVBoxLayout(self)
 		mainLayout.addWidget(self.configBar)
 		mainLayout.addWidget(self.actionsBox)
+		mainLayout.addWidget(self.searchCategoryBox)
 		mainLayout.addWidget(self.vscroll)
 		mainLayout.addWidget(self.hscroll)
 		self.setWindowTitle(self.windowTitle)
@@ -283,9 +301,14 @@ class ExchangeClient(QWidget):
 				QMessageBox.information(self, "Oops", "That's an absurd search!", QMessageBox.Ok, QMessageBox.Ok)
 				return  
 
+			searchCategory = self.radioButtonGroup.checkedId()
+			if searchCategory < 1: 
+				QMessageBox.information(sef, "Oops", "Please select a category to search from.", QMessageBox.Ok, QMessageBox.Ok)
+				return
+
 			uri = self.exchange_url + '/cgi-bin/search.py'
 			headers = {'user-agent':'21Lane'}
-			r = requests.post(uri, data={'q':self.searchbox.text()}, cookies={'session_id':self.session_id}, headers=headers, proxies=None, timeout=5)
+			r = requests.post(uri, data={'q':self.searchbox.text(), 'category':str(searchCategory)}, cookies={'session_id':self.session_id}, headers=headers, proxies=None, timeout=5)
 			responseJSON = ''
 			if r.status_code == 200:
 				if r.text.strip() == 'unauthorized':
