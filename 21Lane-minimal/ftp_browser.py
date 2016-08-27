@@ -310,8 +310,19 @@ class FTPBrowser(QWidget):
 			browserbtn.setFixedSize(25, 25)
 			dilayout.addWidget(browserbtn)
 			dilayout.addWidget(btn)
+
+			# this is a dummy button for handling progressbar change event
+			# repaint of widgets from another thread is not allowed
+
+			def changepBarValue(newValue):
+				pBar.setValue(newValue)
+
+			dummybtn = QPushButton('')
+			# dummybtn.clicked.connect(changepBarValue(newValue))
+			dummybtn.setVisible(False)
+
 			self.dbLayout.addWidget(downloadItem)
-			self.downman.addEntry(hostname=self.hostname, port=self.port, pathname=pathname, filesize=filesize, filename=filename, guiwidget={"state":'in queue', "statusicon":statusIcon, 'groupbox':downloadItem, 'btn':btn, 'pbar':pBar })
+			self.downman.addEntry(hostname=self.hostname, port=self.port, pathname=pathname, filesize=filesize, filename=filename, guiwidget={"state":'in queue', "statusicon":statusIcon, 'groupbox':downloadItem, 'btn':btn, 'pbar':changepBarValue })
 
 		return makeDownloadEntry
 	

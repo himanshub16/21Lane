@@ -73,8 +73,8 @@ class Downloader:
 					try:
 						size = os.path.getsize(os.path.join(destination, filename))
 						completionPercent = ((100 * size) / float(total_size)) 
-						print(completionPercent)
-						guiwidget['pbar'].setValue(completionPercent)
+						# guiwidget['pbar'].setValue(completionPercent)
+						guiwidget['pbar'](completionPercent)
 						time.sleep(1)
 					except FileNotFoundError as e:
 						print("File not found")
