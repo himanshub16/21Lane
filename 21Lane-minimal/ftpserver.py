@@ -966,6 +966,11 @@ class MainUI(QWidget):
 
 		
 if __name__ == "__main__":
+	try:
+		os.environ.pop('all_proxy')
+	except Exception as e:
+		pass
+		
 	app = QApplication([])
 	app.setWindowIcon(QIcon('icons/favicon.ico'))
 	ex = MainUI()

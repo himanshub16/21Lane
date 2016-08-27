@@ -23,7 +23,6 @@ class FTPClient:
 			ftp.quit()
 			return True
 		except Exception as e:
-			raise e
 			return False
 
 
@@ -60,7 +59,6 @@ class FTPClient:
 		# self.pwd has to be set to blank and absolute path should be provided
 		try:
 			self.pwd = path
-			pprint(self.pwd)
 			retval = self.ftplist()
 			if not len(retval) > 0:
 				return 
@@ -125,10 +123,8 @@ class FTPClient:
 
 		write_stream = open(targetFile, 'wb')
 		try:
-			print('trying to connect to', self.hostname, self.port)
 			ftp.connect(host=self.hostname, port=self.port)
 			ftp.login()
-			print('retrieving ', pathname,'/', filename)
 			ftp.retrbinary('RETR %s' % pathname+'/'+filename, write_stream.write)
 			ftp.quit()
 			write_stream.close()
@@ -137,7 +133,6 @@ class FTPClient:
 			write_stream.close()
 			ftp.close()
 			os.remove(targetFile)
-			print(pathname+'/'+filename)
 			raise e
 			return False
 

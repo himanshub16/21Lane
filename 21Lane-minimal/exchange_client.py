@@ -157,12 +157,12 @@ class ExchangeClient(QWidget):
 				self.cBLayout.addWidget(headerName, 0, 2)
 				counter = 1
 
-				for entry in list(responseJSON.values()):
+				for host, entry in responseJSON.items():
 					browseAction = QPushButton(QIcon('icons/browse.png'), '')
 					sizeLabel = QLabel(convertSize((entry['SHARED_SIZE'])))
 					nameLabel = QLabel(entry['SERVER_NAME'])
 					browseAction.setMaximumWidth(25)
-					browseAction.clicked.connect(self.open_exchange(entry['IP_ADDRESS'], entry['PORT'], entry['SERVER_NAME']))
+					browseAction.clicked.connect(self.open_exchange(hostname=entry['IP_ADDRESS'], port=entry['PORT'], server_name=entry['SERVER_NAME'], target_id=host))
 					sizeLabel.setMaximumWidth(100)
 					self.cBLayout.addWidget(browseAction, counter, 0)
 					self.cBLayout.addWidget(sizeLabel, counter, 1)
@@ -199,18 +199,24 @@ class ExchangeClient(QWidget):
 		config.close()
 
 
-	def open_exchange(self, host, port, server_name):
+	def open_exchange(self, hostname, port, server_name, target_id):
 		def openBrowser():
-			c = FTPClient(hostname=host, port=port)
+			c = FTPClient(hostname=hostname, port=port)
 			if not c.ping():
 				print("ping failed")
-				QMessageBox.critical(self, "Aww", "Cannot connect to the machine.\nOne of the network or remote machine is down.", QMessageBox.Ok, QMessageBox.Ok)
+				QMessageBox.critical(self, "Aww", "Cannot connect to the machine.\nPerhaps the remote machine is not available.", QMessageBox.Ok, QMessageBox.Ok)
 				return
-			subprocess.Popen([python, "ftp_browser.py", host, str(port), server_name])
+
+			subprocess.Popen([python, "ftp_browser.py", hostname, port, server_name, self.exchange_url, target_id])
 		return openBrowser
 
 
 if __name__=="__main__":
+	try:
+		os.environ.pop('all_proxy')
+	except Exception as e:
+		pass
+		
 	if (len(sys.argv) < 2):
 		sys.exit(1)
 	app = QApplication([])
