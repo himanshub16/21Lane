@@ -274,7 +274,7 @@ class generate_system_snapshot(threading.Thread):
 			f.close()
 			uri=exchange_url+'/cgi-bin/actions.py'
 			headers = {'user-agent':'21Lane'}
-			r = requests.post(url=uri, data={'action':'snapshot'}, cookies={'session_id':sessionid}, headers=headers, timeout=5, proxies=None)
+			r = requests.post(url=uri, data={'action':'snapshot'}, cookies={'session_id':sessionid}, headers=headers, timeout=5, proxies={'socks':None, 'http':None})
 			# print(r.text, 'is the response for snapshot')
 			if r.status_code==200:
 				if r.text.strip() == 'ok':
@@ -412,7 +412,7 @@ class MainUI(QWidget):
 		self.mainbtn.setCheckable(True)
 		self.mainbtn.clicked[bool].connect(self.check_server)
 
-		self.exchangebtn = QPushButton("Walk the lane", self)
+		self.exchangebtn = QPushButton("View other users", self)
 		self.exchangebtn.setStyleSheet("background-color: #bdc3c7; color: white; border: none; padding: 5px 15px;")
 		self.exchangebtn.setCheckable(True)
 		self.exchangebtn.setEnabled(False)
@@ -816,7 +816,7 @@ class MainUI(QWidget):
 			uri = exchange_url+'/cgi-bin/actions.py'
 			try:
 				headers = {'user-agent':'21Lane'}
-				r = requests.post(url=uri, data=post_data, cookies={'session_id':sessionid}, headers=headers, proxies=None, timeout=5)
+				r = requests.post(url=uri, data=post_data, cookies={'session_id':sessionid}, headers=headers, proxies={'socks':None, 'http':None}, timeout=5)
 				if r.status_code == 200 and r.text.strip() == 'ok':
 					exchange_connect_status = False
 					QMessageBox.information(self, '21Exchange', "You have been logged out.")
@@ -865,6 +865,7 @@ class MainUI(QWidget):
 			url = exchange_url+"/cgi-bin/actions.py"
 
 			server_name = self.sett.server_name
+
 			post_data = { 'action':'connect', 'server_name':server_name, 'port':PORT, 'IP':get_ip_address() }
 
 			if 'session_id' in ls(pwd):
@@ -880,7 +881,7 @@ class MainUI(QWidget):
 				cookie_dic = None
 
 			headers = {'user-agent':'21Lane'}			
-			r = requests.post(url, data=post_data, cookies=cookie_dic, headers=headers, proxies=None, timeout=5)
+			r = requests.post(url, data=post_data, cookies=cookie_dic, headers=headers, proxies={'socks':None, 'http':None}, timeout=5)
 			sessionid = None
 			if r.status_code == 200:
 				f = open('session_id', 'w')
@@ -931,7 +932,7 @@ class MainUI(QWidget):
 
 			# # now notify you dad to take the parcel
 			# mylog('Asking dad to take the parcel')
-			# r = requests.post(url=exchange_url, data={'action':'snapshot'}, cookies={'session_id':sessionid}, timeout=5, proxies=None)
+			# r = requests.post(url=exchange_url, data={'action':'snapshot'}, cookies={'session_id':sessionid}, timeout=5, proxies={'socks':None, 'http':None})
 			# # print(r.text, 'is the response for snapshot')
 			# if r.status_code==200 and r.text.strip()=='ok':
 			# 	mylog('Snapshot file uploaded successfully.')
@@ -966,11 +967,7 @@ class MainUI(QWidget):
 
 		
 if __name__ == "__main__":
-	try:
-		os.environ.pop('all_proxy')
-	except Exception as e:
-		pass
-		
+
 	app = QApplication([])
 	app.setWindowIcon(QIcon('icons/favicon.ico'))
 	ex = MainUI()
