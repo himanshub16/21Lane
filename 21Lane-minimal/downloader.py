@@ -49,7 +49,7 @@ class Downloader:
 			if (len(self.downloadPath) == 0):
 				raise IOError
 		except IOError:
-			self.downloadPath = os.path.join(os.path.expanduser('~'), 'Download')
+			self.downloadPath = os.path.join(os.path.expanduser('~'), 'Downloads')
 
 	def downloader(self):
 		completion = False
