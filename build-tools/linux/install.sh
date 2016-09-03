@@ -25,7 +25,7 @@ else
 			exit 1
 		fi
 	else
-		python3 setup.py install && pip3 install -r requirements.txt
+		python3 setup.py install && pip3 install -r requirements.txt --user
 		# install required modules
 		# pip3 install PyQt5==5.6
 		# pip3 install requests, tinydb, json, deepcopy

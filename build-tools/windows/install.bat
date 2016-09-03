@@ -14,7 +14,7 @@ if errorlevel 1 (
 	) else (
 		start /wait python setup.py install
 		echo Installing required modules
-		pip install -r requirements.txt
+		pip install -r requirements.txt --user
 		REM Script from : https://github.com/npocmaka/batch.scripts/blob/master/hybrids/jscript/shortcutJS.bat
 		create_shortcut.bat -linkfile "%userprofile%\Desktop\21Lane.lnk" -target "%userprofile%\21Lane\21lane.bat" -description "21Lane (FTP based file sharing)" -iconlocation "%userprofile%\21Lane\icons\favicon.ico" -workingdirectory "%userprofile%\21Lane\""
 		create_shortcut.bat -linkfile "%appdata%\Microsoft\Windows\Start Menu\21Lane.lnk" -target "%userprofile%\21Lane\21lane.bat" -description "21Lane (FTP based file sharing)" -iconlocation "%userprofile%\21Lane\icons\favicon.ico" -workingdirectory "%userprofile%\21Lane\"
