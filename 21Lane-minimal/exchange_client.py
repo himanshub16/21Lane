@@ -123,7 +123,7 @@ class ExchangeClient(QWidget):
 		try:
 			uri = self.exchange_url + '/cgi-bin/get_connected_users.py'
 			headers = {'user-agent':'21Lane'}
-			r = requests.post(uri, cookies={'session_id':self.session_id}, proxies=None, headers=headers, timeout=5)
+			r = requests.post(uri, cookies={'session_id':self.session_id}, proxies={'socks':None, 'http':None}, headers=headers, timeout=5)
 			if r.status_code == 200:
 				if r.text.strip() == 'unauthorized':
 					QMessageBox.warning(self, 'Unauthorized', "You are not connected to this exchange.", QMessageBox.Ok, QMessageBox.Ok)
@@ -213,6 +213,12 @@ class ExchangeClient(QWidget):
 
 
 if __name__=="__main__":
+	import platform
+	if "windows" in platform.platform().lower():
+		import ctypes
+		myappid=u'himanshub16.21Lane-min.1.2-exchange'
+		ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+
 	if (len(sys.argv) < 2):
 		sys.exit(1)
 	app = QApplication([])

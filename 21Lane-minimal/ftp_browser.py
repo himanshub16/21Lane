@@ -191,7 +191,7 @@ class FTPBrowser(QWidget):
 			uri = self.exchange_url + '/cgi-bin/search.py'
 			headers = {'user-agent':'21Lane'}
 
-			r = requests.post(uri, data={'q':'arrow', 'category':searchCategory, 'target':self.target_id }, cookies={'session_id':self.session_id}, headers=headers, proxies=None, timeout=5)
+			r = requests.post(uri, data={'q':'arrow', 'category':searchCategory, 'target':self.target_id }, cookies={'session_id':self.session_id}, headers=headers, proxies={'socks':None, 'http':None}, timeout=5)
 			responseJSON = ''
 			# return
 			if r.status_code == 200:
@@ -414,6 +414,12 @@ class FTPBrowser(QWidget):
 			
 
 if __name__=="__main__":
+
+	import platform
+	if "windows" in platform.platform().lower():
+		import ctypes
+		myappid=u'himanshub16.21Lane-min.1.2-browser'
+		ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 		
 	if (len(sys.argv) < 5):
 		print('insufficient arguments')

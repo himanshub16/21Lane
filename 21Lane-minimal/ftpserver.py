@@ -274,7 +274,7 @@ class generate_system_snapshot(threading.Thread):
 			f.close()
 			uri=exchange_url+'/cgi-bin/actions.py'
 			headers = {'user-agent':'21Lane'}
-			r = requests.post(url=uri, data={'action':'snapshot'}, cookies={'session_id':sessionid}, headers=headers, timeout=5, proxies=None)
+			r = requests.post(url=uri, data={'action':'snapshot'}, cookies={'session_id':sessionid}, headers=headers, timeout=5, proxies={'socks':None, 'http':None})
 			if r.status_code==200:
 				if r.text.strip() == 'ok':
 					mylog('Snapshot file uploaded successfully.')
@@ -815,7 +815,7 @@ class MainUI(QWidget):
 			uri = exchange_url+'/cgi-bin/actions.py'
 			try:
 				headers = {'user-agent':'21Lane'}
-				r = requests.post(url=uri, data=post_data, cookies={'session_id':sessionid}, headers=headers, proxies=None, timeout=5)
+				r = requests.post(url=uri, data=post_data, cookies={'session_id':sessionid}, headers=headers, proxies={'socks':None, 'http':None}, timeout=5)
 				if r.status_code == 200 and r.text.strip() == 'ok':
 					exchange_connect_status = False
 					QMessageBox.information(self, '21Exchange', "You have been logged out.")
@@ -880,7 +880,7 @@ class MainUI(QWidget):
 				cookie_dic = None
 
 			headers = {'user-agent':'21Lane'}			
-			r = requests.post(url, data=post_data, cookies=cookie_dic, headers=headers, proxies=None, timeout=5)
+			r = requests.post(url, data=post_data, cookies=cookie_dic, headers=headers, proxies={'socks':None, 'http':None}, timeout=5)
 			sessionid = None
 			if r.status_code == 200:
 				f = open('session_id', 'w')
@@ -966,6 +966,12 @@ class MainUI(QWidget):
 
 		
 if __name__ == "__main__":
+
+	import platform
+	if "windows" in platform.platform().lower():
+		import ctypes
+		myappid=u'himanshub16.21Lane-min.1.2'
+		ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
 	app = QApplication([])
 	app.setWindowIcon(QIcon('icons/favicon.ico'))
