@@ -12,7 +12,7 @@ if errorlevel 1 (
 		echo Missing pip.
 		echo Make sure your Python installation is complete.
 	) else (
-		start /wait python setup.py install
+		start /wait python validator.py install
 		echo Installing required modules
 		pip install -r requirements.txt --user
 		REM Script from : https://github.com/npocmaka/batch.scripts/blob/master/hybrids/jscript/shortcutJS.bat

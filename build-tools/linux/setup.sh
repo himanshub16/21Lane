@@ -18,14 +18,17 @@ else
 		echo "pip3 is missing."
 		read -pr "Do you want to install pip ? (y/n) " pipresp
 		if [ "$pipresp" = "y"] || [ "$pipresp" = "Y" ]; then
-			sudo apt-get install pip3
+			sudo apt-get install python3-pip
 		else
 			echo "Make sure your Python installation is complete."
 			read -n1 -p "Press any key to exit... "
 			exit 1
 		fi
 	else
-		python3 setup.py install && pip3 install -r requirements.txt --user
+		python3 validator.py install
+		if [ -e "requirements.txt" ]; then
+			pip3 install -r requirements.txt --user
+		fi
 		# install required modules
 		# pip3 install PyQt5==5.6
 		# pip3 install requests, tinydb, json, deepcopy
