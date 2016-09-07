@@ -1,2 +1,2 @@
-nohup python3 ftpserver.py &
+nohup python3.5 ftpserver.py &
 exit 

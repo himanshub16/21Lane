@@ -25,7 +25,7 @@ else
 			exit 1
 		fi
 	else
-		python3 validator.py install
+		python3.5 validator.py install
 		if [ -e "requirements.txt" ]; then
 			pip3 install -r requirements.txt --user
 		fi
