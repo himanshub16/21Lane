@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import (QWidget, QApplication, QPushButton, QLabel, QAction
 		QGroupBox, QHBoxLayout, QVBoxLayout, QFormLayout, QLineEdit, QFileDialog, QProgressBar,\
 		QScrollArea, QMessageBox, QGridLayout, QSpacerItem, QSizePolicy, QRadioButton, QButtonGroup )
 from PyQt5.QtGui import QIcon, QCloseEvent, QPixmap
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, pyqtSignal, QObject
 
 def mylog(ar):
 	f = open('log.txt', 'a')
@@ -39,6 +39,11 @@ def convertSize(size):
 	else:
 		return str(abs_gb) + " GB"
 				
+
+
+class Communicate(QObject):
+	signal = pyqtSignal(int)
+
 
 class FTPBrowser(QWidget):
 	def __init__(self, hostname, port, server_name, exchange_url, target_id):
@@ -293,10 +298,12 @@ class FTPBrowser(QWidget):
 		return callChangeURI
 
 	def openDownloadLocation(self, pathname):
+		# no use as of now because browser button has been removed
 		def dummyFunction():
 			self.addressBox.setText(pathname)
 			self.goBtn.click()
 		return dummyFunction
+
 
 	def downloadFile(self, filename, pathname, filesize, destpath=''):
 		def makeDownloadEntry():
@@ -309,24 +316,41 @@ class FTPBrowser(QWidget):
 			statusIcon.setPixmap(QPixmap('icons/wait.svg'))
 			statusIcon.setToolTip("In Queue")
 			statusIcon.setFixedSize(25, 25)
-			completionLabel = QLabel('In Queue')
-			# pBar = QProgressBar()
-			# pBar.setValue(0)
+			# completionLabel = QLabel('In Queue')
+			pBar = QProgressBar()
+			pBar.setValue(0)
 			dilayout.addWidget(statusIcon)
-			dilayout.addWidget(completionLabel)
-			# dilayout.addWidget(pBar)
+			# dilayout.addWidget(completionLabel)
+			dilayout.addWidget(pBar)
 			btn = QPushButton(QIcon('icons/cancel.png'), '')
 			btn.setToolTip("Delete this box \n(cancel download if not running)")
 			btn.setMaximumSize(25,25)
 			btn.clicked.connect(downloadItem.deleteLater)
-			browserbtn = QPushButton(QIcon('icons/browse.png'), '')
-			browserbtn.setToolTip("Open Location containing this item.")
-			browserbtn.clicked.connect(self.openDownloadLocation(pathname))
-			browserbtn.setFixedSize(25, 25)
-			dilayout.addWidget(browserbtn)
+			# browserbtn = QPushButton(QIcon('icons/browse.png'), '')
+			# browserbtn.setToolTip("Open Location containing this item.")
+			# browserbtn.clicked.connect(self.openDownloadLocation(pathname))
+			# browserbtn.setFixedSize(25, 25)
+			# dilayout.addWidget(browserbtn)
 			dilayout.addWidget(btn)
+
+			comm = None
+			def updatepbar(val):
+				try:
+					if val <= -1:
+						statusIcon.setPixmap(QPixmap('icons/failed.svg'))
+						return
+
+					if val == 100:
+						statusIcon.setPixmap(QPixmap('icons/complete.svg'))
+					pBar.setValue(val)
+				except RuntimeError:
+					pass
+
+			comm = Communicate()
+			comm.signal.connect(updatepbar)
+
 			self.dbLayout.addWidget(downloadItem)
-			self.downman.addEntry(hostname=self.hostname, port=self.port, pathname=pathname, filesize=filesize, filename=filename, destpath=destpath, guiwidget={"state":'in queue', "statusicon":statusIcon, 'groupbox':downloadItem, 'btn':btn, 'label':completionLabel })
+			self.downman.addEntry(hostname=self.hostname, port=self.port, pathname=pathname, filesize=filesize, filename=filename, destpath=destpath, pbarsignal=comm)
 
 		return makeDownloadEntry
 	

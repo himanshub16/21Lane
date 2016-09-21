@@ -7,7 +7,7 @@ from PyQt5.QtGui import QIcon, QPixmap
 configFile = 'ftp-client.conf'
 
 class Node:
-	def __init__(self, hostname='locahost', port=2121, filesize=0, filename=None, destpath='', pathname=None, guiwidget=None):
+	def __init__(self, hostname='locahost', port=2121, filesize=0, filename=None, destpath='', pathname=None, pbarsignal=None):
 		if (not filename or not pathname):
 			return None
 		self.hostname = hostname
@@ -17,7 +17,7 @@ class Node:
 		self.pathname = pathname 
 		self.tries = 0
 		self.destpath = destpath
-		self.guiwidget = guiwidget
+		self.pbarsignal = pbarsignal
 
 
 class Downloader:
@@ -58,20 +58,22 @@ class Downloader:
 		# ... commented as it caused lags.
 		# changed completion label with progress bar
 		# will try to implement in future versions
-		def stats_monitor(filename, total_size, guiwidget, targetFile):
+		def stats_monitor(state, filename, total_size, pbarsignal, targetFile):
 			try:
-				guiwidget['state'] = 'running'
-				print("gui widget state running")
+				# guiwidget['state'] = 'running'
+				# print("gui widget state running")
 				print(targetFile)
-				while guiwidget['state'] =='running':
+				while state =='running':
 					try:
 						size = os.path.getsize(targetFile)
 						completionPercent = ((100 * size) / float(total_size)) 
-						guiwidget['pbar'].setValue(completionPercent)
+						pbarsignal.signal.emit(completionPercent)
 						time.sleep(1)
 					except FileNotFoundError as e:
 						time.sleep(0.5)
 						pass
+					except ZeroDivisionError as e:
+						pbarsignal.signal.emit(100)
 					except Exception as e:
 						raise e
 			except RuntimeError as e:
@@ -88,7 +90,8 @@ class Downloader:
 			filename = node.filename
 			pathname = node.pathname
 			destpath = node.destpath
-			guiwidget = node.guiwidget
+			# guiwidget = node.guiwidget
+			state = 'somestate'
 
 			if destpath.startswith('/'):
 				destpath = destpath[1:]
@@ -115,39 +118,46 @@ class Downloader:
 			try:
 				completion = False
 				total_size = node.filesize
-				guiwidget['statusicon'].setToolTip("In Queue")
+				# guiwidget['statusicon'].setToolTip("In Queue")
 
 				client = FTPClient(node.hostname, node.port)
-				# th = threading.Thread(target=stats_monitor, args=(targetFile, total_size, guiwidget, targetFile,))
-				# th.setDaemon(False)
-				# th.start()
+				state = "running"
+				th = threading.Thread(target=stats_monitor, args=(state, targetFile, total_size, node.pbarsignal, targetFile,))
+				th.setDaemon(False)
+				th.start()
 				node.tries += 1
-				node.guiwidget['label'].setText("Downloading")
-				guiwidget['statusicon'].setPixmap(QPixmap('icons/running.svg'))
-				guiwidget['statusicon'].setToolTip('Downloading')
+				# node.guiwidget['label'].setText("Downloading")
+				# guiwidget['statusicon'].setPixmap(QPixmap('icons/running.svg'))
+				# guiwidget['statusicon'].setToolTip('Downloading')
 			except RuntimeError as e:
 				continue
 
 			try:
 				if (node.tries < 4 and client.downloadFile(pathname=node.pathname, filename=node.filename, targetFile=targetFile)):
-					guiwidget['label'].setText("Completed")
-					guiwidget['statusicon'].setPixmap(QPixmap('icons/complete.svg'))
-					guiwidget['statusicon'].setToolTip('Completed')
+					# guiwidget['label'].setText("Completed")
+					# guiwidget['statusicon'].setPixmap(QPixmap('icons/complete.svg'))
+					# guiwidget['statusicon'].setToolTip('Completed')
 					# guiwidget['pbar'].setValue(100)
-					guiwidget['state'] = 'completed'
+					# guiwidget['state'] = 'completed'
+					state = 'completed'
+					node.pbarsignal.signal.emit(100)
 					
 				else:
 					if (node.tries == 4):
-						guiwidget['label'].setText("Failed")
-						guiwidget['statusicon'].setPixmap(QPixmap('icons/failed.svg'))
-						guiwidget['statusicon'].setToolTip('Failed')
-						guiwidget['state'] = 'failed'
+						# guiwidget['label'].setText("Failed")
+						# guiwidget['statusicon'].setPixmap(QPixmap('icons/failed.svg'))
+						# guiwidget['statusicon'].setToolTip('Failed')
+						# guiwidget['state'] = 'failed'
+						state = 'failed'
+						node.pbarsignal.signal.emit(-1)
 					else:
 						self.downloadQueue.put(node)
-						guiwidget['label'].setText("Waiting")
-						guiwidget['statusicon'].setPixmap(QPixmap('icons/wait.svg'))
-						guiwidget['statusicon'].setToolTip('Waiting')
-						node.guiwidget['state'] = 'waiting'
+						# guiwidget['label'].setText("Waiting")
+						# guiwidget['statusicon'].setPixmap(QPixmap('icons/wait.svg'))
+						# guiwidget['statusicon'].setToolTip('Waiting')
+						# node.guiwidget['state'] = 'waiting'
+						state = 'waiting'
+						node.pbarsignal.signal.emit(50)
 				self.downloadQueue.task_done()
 				completion = True
 
@@ -155,15 +165,16 @@ class Downloader:
 				pass
 
 			except Exception as e:
-				node.guiwidget['statusicon'].setPixmap(QPixmap('icons/failed.svg'))
-				node.guiwidget['statusicon'].setToolTip("Network Error")
-				node.guiwidget['label'].setText("Network error. Retry")
+				# node.guiwidget['statusicon'].setPixmap(QPixmap('icons/failed.svg'))
+				# node.guiwidget['statusicon'].setToolTip("Network Error")
+				# node.guiwidget['label'].setText("Network error. Retry")
+				node.pbarsignal.emit(-10)
 				raise e
 				pass
 
-	def addEntry(self, pathname, filesize, filename, guiwidget, destpath='', hostname='localhost', port=2121):
-		node = Node(hostname=hostname, port=port, pathname=pathname, filesize=filesize, filename=filename, guiwidget=guiwidget, destpath=destpath)
+	def addEntry(self, pathname, filesize, filename, pbarsignal, destpath='', hostname='localhost', port=2121):
+		node = Node(hostname=hostname, port=port, pathname=pathname, filesize=filesize, filename=filename, pbarsignal=pbarsignal, destpath=destpath)
 		if not Node:
-			node.guiwidget['state'] = 'failed'
+			# node.guiwidget['state'] = 'failed'
 			return False
 		self.downloadQueue.put(node)
