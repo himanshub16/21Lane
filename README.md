@@ -1,5 +1,8 @@
 ##21Lane (https://21lane.github.io)
 
+The master branch is up with v2.
+For v1, consider branch v1, and go to the releases section.
+
 ### Creator: [Himanshu Shekhar] ( http://github.com/himanshub16 )
 This is a file sharing software which sets up an FTP server on your system.
 
