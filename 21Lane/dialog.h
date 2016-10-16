@@ -2,6 +2,7 @@
 #define DIALOG_H
 
 #include <QDialog>
+#include <QListWidget>
 
 namespace Ui {
 class Dialog;
