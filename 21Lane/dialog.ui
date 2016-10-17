@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="settingsTab">
       <attribute name="title">
@@ -69,25 +69,6 @@
              </property>
             </widget>
            </item>
-           <item row="3" column="4" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-            <widget class="QDoubleSpinBox" name="speedLimitSpin">
-             <property name="suffix">
-              <string> Mbps</string>
-             </property>
-             <property name="minimum">
-              <double>2.500000000000000</double>
-             </property>
-             <property name="maximum">
-              <double>9.900000000000000</double>
-             </property>
-             <property name="singleStep">
-              <double>0.500000000000000</double>
-             </property>
-             <property name="value">
-              <double>3.000000000000000</double>
-             </property>
-            </widget>
-           </item>
            <item row="0" column="4">
             <widget class="QSpinBox" name="port">
              <property name="minimum">
@@ -103,13 +84,19 @@
            </item>
            <item row="3" column="1" colspan="3">
             <widget class="QSlider" name="speedLimitSlider">
+             <property name="minimum">
+              <number>2</number>
+             </property>
+             <property name="maximum">
+              <number>10</number>
+             </property>
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>
             </widget>
            </item>
            <item row="4" column="1" colspan="4">
-            <widget class="QLineEdit" name="donwloadLocationInput"/>
+            <widget class="QLineEdit" name="downloadLocationInput"/>
            </item>
            <item row="1" column="0">
             <widget class="QPushButton" name="sharedLocationBtn">
@@ -120,6 +107,19 @@
            </item>
            <item row="1" column="1" colspan="4">
             <widget class="QLineEdit" name="sharedLocationInput"/>
+           </item>
+           <item row="3" column="4">
+            <widget class="QSpinBox" name="speedLimitSpin">
+             <property name="suffix">
+              <string> Mbps</string>
+             </property>
+             <property name="minimum">
+              <number>2</number>
+             </property>
+             <property name="maximum">
+              <number>100</number>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
@@ -369,6 +369,26 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>publicName</tabstop>
+  <tabstop>port</tabstop>
+  <tabstop>sharedLocationBtn</tabstop>
+  <tabstop>speedLimitSlider</tabstop>
+  <tabstop>speedLimitSpin</tabstop>
+  <tabstop>downloadLocationBtn</tabstop>
+  <tabstop>exchangeURL</tabstop>
+  <tabstop>toggleShareBtn</tabstop>
+  <tabstop>sharedLocationInput</tabstop>
+  <tabstop>scrollArea_3</tabstop>
+  <tabstop>browserPrevBtn</tabstop>
+  <tabstop>browserNextBtn</tabstop>
+  <tabstop>browserInput</tabstop>
+  <tabstop>browserGoBtn</tabstop>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>scrollArea_2</tabstop>
+  <tabstop>downloadLocationInput</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
