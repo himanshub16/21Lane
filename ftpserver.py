@@ -17,21 +17,6 @@ def getSize(filepath):
 		return 0
 
 
-def toHumanReadable(size):
-	bytes = size
-	kb = size / 1024;
-	mb = size / 1048576;
-	gb = size / 1073741824;
-	if (gb > 0):
-		return str(gb) + " GB"
-	elif (mb > 0):
-		return str(mb) + " MB"
-	elif (kb > 0):
-		return str(kb) + " KB"
-	else:
-		return str(bytes) + " bytes"
-
-
 class CustomHandler(FTPHandler):
 	def on_connect(self):
 		stats["connected"] += 1
@@ -46,7 +31,6 @@ class CustomHandler(FTPHandler):
 	def on_file_sent(self, file):
 		stats["files_transferred"] += 1
 		stats["bytes_transferred"] += getSize(file)
-		stats["bytes_transferred_str"] = toHumanReadable(stats["bytes_transferred"])
 		with open(STATS_FILE, "w") as f:
 			f.write(json.dumps(stats))
 
