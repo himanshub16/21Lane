@@ -34,7 +34,7 @@ try:
 			"isDir": isDir,
 			"fileSize": fileSize,
 			"fileName": fileName,
-			"ftpPath": pwd+'/'+fileName,
+			"ftpPath": pwd+'/' if not isDir else pwd+'/'+fileName+'/',
 			"URL": "ftp://"+host+":"+str(port)+'/'+pwd+"/"+fileName
 			})
 except Exception as e:

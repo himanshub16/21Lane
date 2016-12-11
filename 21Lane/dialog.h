@@ -2,6 +2,7 @@
 #define DIALOG_H
 
 #include "settings.h"
+#include "downloader.h"
 
 #include <QDialog>
 #include <QListWidget>
@@ -13,14 +14,16 @@
 #include <QKeyEvent>
 #include <QStringList>
 #include <QFileSystemWatcher>
+#include <QJsonArray>
+#include <QJsonValue>
+#include <QThreadPool>
+#include <QTime>
 
 #define STATS_FILE "stats.json"
+#define LIST_FILE "dirlist.json"
+#define MAX_WORKERS 3
 
-#define FTP_SERVER "python"
-// unix lovers like me. Pardon for .exe
-// But don't want to change code for compiling on windows.
-// and file extension does not matter on Unix.
-// Well, that's absracted behind the application.
+QString toHumanReadable(double size);
 
 namespace Ui {
 class Dialog;
@@ -50,12 +53,34 @@ private slots:
     void ftpServerFinished(int exitCode);
     void ftpServerError(QProcess::ProcessError err);
     void statsUpdater(QString fileName);
+    void ftpList(QString host, int port, QString path);
+
+    void on_browserGoBtn_clicked();
+
+    void on_pushButton_clicked();
+
+    void on_browserPrevBtn_clicked();
+
 private:
     Ui::Dialog *ui;
     Settings settings;
     QProcess ftpserver;
     QStringList serverArgs;
     QFileSystemWatcher statsMonitor;
+
+#ifndef Q_OS_UNIX
+    QString PYTHON = QDir(QDir::current()).filePath("python");
+#else
+    QString PYTHON = "python";
+#endif
+
+    // for the browser
+    QProcess ftpClient;
+    QString clientHost;
+    int clientPort;
+    QString clientCurrentPath;
+    QString clientPrevPath;
+
 
     void populateForm();
     void toggleServer();

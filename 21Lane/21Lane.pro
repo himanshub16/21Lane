@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets
+QT       += core gui widgets network
 CONFIG   += c++11
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -15,9 +15,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         dialog.cpp \
-    settings.cpp
+    settings.cpp \
+    downloader.cpp
 
 HEADERS  += dialog.h \
-    settings.h
+    settings.h \
+    downloader.h
 
 FORMS    += dialog.ui
+
+RESOURCES += resources.qrc
