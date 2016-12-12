@@ -20,7 +20,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="settingsTab">
       <attribute name="title">
@@ -28,9 +28,9 @@
       </attribute>
       <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout">
+        <layout class="QVBoxLayout" name="settingsLayout">
          <item>
-          <layout class="QGridLayout" name="gridLayout">
+          <layout class="QGridLayout" name="settingsGrid">
            <item row="4" column="0">
             <widget class="QPushButton" name="downloadLocationBtn">
              <property name="text">
@@ -39,34 +39,42 @@
             </widget>
            </item>
            <item row="0" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-            <widget class="QLabel" name="label">
+            <widget class="QLabel" name="publicNameLbl">
              <property name="text">
               <string>Public Name</string>
              </property>
             </widget>
            </item>
            <item row="3" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-            <widget class="QLabel" name="label_3">
+            <widget class="QLabel" name="speedLimitLbl">
              <property name="text">
               <string>Speed Limit</string>
              </property>
             </widget>
            </item>
            <item row="5" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-            <widget class="QLabel" name="label_4">
+            <widget class="QLabel" name="exchangeURLLbl">
              <property name="text">
               <string>Exchange URL</string>
              </property>
             </widget>
            </item>
            <item row="5" column="1" colspan="4">
-            <widget class="QLineEdit" name="exchangeURL"/>
+            <widget class="QLineEdit" name="exchangeURLInput">
+             <property name="placeholderText">
+              <string>You can get it from your exchange website</string>
+             </property>
+            </widget>
            </item>
            <item row="0" column="1" colspan="2">
-            <widget class="QLineEdit" name="publicName"/>
+            <widget class="QLineEdit" name="publicNameInput">
+             <property name="placeholderText">
+              <string>How do people know you?</string>
+             </property>
+            </widget>
            </item>
            <item row="0" column="3" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-            <widget class="QLabel" name="label_2">
+            <widget class="QLabel" name="portLbl">
              <property name="text">
               <string>Port</string>
              </property>
@@ -113,7 +121,11 @@
             </widget>
            </item>
            <item row="1" column="1" colspan="4">
-            <widget class="QLineEdit" name="sharedLocationInput"/>
+            <widget class="QLineEdit" name="sharedLocationInput">
+             <property name="placeholderText">
+              <string>This is the folder you are sharing</string>
+             </property>
+            </widget>
            </item>
            <item row="3" column="4">
             <widget class="QSpinBox" name="speedLimitSpin">
@@ -131,7 +143,7 @@
           </layout>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <layout class="QHBoxLayout" name="mouseMessageLayout">
            <item>
             <spacer name="horizontalSpacer">
              <property name="orientation">
@@ -215,13 +227,13 @@
          <item>
           <widget class="QGroupBox" name="groupBox">
            <property name="title">
-            <string>Stats:</string>
+            <string>     Stats:</string>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_8">
               <item>
-               <widget class="QLabel" name="label_6">
+               <widget class="QLabel" name="connectedStatsLbl">
                 <property name="text">
                  <string>Connected</string>
                 </property>
@@ -304,7 +316,7 @@
       </attribute>
       <layout class="QHBoxLayout" name="horizontalLayout_5">
        <item>
-        <widget class="QScrollArea" name="scrollArea_3">
+        <widget class="QScrollArea" name="userListScrollArea">
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
@@ -314,7 +326,7 @@
             <x>0</x>
             <y>0</y>
             <width>529</width>
-            <height>329</height>
+            <height>333</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_7">
@@ -333,7 +345,7 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
+        <layout class="QHBoxLayout" name="browserControlsLayout">
          <item>
           <widget class="QPushButton" name="browserPrevBtn">
            <property name="text">
@@ -346,7 +358,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="browserHomeBtn">
            <property name="text">
             <string/>
            </property>
@@ -377,7 +389,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QScrollArea" name="scrollArea">
+        <widget class="QScrollArea" name="browserScrollArea">
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
@@ -387,7 +399,7 @@
             <x>0</x>
             <y>0</y>
             <width>529</width>
-            <height>292</height>
+            <height>298</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -409,7 +421,7 @@
       </attribute>
       <layout class="QHBoxLayout" name="horizontalLayout_7">
        <item>
-        <widget class="QScrollArea" name="scrollArea_2">
+        <widget class="QScrollArea" name="downloadsScrollArea">
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
@@ -419,14 +431,14 @@
             <x>0</x>
             <y>0</y>
             <width>529</width>
-            <height>329</height>
+            <height>333</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_5">
            <item row="0" column="0">
             <layout class="QVBoxLayout" name="downloadsLayout">
              <item>
-              <spacer name="verticalSpacer">
+              <spacer name="downloadsSpacer">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
                </property>
@@ -452,23 +464,24 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
-  <tabstop>tabWidget</tabstop>
-  <tabstop>publicName</tabstop>
+  <tabstop>publicNameInput</tabstop>
   <tabstop>port</tabstop>
   <tabstop>sharedLocationBtn</tabstop>
+  <tabstop>sharedLocationInput</tabstop>
   <tabstop>speedLimitSlider</tabstop>
   <tabstop>speedLimitSpin</tabstop>
   <tabstop>downloadLocationBtn</tabstop>
-  <tabstop>exchangeURL</tabstop>
+  <tabstop>downloadLocationInput</tabstop>
+  <tabstop>exchangeURLInput</tabstop>
   <tabstop>toggleShareBtn</tabstop>
-  <tabstop>sharedLocationInput</tabstop>
-  <tabstop>scrollArea_3</tabstop>
-  <tabstop>browserPrevBtn</tabstop>
+  <tabstop>tabWidget</tabstop>
   <tabstop>browserInput</tabstop>
   <tabstop>browserGoBtn</tabstop>
-  <tabstop>scrollArea</tabstop>
-  <tabstop>scrollArea_2</tabstop>
-  <tabstop>downloadLocationInput</tabstop>
+  <tabstop>browserScrollArea</tabstop>
+  <tabstop>downloadsScrollArea</tabstop>
+  <tabstop>userListScrollArea</tabstop>
+  <tabstop>browserPrevBtn</tabstop>
+  <tabstop>browserHomeBtn</tabstop>
  </tabstops>
  <resources>
   <include location="resources.qrc"/>
