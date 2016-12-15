@@ -17,21 +17,21 @@
    <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0" colspan="2">
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="filenameLbl">
        <property name="text">
         <string>This is my file name</string>
        </property>
       </widget>
      </item>
      <item row="0" column="2">
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="progressLbl">
        <property name="text">
         <string>completion</string>
        </property>
       </widget>
      </item>
      <item row="0" column="3">
-      <widget class="QToolButton" name="toolButton">
+      <widget class="QToolButton" name="options">
        <property name="text">
         <string>...</string>
        </property>
@@ -45,7 +45,7 @@
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="label_6">
+      <widget class="QLabel" name="serverName">
        <property name="styleSheet">
         <string notr="true">color: rgb(85, 0, 255);
 text-decoration: underline;</string>
