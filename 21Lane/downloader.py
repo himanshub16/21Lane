@@ -1,45 +1,71 @@
 from ftplib import FTP
+from time import sleep
 
-class raiseError(Exception):
-    pass 
+class DownloadItem:
+    def __init__(self, filename, host, port, sourcePath, destPath, size, signal):
+        self.filename = filename 
+        self.host = host 
+        self.port = port 
+        self.source = sourcePath 
+        self.destination = destPath
+        self.filesize = size
+        self.completed = 0
+        # self.guisignal = signal 
+        self.completed = False
+        self.worker = None 
+
 
 class Downloader:
-    def __init__(self):
-        self.filename = None
-        self.host = ""
-        self.port = 2121
-        self.source = ""
-        self.destination = ""
-        self.filesize = 0
-        self.completed = 0
-        self.ftp = FTP()
-        self.guisignal = None
-        self.fileobj = None
-
-    def callback(self, data):
-        file.write(data)
-        self.completed += len(data)
-        self.guisignal.updateValues(self.completed)
+    def __init__(self, sema):
+        self.di = None
+        self.ftp = None 
+        self.fileptr = None 
+        self.running = False 
+        self.sharedSem = sema
+    
+    def update(self, di):
+        self.di = di 
+    
+    def abort(self):
+        self.running = False 
 
     def cleanup(self):
         try:
             self.ftp.quit()
-            self.fileobj.close()
+            self.fileptr.close() 
+            self.running = False 
+            del self.fileptr
+            del self.ftp 
         except Exception as e:
-            pass 
+            print ("cleanup", self.di.filename, e) 
         finally:
-            self.__init__()
+            self.di = None 
+            self.ftp = None 
+            self.fileptr = None 
 
-    def download(self, host, port, filename, source, destination, size, signal):
+    def callback(self, data):
+        if not self.running:
+            self.ftp.quit()
+            self.running = False 
+            # self.di.guisignal.raiseError()
+            return
+        self.fileptr.write(data)
+        self.di.completed += len(data) 
+        # self.di.guisignal.updateValues(self.completed)
+            
+    def download(self):
         try:
-            self.fileobj = open(destination, 'w')
-            self.guisignal = signal 
-            self.filesize = size
-            self.filename = filename 
-            self.ftp.connect(host, port)
+            self.fileptr = open(self.di.destination, "wb")
+            self.ftp = FTP()
+            self.ftp.connect(self.di.host, self.di.port)
             self.ftp.login()
-            self.ftp.retrbinary("RETR "+destination, callback)
+            self.running = True 
+            self.ftp.retrbinary("RETR "+self.di.source, self.callback)
         except Exception as e:
-            self.guisignal.raiseError()
+            print ("download:", self.di.filename, e)
+            self.di.guisignal.raiseError()
         finally:
+            print (self.di.filename, "completed by", self)
+            self.di.worker = None 
             self.cleanup()
+            self.sharedSem.release()
