@@ -5,3 +5,6 @@ class DownloadItemUpdater(QObject):
 
     def updateValues():
         self.signal.emit()
+    
+    def raiseError():
+        self.signal.emit()
