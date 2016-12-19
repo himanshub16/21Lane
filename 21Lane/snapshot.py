@@ -7,23 +7,28 @@ from os.path import join, getsize, isdir, islink
 
 REFRESH_INTERVAL = 900 # 15 minutes
 REQUEST_TIMEOUT  = 5   # 5 seconds
+HEADERS = {
+    "user-agent": "21Lane"
+}
 
 class SnapshotUpdater:
-    def __init__(self, publicName, port, exchangeURI):
+    def __init__(self):
         self.subprocess = None 
-        self.exchangeURI = exchangeURI
-        self.port = port
+        self.exchangeURI = ''
+        self.port = 2121
         self.sessionId = None 
-        self.publicName = publicName
+        self.publicName = ''
         self.sharedSize = 0
-        self.running = False
+        self.is_running = False
+
+    def updateInfo(self, publicName, exchange_url, port=2121):
+        self.port = port 
+        self.publicName = publicName
+        self.exchangeURI = exchange_url 
 
     def authorize(self):
         if not self.exchangeURI:
             return 
-        headers = {
-            "user-agent": "21Lane"
-        }
         payload = {
             "action": "login",
             "publicName": self.publicName,
@@ -32,7 +37,7 @@ class SnapshotUpdater:
             "sharedSize": self.sharedSize                
         }
         try:
-            r = POST(url=self.exchangeURI, data=payload, headers=headers)
+            r = POST(url=self.exchangeURI, data=payload, headers=HEADERS)
             if r.status_code == 200:
                 if r.text.strip() == "failed":
                     print ("update failed")
@@ -44,18 +49,41 @@ class SnapshotUpdater:
                 print("error", r.status_code)
         except Exception as e:
             print ("Error occured", e)
+
+    def deauthorize(self):
+        if not self.exchangeURI:
+            return 
+        payload = {
+            "action": "logout",
+            "sessionId": "" if self.sessionId is None else self.sessionId, 
+        }
+        try:
+            r = POST(url=self.exchangeURI, data=payload, headers=HEADERS)
+            if r.status_code == 200:
+                if r.text.strip() == "failed":
+                    print ("update failed")
+                elif r.text.strip() == "caperror":
+                    print ("caperror")
+                else:
+                    self.sessionId = r.text.strip()
+            else:
+                print("error", r.status_code)
+        except Exception as e:
+            print ("Error occured", e)
+
     
     def updateDir(self, directory):
         self.sharedDir = directory
         self.abort()
-        self.running = True 
+        self.is_running = True 
         self.subprocess = Thread(target=self.cache_proc)
         self.subprocess.start()
 
     def abort(self):
         if self.subprocess:
+            self.deauthorize()
             if self.subprocess.is_alive():
-                self.running = False 
+                self.is_running = False 
                 self.subprocess.join()
         self.subprocess = None 
 
@@ -73,7 +101,7 @@ class SnapshotUpdater:
 
     def cache_proc(self):
         t = 0
-        while self.running:
+        while self.is_running:
             if t < REFRESH_INTERVAL:
                 t += 1
                 sleep(1)
