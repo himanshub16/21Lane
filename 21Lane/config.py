@@ -1,3 +1,5 @@
+#!/usr/bin/python3 
+
 import json 
 
 CONFIG_FILE = "config.json"

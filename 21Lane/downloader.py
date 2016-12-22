@@ -1,3 +1,5 @@
+#!/usr/bin/python3 
+
 from ftplib import FTP
 from time import sleep
 from os.path import exists as path_exists

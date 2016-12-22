@@ -1,3 +1,5 @@
+#!/usr/bin/python3 
+
 from threading import Thread  
 from requests import post as POST
 from time import sleep  

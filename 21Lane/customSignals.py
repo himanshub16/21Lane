@@ -1,3 +1,5 @@
+#!/usr/bin/python3 
+
 from PyQt5.QtCore import pyqtSignal, QObject
 
 class DownloadItemUpdater(QObject):

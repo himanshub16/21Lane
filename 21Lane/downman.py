@@ -1,3 +1,5 @@
+#!/usr/bin/python3 
+
 from downloader import Downloader, DownloadItem
 from os import cpu_count
 from os import path 
