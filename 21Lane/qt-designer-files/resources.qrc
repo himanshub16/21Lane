@@ -1,13 +1,17 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/folder.png</file>
-        <file>images/download.png</file>
         <file>images/back.png</file>
+        <file>images/complete.svg</file>
+        <file>images/download.png</file>
+        <file>images/failed.svg</file>
+        <file>images/folder.png</file>
         <file>images/go.png</file>
         <file>images/home.png</file>
         <file>images/next.png</file>
-        <file>images/complete.svg</file>
-        <file>images/failed.svg</file>
+        <file>images/reload.png</file>
         <file>images/wait.svg</file>
+	<file>images/cancel.png</file>
+	<file>images/more.png</file>
+	<file>images/open.png</file>
     </qresource>
 </RCC>
