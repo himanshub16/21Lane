@@ -5,11 +5,14 @@
 from pyftpdlib.handlers import FTPHandler, ThrottledDTPHandler
 from pyftpdlib.servers import FTPServer
 from pyftpdlib.authorizers import DummyAuthorizer
-import os 
+
 import socket
-from multiprocessing import Process 
 from os.path import exists as path_exists
+from os.path import getsize 
+from multiprocessing import Process 
+
 from customErrors import PortUnavailableError
+from customSignals import ServerStatsUpdater
 
 
 def isPortAvailable(port):
@@ -20,20 +23,19 @@ def isPortAvailable(port):
 
 
 class CustomHandler(FTPHandler):
+    stats = ServerStatsUpdater()
     def on_connect(self):
-        print ("%s:%s connected" % (self.remote_ip, self.remote_port))
+        self.stats.connected()
 
     def on_disconnect(self):
-        # do something when client disconnects
-        pass
+        self.stats.disconnected()
 
     def on_file_sent(self, file):
-        # do something when a file has been sent
-        pass
+        print(getsize(file))
+        self.stats.transferred(getsize(file))
 
     def on_incomplete_file_sent(self, file):
-        # do something when a file is partially sent
-        pass
+        self.stats.transferred(getsize(file))
 
 
 class Server:
@@ -44,6 +46,10 @@ class Server:
         self.dtp_handler = ThrottledDTPHandler
         self.ftp_handler = CustomHandler
         self.ftp_handler.banner = "21Lane ready"
+        self.stats = self.ftp_handler.stats
+        self.connected = 0
+        self.bytesTransferred = 0
+        self.filesTransferred = 0
 
     def setPort(self, port):
         if isPortAvailable(port):
@@ -73,6 +79,7 @@ class Server:
             self.server.close_all()
             self.server_proc.terminate()
             self.server_proc.join()
+            print ("server stopped")
             del self.server_proc
             self.server_proc = None 
             self.is_running = False 
