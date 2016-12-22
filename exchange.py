@@ -45,8 +45,9 @@ def updateDb(db):
     with open(USER_DB, "w") as f:
         f.write(json.dumps(db))
 
-def login(sessid, ip, port, sharedSize):
+def login(sessid, ip, port, publicName, sharedSize):
     reachable = checkConnection(ip, port) 
+    db = getUsers()
     present = checkUser(db, sessid)
     db = getUsers()
     if present:
@@ -54,7 +55,8 @@ def login(sessid, ip, port, sharedSize):
             db[sessid] = {
                 "ip": ip, 
                 "port": port, 
-                "sharedSize": sharedSize
+                "sharedSize": sharedSize,
+                "publicName": publicName
             }
             updateDb(db)
         else:
@@ -64,16 +66,30 @@ def login(sessid, ip, port, sharedSize):
         db[sessid] = {
             "ip": ip, 
             "port": port, 
-            "sharedSize": sharedSize
+            "sharedSize": sharedSize,
+            "publicName": publicName
         }
         updateDb(db)
     return sessid 
 
 def logout(sessid):
     db = getUsers()
-    if checkUser(sessid):
+    if checkUser(db, sessid):
         db.pop(sessid)
     updateDb(db)
+
+def getList(sessid):
+    db = getUsers()
+    # if checkUser(db, sessid):
+    retval = []
+    for user in db.values():
+        retval.append({
+            "publicName": user["publicName"],
+            "sharedSize": user["sharedSize"],
+            "ip": user["ip"],
+            "port": user["port"]
+        })
+    return retval 
 
 def validateRequest(publicName, port, sharedSize, sessionId, action):
     if action is "login":
@@ -108,12 +124,18 @@ remoteIP = sanitize(remoteIP)
 publicName = sanitize(publicName)
 
 if validateRequest(publicName, port, sharedSize, sessionId, action):
-    if "login" in action:
-        retval = login(sessionId, remoteIP, port, sharedSize)
+    if action == "login":
+        retval = login(sessionId, remoteIP, port, publicName, sharedSize)
         print (retval) 
-    elif "logout" in action:
-        logout(sessid) 
+    elif action == "logout":
+        logout(sessionId) 
         print ("success")
+    elif action == "list":
+        retval = getList(sessionId)
+        if retval:
+            print(json.dumps(retval))
+        else:
+            print ("denied")
     else:
         print("failed")
 else:
