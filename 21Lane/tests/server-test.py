@@ -1,3 +1,5 @@
+#!/usr/bin/python3 
+
 from server import *
 from time import sleep
 

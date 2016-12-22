@@ -1,3 +1,5 @@
+#!/usr/bin/python3 
+
 from snapshot import SnapshotUpdater
 from time import sleep 
 

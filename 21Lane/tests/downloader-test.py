@@ -1,3 +1,5 @@
+#!/usr/bin/python3 
+
 from downloader import DownloadItem
 from downman import DownloadManager
 
