@@ -25,9 +25,9 @@ class DownloadManager:
             self.batchProcessor = Thread(target=self.downloadManager)
             self.running = True 
             self.batchProcessor.start()
-            print("manager started")
+            print("download manager started")
         else:
-            print('manager already running', end=' ')
+            print('download manager already running', end=' ')
 
     def stopDownloader(self):
         try:
@@ -83,7 +83,8 @@ class DownloadManager:
                 pass 
             threadlist.append(th)
         
-        print ('waiting for thread')
+        print ('waiting for downloaders to exit')
         for thread in threadlist:
             thread.join()
+        print ("download manager quits")
 
