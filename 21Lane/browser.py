@@ -1,17 +1,24 @@
 #!/usr/bin/python3
 
 # code for file browser 
-from ftplib import FTP
+from ftplib import FTP, error_perm
 from copy import deepcopy
-from os.path import join
+from os.path import join, dirname
 
 class Browser:
-    def __init__(self, parent):
-        self.qt_parent = parent 
-        # the parent of all widgets created for browser 
+    def __init__(self):
+        self.host = None 
+        self.port = 2121 
+        self.filelist = None 
+        self.historyStack = []
+    
+    def update(self, host, port):
+        self.host = host 
+        self.port = port 
+        self.historyStack.clear()
 
     def getFileList(self, host, port, pwd):
-        self.filelist = None 
+        filelist = None 
         ftp = FTP()
         # the following is a result of hours of manual tuning and string manipulation
         # please bear with the complexity
@@ -37,28 +44,45 @@ class Browser:
             ftp.close()
             print('error occured')
         else:
-            self.filelist = list(tmplist.values())
-        return self.filelist
+            filelist = list(tmplist.values())
+        return filelist 
 
-    def getRecursiveList(self, host, port, pwd, depth=1):
+    def getRecursiveList(self, host, port, pwd, relativeTo, depth=1):
         try:
             fl = self.getFileList(host, port, pwd)
             for file in fl:
+                file["filename"] = file["pathname"].replace(relativeTo, '', 1)
                 if file["isDir"]:
-                    self.getRecursiveList(host, port, deepcopy(file["pathname"]), depth+1)
+                    self.getRecursiveList(host, port, deepcopy(file["pathname"]), relativeTo, depth+1)
                 else:
                     self.recfilelist.append(file)
         except RecursionError:
-            return 
+            pass 
+        except TypeError:
+            pass
         except Exception as e:
             print("Error occured", e)
             raise e
 
     def getRecursiveFileList(self, host, port, pwd):
         self.recfilelist = []
-        self.getRecursiveList(host, port, deepcopy(pwd))
+        print ("making recursive listing for", host, port, pwd, "relative to", dirname(pwd))
+        self.getRecursiveList(host, port, deepcopy(pwd), dirname(pwd))
         meta = { "totalFiles": 0, "totalSize": 0 }
         for file in self.recfilelist:
             meta["totalFiles"] += 1
             meta["totalSize"] += file["filesize"]
-        return meta 
+        return meta
+
+    def pathExists(self, host, port, pwd):
+        ftp = FTP()
+        if (not host) or (not port) or (not pwd):
+            return False 
+        try:
+            ftp.connect(host, port)
+            ftp.login()
+            ftp.cwd(pwd)
+            ftp.quit()
+            return True     
+        except error_perm:
+            return False 
