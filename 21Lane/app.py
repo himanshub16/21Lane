@@ -347,6 +347,7 @@ class GUI(Ui_Dialog):
         frame = QFrame(self.dialog)
         frame.setFrameStyle(QFrame.StyledPanel)
         layout = QHBoxLayout()
+        filesize = filesize if not filesize is 0 else 1
         diui["layout"] = layout
         diui["widget"] = frame
         diui["filename"] = QLabel(filename)
@@ -356,7 +357,7 @@ class GUI(Ui_Dialog):
         diui["filesize"].setAlignment(Qt.AlignCenter)
         diui["progress"] = QProgressBar()
         diui["progress"].setRange(0, filesize)
-        diui["completion"] = QLabel(toHumanReadable(0))
+        diui["completion"] = QLabel("Waiting...")
         diui["completion"].setAlignment(Qt.AlignCenter)
         diui["cancelBtn"] = QPushButton(QIcon(":/images/cancel.png"), '')
         diui["openDestBtn"] = QPushButton(QIcon(":/images/folder.png"), '')
