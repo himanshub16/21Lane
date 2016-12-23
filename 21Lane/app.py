@@ -49,6 +49,7 @@ class GUI(Ui_Dialog):
         self.dialog = dialog 
         self.settings = Settings() 
         self.dialog.closeEvent = self.closeEvent
+        self.dialog.keyPressEvent = self.keyPressedEvent
         self.server = Server()
         self.downman = DownloadManager()
         self.browser = Browser()
@@ -81,6 +82,11 @@ class GUI(Ui_Dialog):
         self.speedLimitSlider.setValue(self.settings.configDic["speedLimit"])
         self.speedLimitSpin.setValue(self.settings.configDic["speedLimit"])
         self.exchangeURLInput.setText(self.settings.configDic["exchangeURL"])
+
+
+    def keyPressedEvent(self, event):
+        if event.key() == Qt.Key_Escape:
+            event.ignore()
 
 
     def closeEvent(self, event):
