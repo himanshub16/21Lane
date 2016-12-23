@@ -402,6 +402,6 @@ class GUI(Ui_Dialog):
         self.trayIconMenu = QMenu(self.dialog)
         self.trayIconMenu.addAction(self.activateAction)
         self.trayIconMenu.addAction(self.quitAction)
-        self.trayIcon = QSystemTrayIcon(self.dialog)
+        self.trayIcon = QSystemTrayIcon(QIcon(":/images/icon.ico"), self.dialog)
         self.trayIcon.setContextMenu(self.trayIconMenu)
         self.trayIcon.show()
