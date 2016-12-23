@@ -9,7 +9,7 @@ if __name__=="__main__":
         (sys.version_info.minor >= 5)):
         print ("Sorry. PyQt5 requires at least Python3.5")
         sys.exit()
-    q = QApplication([])
+    q = QApplication(sys.argv)
     d = QDialog()
     u = app.GUI(d)
     sys.exit(q.exec_())
