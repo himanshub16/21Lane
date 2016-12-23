@@ -1,10 +1,8 @@
-#!/usr/bin/python3 
-
 # -*- coding: utf-8 -*-
 
 # Form implementation generated from reading ui file 'dialog.ui'
 #
-# Created by: PyQt5 UI code generator 5.5.1
+# Created by: PyQt5 UI code generator 5.7
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -13,7 +11,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
+        Dialog.setWindowModality(QtCore.Qt.ApplicationModal)
         Dialog.resize(571, 415)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/images/icon.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        Dialog.setWindowIcon(icon)
         Dialog.setSizeGripEnabled(False)
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(Dialog)
         self.horizontalLayout_4.setContentsMargins(11, 11, 11, 11)
@@ -204,9 +206,9 @@ class Ui_Dialog(object):
         self.horizontalLayout_2.addItem(spacerItem5)
         self.reloadUsersBtn = QtWidgets.QPushButton(self.usersListTab)
         self.reloadUsersBtn.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/images/reload.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.reloadUsersBtn.setIcon(icon)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(":/images/reload.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.reloadUsersBtn.setIcon(icon1)
         self.reloadUsersBtn.setObjectName("reloadUsersBtn")
         self.horizontalLayout_2.addWidget(self.reloadUsersBtn)
         self.verticalLayout_4.addLayout(self.horizontalLayout_2)
@@ -242,16 +244,16 @@ class Ui_Dialog(object):
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.browserHomeBtn = QtWidgets.QPushButton(self.browserTab)
         self.browserHomeBtn.setText("")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/images/home.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.browserHomeBtn.setIcon(icon1)
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(":/images/home.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.browserHomeBtn.setIcon(icon2)
         self.browserHomeBtn.setObjectName("browserHomeBtn")
         self.horizontalLayout.addWidget(self.browserHomeBtn)
         self.browserPrevBtn = QtWidgets.QPushButton(self.browserTab)
         self.browserPrevBtn.setText("")
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(":/images/back.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.browserPrevBtn.setIcon(icon2)
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap(":/images/back.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.browserPrevBtn.setIcon(icon3)
         self.browserPrevBtn.setObjectName("browserPrevBtn")
         self.horizontalLayout.addWidget(self.browserPrevBtn)
         self.browserInput = QtWidgets.QLineEdit(self.browserTab)
@@ -259,9 +261,9 @@ class Ui_Dialog(object):
         self.horizontalLayout.addWidget(self.browserInput)
         self.browserGoBtn = QtWidgets.QPushButton(self.browserTab)
         self.browserGoBtn.setText("")
-        icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(":/images/go.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.browserGoBtn.setIcon(icon3)
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap(":/images/go.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.browserGoBtn.setIcon(icon4)
         self.browserGoBtn.setObjectName("browserGoBtn")
         self.horizontalLayout.addWidget(self.browserGoBtn)
         self.verticalLayout_2.addLayout(self.horizontalLayout)
@@ -336,7 +338,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        Dialog.setWindowTitle(_translate("Dialog", "21Lane"))
         self.publicNameLbl.setText(_translate("Dialog", "Public Name"))
         self.publicNameInput.setPlaceholderText(_translate("Dialog", "How do people know you?"))
         self.portLbl.setText(_translate("Dialog", "Port"))

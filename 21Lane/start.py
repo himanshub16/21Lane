@@ -1,6 +1,7 @@
 #!/usr/bin/python3 
 
 from PyQt5.QtWidgets import QApplication, QDialog
+import resources_rc
 import app, sys
 
 if __name__=="__main__":
