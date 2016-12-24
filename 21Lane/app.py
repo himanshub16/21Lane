@@ -9,7 +9,6 @@ from config import Settings
 from customSignals import *
 from customErrors import * 
 
-from requests import get as GET
 from webbrowser import open as xdg_open
 from mimetypes import guess_type as guess_mime
 from os.path import join as join_path
