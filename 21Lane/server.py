@@ -9,10 +9,11 @@ from pyftpdlib.authorizers import DummyAuthorizer
 import socket
 from os.path import exists as path_exists
 from os.path import getsize 
-from multiprocessing import Process 
 
 from customErrors import PortUnavailableError
 from customSignals import ServerStatsUpdater
+
+from PyQt5.QtCore import QThread
 
 
 def isPortAvailable(port):
@@ -25,31 +26,32 @@ def isPortAvailable(port):
 class CustomHandler(FTPHandler):
     stats = ServerStatsUpdater()
     def on_connect(self):
+        print("someone connected")
         self.stats.connected()
 
     def on_disconnect(self):
+        print("somone disconnected")
         self.stats.disconnected()
 
     def on_file_sent(self, file):
-        print(getsize(file))
         self.stats.transferred(getsize(file))
 
     def on_incomplete_file_sent(self, file):
         self.stats.transferred(getsize(file))
 
 
-class Server:
+class Server(QThread):
     def __init__(self):
+        super().__init__()
         self.port = 2121
         self.sharedDir = ""
-        self.is_running = False 
         self.dtp_handler = ThrottledDTPHandler
         self.ftp_handler = CustomHandler
         self.ftp_handler.banner = "21Lane ready"
-        self.stats = self.ftp_handler.stats
         self.connected = 0
         self.bytesTransferred = 0
         self.filesTransferred = 0
+        self.setTerminationEnabled(True)
 
     def setPort(self, port):
         if isPortAvailable(port):
@@ -68,19 +70,15 @@ class Server:
         self.dtp_handler.read_limit = netSpeed
         self.ftp_handler.dtp_handler = self.dtp_handler
 
-    def startServer(self):
-        self.server = FTPServer(('', self.port), self.ftp_handler)
-        self.server_proc = Process(target=self.server.serve_forever)
-        self.server_proc.start()
-        self.is_running = True 
-
     def stopServer(self):
-        if self.is_running:
-            self.server.close_all()
-            self.server_proc.terminate()
-            self.server_proc.join()
-            print ("server stopped")
-            del self.server_proc
-            self.server_proc = None 
-            self.is_running = False 
+        if self.isRunning():
+            self.server.close_all
+            self.quit()
+            if not self.wait(1000):
+                self.terminate()
 
+    def run(self):
+        self.server = FTPServer(('', self.port), self.ftp_handler)
+        self.finished.connect(self.server.close_all)
+        self.server.serve_forever()
+        self.server = None 
