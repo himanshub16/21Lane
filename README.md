@@ -1,20 +1,27 @@
-##21Lane (https://21lane.github.io)
+## [21Lane](https://github.com/himanshub16/21lane/)
 
-The master branch is up with v2.
-For v1, consider branch v1, and go to the releases section.
+A simple, peer-to-peer file sharing solution.
+For v1, consider branch v1, or go to the releases section.
 
-### Creator: [Himanshu Shekhar] ( http://github.com/himanshub16 )
-This is a file sharing software which sets up an FTP server on your system.
+## What can I do with this ?
+* Share some folder on your system, which is accessible to other peers on LAN / Internet, who can connect to your IP address.
+* Download from other peers using the same service.
 
-For usage manual, refer to [this link](https://21lane.github.io/howto.html)
+## What if I don't want to share to other peers ? Any use in that case ?
+You can leave the `Exchange URL` field blank, and share personally with the people you want, using the addresses below.
 
-A brief working of the software is described [here](https://21lane.github.io/working.html)
+## Are there any requirements ?
+No. You'll get a binary which can be directly executed on your system.
 
-The FTP server library used here is [pyftpdlib](https://github.com/giampaolo/pyftpdlib)
+If you are a developer, trying to tinker with it, just install the dependencies from `requirements.txt` file.
 
-This is a free software licensed under GNU-GPL v3, terms of which are stated [here](https://www.gnu.org/licenses/gpl-3.0.en.html).
-The libraries used have their own licenses, specified by the respective authors in the license file.
 
-Icons and images are obtained from [Google Material Design Icons](https://design.google.com/icons), licensed under Apache License.
+## How to contribute to it ?
+`
+    git clone https://github.com/himanshub16/21lane.git 
+    cd 21lane 
+    source myftp/bin/activate 
+    pip install -r requirements.txt 
 
-The contributors other than the creator are listed in contributors.md file.
+`
+You are all set. 
