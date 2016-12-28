@@ -7,21 +7,24 @@ from time import sleep
 from os import listdir as ls 
 from os.path import join, getsize, isdir, islink
 
+from PyQt5.QtCore import QThread
+
 REFRESH_INTERVAL = 900 # 15 minutes
 REQUEST_TIMEOUT  = 5   # 5 seconds
 HEADERS = {
     "user-agent": "21Lane"
 }
 
-class ExchangeClient:
+class ExchangeClient(QThread):
     def __init__(self):
-        self.subprocess = None 
+        super().__init__()
         self.exchangeURI = ''
         self.port = 2121
         self.sessionId = None 
         self.publicName = ''
         self.sharedSize = 0
-        self.is_running = False
+        self.setTerminationEnabled(True)
+        self.finished.connect(self.deauthorize)
 
     def updateInfo(self, publicName, exchange_url=None, port=2121):
         self.port = port 
@@ -101,23 +104,15 @@ class ExchangeClient:
     
     def updateDir(self, directory):
         self.sharedDir = directory
-        self.abort()
-        self.is_running = True 
-        self.subprocess = Thread(target=self.cache_proc)
-        self.subprocess.start()
+        if self.isRunning():
+            self.quit()
+            if not self.wait(1000):
+                self.terminate()
+        self.start()
         print("snapshot proc started")
 
-    def abort(self):
-        if self.is_running:
-            if self.subprocess.is_alive():
-                self.is_running = False 
-                self.subprocess.join()
-                self.deauthorize()
-                print ("snapshot process stopped")
-        self.subprocess = None 
-
     def getTotalSharedSize(self, pwd):
-        if not self.is_running:
+        if not self.isRunning():
             return 
         try:
             for file in ls(pwd):
@@ -130,21 +125,13 @@ class ExchangeClient:
         except Exception as e:
             pass 
 
-    def cache_proc(self):
-        t = REFRESH_INTERVAL
-        while self.is_running:
-            if t < REFRESH_INTERVAL:
-                t += 1
-                sleep(1)
-                continue
-            t = 0
+    def run(self):
+        while True:
             try:
                 self.sharedSize = 0
                 self.getTotalSharedSize(self.sharedDir)
             except RecursionError:
                 pass 
             self.authorize()
-
-
-
+            self.sleep(REFRESH_INTERVAL)
         
