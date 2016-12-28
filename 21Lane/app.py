@@ -15,12 +15,14 @@ from os.path import join as join_path
 from os.path import dirname as get_dirname
 
 import resources_rc
-from dialog import Ui_Dialog
+from form import Ui_mainWindow 
 from PyQt5.QtWidgets import QDialog, QMessageBox, QFileDialog, QTableWidgetItem
 from PyQt5.QtWidgets import QHBoxLayout, QProgressBar, QLabel, QPushButton, QFrame
 from PyQt5.QtWidgets import QMenu, QAction, QSystemTrayIcon, qApp
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt 
+
+from PyQt5.QtNetwork import QNetworkInterface, QAbstractSocket, QHostAddress
 
 
 KB = 1024
@@ -41,14 +43,23 @@ def toHumanReadable(bytes):
         return str(bytes)+ " bytes"
 
 
-class GUI(Ui_Dialog):
-    def __init__(self, dialog):
+def getAllAddresses():
+    addresses = QNetworkInterface.allAddresses()
+    required = []
+    for address in addresses:
+        if (address.protocol() == QAbstractSocket.IPv4Protocol) and \
+            (address != QHostAddress(QHostAddress.LocalHost)):
+            required.append(address.toString())
+    return required
+
+
+class GUI(Ui_mainWindow):
+    def __init__(self, window):
         super().__init__()
-        self.setupUi(dialog)
-        self.dialog = dialog 
+        self.setupUi(window)
+        self.window = window 
         self.settings = Settings() 
-        self.dialog.closeEvent = self.closeEvent
-        self.dialog.keyPressEvent = self.keyPressedEvent
+        self.window.closeEvent = self.closeEvent
         self.server = Server()
         self.downman = DownloadManager()
         self.browser = Browser()
@@ -63,13 +74,16 @@ class GUI(Ui_Dialog):
         self.browserTable.setColumnHidden(0, True)
         self.userListTable.setColumnHidden(0, True)
         self.tabWidget.setCurrentIndex(0)
+        self.urlFrame.setVisible(False)
         self.downloadsScrollArea.setStyleSheet(" \
             download_item { \
                 border: 1px solid grey; \
             } \
         ")
+        self.window.setWindowIcon(QIcon(":/images/favicon.ico"))
+        self.window.setWindowTitle("21Lane")
         self.setupSystemTray()
-        dialog.show()
+        self.window.show()
 
 
     def loadSettings(self):
@@ -94,21 +108,27 @@ class GUI(Ui_Dialog):
             self.activateAction.setChecked(False)
             event.ignore()
             return
-        if self.server.is_running:
+        if self.server.isRunning():
             self.server.stopServer()
-        if self.xchgClient.is_running:
-            self.xchgClient.abort()
+        if self.xchgClient.isRunning():
+            print ('attempting to shut down exchange client')
+            self.xchgClient.quit()
+            print ('asked to end xchgclient politely')
+            if not self.xchgClient.wait(1):
+                print('forced closure of xchgclient required')
+                self.xchgClient.terminate()
+            print('xchgclient forcefully closed')
         if self.downman.running:
             self.downman.stopDownloader()
         qApp.exit()
 
 
     def showMessage(self, maintext=None, subtext=None):
-        QMessageBox.information(self.dialog, maintext, subtext, QMessageBox.Ok, QMessageBox.Ok)
+        QMessageBox.information(self.window, maintext, subtext, QMessageBox.Ok, QMessageBox.Ok)
 
 
     def getPathFromDialog(self):
-        return QFileDialog.getExistingDirectory(self.dialog, "Select folder", self.lastKnownDir, QFileDialog.ShowDirsOnly)
+        return QFileDialog.getExistingDirectory(self.window, "Select folder", self.lastKnownDir, QFileDialog.ShowDirsOnly)
 
 
     def addEventListeners(self):
@@ -118,9 +138,9 @@ class GUI(Ui_Dialog):
         self.downloadLocationBtn.clicked.connect(self.showDirectorySelector)
         self.toggleShareBtn.setText("Start Sharing")
         self.toggleShareBtn.clicked.connect(self.toggleShare)
-        self.server.stats.clientConnect.connect(self.statClientConnected)
-        self.server.stats.clientDisconnect.connect(self.statClientDisconnected)
-        self.server.stats.fileTransfer.connect(self.statFileTransferred)
+        self.server.ftp_handler.stats.clientConnect.connect(self.statClientConnected)
+        self.server.ftp_handler.stats.clientDisconnect.connect(self.statClientDisconnected)
+        self.server.ftp_handler.stats.fileTransfer[int] .connect(self.statFileTransferred)
         self.reloadUsersBtn.clicked.connect(self.loadUsers)
         self.browserInput.returnPressed.connect(self.browserGoBtn.click)
         self.browserGoBtn.clicked.connect(self.loadBrowserTable)
@@ -130,13 +150,13 @@ class GUI(Ui_Dialog):
         self.browserTable.doubleClicked.connect(self.handleFileSelection)
         self.developerLink.linkActivated.connect(xdg_open)
         self.projectLink.linkActivated.connect(xdg_open)
-
+        self.stats_connected.setText("hello ")
 
     def showDirectorySelector(self, event):
-        if self.dialog.sender() is self.downloadLocationBtn:
+        if self.window.sender() is self.downloadLocationBtn:
             self.downloadLocationInput.setText(self.getPathFromDialog())
             self.destPrefix = self.downloadLocationInput.text() 
-        elif self.dialog.sender() is self.sharedLocationBtn:
+        elif self.window.sender() is self.sharedLocationBtn:
             self.sharedLocationInput.setText(self.getPathFromDialog()) 
 
 
@@ -146,12 +166,14 @@ class GUI(Ui_Dialog):
 
 
     def statClientConnected(self):
+        print("man connected")
         self.server.connected += 1
         self.stats_connected.setText(str(self.server.connected))
         print(self.server.connected, self.stats_connected.text())
     
 
     def statClientDisconnected(self):
+        print ('amn disconnected')
         self.server.connected -= 1
         self.stats_connected.setText(str(self.server.connected))
         print(self.server.connected)
@@ -170,15 +192,19 @@ class GUI(Ui_Dialog):
                 (not self.port.value()) or \
                 (not self.sharedLocationInput.text()):
                 raise FormIncompleteError 
-            if self.xchgClient.is_running:
-                self.xchgClient.abort()
-            if self.server.is_running:
+            if self.xchgClient.isRunning():
+                self.xchgClient.quit()
+                if not self.xchgClient.wait(1):
+                    self.xchgClient.terminate()
+            if self.server.isRunning():
                 self.server.stopServer()
                 self.toggleShareBtn.setText("Start Sharing")
+                self.toggleShareBtn.setIcon(QIcon(":/images/failed.svg"))
+                self.urlFrame.setVisible(False)
             else:
                 self.server.setPort(self.port.value())
                 self.server.setSharedDirectory(self.sharedLocationInput.text())
-                self.server.startServer()
+                self.server.start()
                 if not self.exchangeURLInput.text():
                     self.xchgClient.updateInfo(self.publicNameInput.text(), None, self.port.value())
                 else:
@@ -187,6 +213,21 @@ class GUI(Ui_Dialog):
                 self.settings.update(self.publicNameInput.text(), self.port.value(), \
                     self.sharedLocationInput.text(), self.downloadLocationInput.text(), self.speedLimitSlider.value(), self.exchangeURLInput.text())
                 self.toggleShareBtn.setText("Stop Sharing")
+                self.toggleShareBtn.setIcon(QIcon(":/images/complete.svg"))
+                addresses = getAllAddresses()
+                if len(addresses) != 0:
+                    lblstr = "<html><body>"
+                    current = 0
+                    end = len(addresses)-1
+                    for addr in addresses:
+                        hyperlink = 'ftp://'+addr+':'+str(self.server.port)
+                        lblstr += "<a href=\'"+hyperlink+"\'>"+hyperlink+"</a>"
+                        if current != (end-1):
+                            lblstr += '\n'
+                        current += 1
+                    lblstr += "</body></html>"  
+                    self.urlLabel.setText(lblstr)
+                    self.urlFrame.setVisible(True)                
         except FileNotFoundError:
             self.showMessage("Don't fool me", "Shared location doesn't exist")
         except PortUnavailableError:
@@ -349,7 +390,7 @@ class GUI(Ui_Dialog):
 
     def createDownloadItemBox(self, filename, filesize):
         diui = {}
-        frame = QFrame(self.dialog)
+        frame = QFrame(self.window)
         frame.setFrameStyle(QFrame.StyledPanel)
         layout = QHBoxLayout()
         filesize = filesize if not filesize is 0 else 1
@@ -388,19 +429,19 @@ class GUI(Ui_Dialog):
 
 
     def showDialog(self, checked):
-        self.dialog.setVisible(checked)
+        self.window.setVisible(checked)
 
 
     def setupSystemTray(self):
-        self.activateAction = QAction("Show", self.dialog)
+        self.activateAction = QAction("Show", self.window)
         self.activateAction.setCheckable(True)
         self.activateAction.setChecked(True)
         self.activateAction.triggered.connect(self.showDialog)
-        self.quitAction = QAction("Quit", self.dialog)
+        self.quitAction = QAction("Quit", self.window)
         self.quitAction.triggered.connect(self.closeEvent)
-        self.trayIconMenu = QMenu(self.dialog)
+        self.trayIconMenu = QMenu(self.window)
         self.trayIconMenu.addAction(self.activateAction)
         self.trayIconMenu.addAction(self.quitAction)
-        self.trayIcon = QSystemTrayIcon(QIcon(":/images/icon.ico"), self.dialog)
+        self.trayIcon = QSystemTrayIcon(QIcon(":/images/icon.ico"), self.window)
         self.trayIcon.setContextMenu(self.trayIconMenu)
         self.trayIcon.show()

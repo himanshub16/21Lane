@@ -1,6 +1,6 @@
 #!/usr/bin/python3 
 
-from PyQt5.QtWidgets import QApplication, QDialog
+from PyQt5.QtWidgets import QApplication, QWidget
 import resources_rc
 import app, sys
 
@@ -9,7 +9,9 @@ if __name__=="__main__":
         (sys.version_info.minor >= 5)):
         print ("Sorry. PyQt5 requires at least Python3.5")
         sys.exit()
-    q = QApplication(sys.argv)
-    d = QDialog()
-    u = app.GUI(d)
+    q = QApplication([])
+    q.setStyle("fusion")
+    window = QWidget()
+    print (QApplication.style())
+    u = app.GUI(window)
     sys.exit(q.exec_())
