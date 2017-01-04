@@ -167,8 +167,11 @@
          </item>
          <item row="4" column="1" colspan="3">
           <widget class="QLineEdit" name="exchangeURLInput">
+           <property name="toolTip">
+            <string/>
+           </property>
            <property name="placeholderText">
-            <string>You can get it from your exchange website</string>
+            <string>Leave blank to share personally.</string>
            </property>
           </widget>
          </item>
@@ -500,6 +503,9 @@
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="topMargin">
+          <number>5</number>
+         </property>
          <item>
           <widget class="QLabel" name="label">
            <property name="text">
@@ -591,6 +597,9 @@
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="topMargin">
+          <number>5</number>
+         </property>
          <item>
           <widget class="QPushButton" name="browserHomeBtn">
            <property name="text">
@@ -709,8 +718,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>543</width>
-            <height>382</height>
+            <width>553</width>
+            <height>390</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="downloadsLayout">

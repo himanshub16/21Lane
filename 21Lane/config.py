@@ -36,4 +36,6 @@ class Settings:
             pass 
         if data.keys() == self.configDic.keys():
             self.configDic = data 
+            return True 
+        return False 
 

@@ -26,11 +26,9 @@ def isPortAvailable(port):
 class CustomHandler(FTPHandler):
     stats = ServerStatsUpdater()
     def on_connect(self):
-        print("someone connected")
         self.stats.connected()
 
     def on_disconnect(self):
-        print("somone disconnected")
         self.stats.disconnected()
 
     def on_file_sent(self, file):

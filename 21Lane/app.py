@@ -70,7 +70,6 @@ class GUI(Ui_mainWindow):
         self.userlist = None 
         self.di_list = []
         self.addEventListeners() 
-        self.loadSettings()
         self.browserTable.setColumnHidden(0, True)
         self.userListTable.setColumnHidden(0, True)
         self.tabWidget.setCurrentIndex(0)
@@ -83,11 +82,12 @@ class GUI(Ui_mainWindow):
         self.window.setWindowIcon(QIcon(":/images/favicon.ico"))
         self.window.setWindowTitle("21Lane")
         self.setupSystemTray()
+        self.loadSettings()
         self.window.show()
 
 
     def loadSettings(self):
-        self.settings.load()
+        success = self.settings.load()
         self.publicNameInput.setText(self.settings.configDic["publicName"])
         self.port.setValue(self.settings.configDic["port"])
         self.sharedLocationInput.setText(self.settings.configDic["sharedDir"])
@@ -95,6 +95,11 @@ class GUI(Ui_mainWindow):
         self.speedLimitSlider.setValue(self.settings.configDic["speedLimit"])
         self.speedLimitSpin.setValue(self.settings.configDic["speedLimit"])
         self.exchangeURLInput.setText(self.settings.configDic["exchangeURL"])
+        if success:
+            self.toggleShare()
+            self.tabWidget.setCurrentIndex(1)
+            print ("current index is", self.tabWidget.currentIndex())
+            self.reloadUsersBtn.click()
 
 
     def keyPressedEvent(self, event):
@@ -150,7 +155,6 @@ class GUI(Ui_mainWindow):
         self.browserTable.doubleClicked.connect(self.handleFileSelection)
         self.developerLink.linkActivated.connect(xdg_open)
         self.projectLink.linkActivated.connect(xdg_open)
-        self.stats_connected.setText("hello ")
 
     def showDirectorySelector(self, event):
         if self.window.sender() is self.downloadLocationBtn:
@@ -166,17 +170,13 @@ class GUI(Ui_mainWindow):
 
 
     def statClientConnected(self):
-        print("man connected")
         self.server.connected += 1
         self.stats_connected.setText(str(self.server.connected))
-        print(self.server.connected, self.stats_connected.text())
     
 
     def statClientDisconnected(self):
-        print ('amn disconnected')
         self.server.connected -= 1
         self.stats_connected.setText(str(self.server.connected))
-        print(self.server.connected)
 
 
     def statFileTransferred(self, filesize):
@@ -215,6 +215,7 @@ class GUI(Ui_mainWindow):
                 self.toggleShareBtn.setText("Stop Sharing")
                 self.toggleShareBtn.setIcon(QIcon(":/images/complete.svg"))
                 addresses = getAllAddresses()
+                print (addresses)
                 if len(addresses) != 0:
                     lblstr = "<html><body>"
                     current = 0
@@ -227,7 +228,8 @@ class GUI(Ui_mainWindow):
                         current += 1
                     lblstr += "</body></html>"  
                     self.urlLabel.setText(lblstr)
-                    self.urlFrame.setVisible(True)                
+                    self.urlFrame.setVisible(True)
+                    print(self.urlFrame.isVisible(), 'url frame is visivle')                
         except FileNotFoundError:
             self.showMessage("Don't fool me", "Shared location doesn't exist")
         except PortUnavailableError:
