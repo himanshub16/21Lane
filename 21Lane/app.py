@@ -49,7 +49,8 @@ def getAllAddresses():
     for address in addresses:
         if (address.protocol() == QAbstractSocket.IPv4Protocol) and \
             (address != QHostAddress(QHostAddress.LocalHost)):
-            required.append(address.toString())
+            if address.toString().startswith('169'): # to avoid link-local addresses
+                required.append(address.toString())
     return required
 
 
@@ -234,7 +235,7 @@ class GUI(Ui_mainWindow):
                         hyperlink = 'ftp://'+addr+':'+str(self.server.port)
                         lblstr += "<a href=\'"+hyperlink+"\'>"+hyperlink+"</a>"
                         if current != (end-1):
-                            lblstr += '\n'
+                            lblstr += '<br>'
                         current += 1
                     lblstr += "</body></html>"  
                     self.urlLabel.setText(lblstr)
