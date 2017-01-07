@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=21Lane
+Comment=Share files easily.
+Exec=/opt/21Lane/21Lane
+Icon=/opt/21Lane/icon.png
+Path=/opt/21Lane
+StartupNotify=true
+Terminal=false
+Type=Application
+Categories=Network;

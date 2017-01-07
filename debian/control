@@ -1,0 +1,12 @@
+Package: 21lane
+Version: 1.0-1
+Section: Network
+Priority: optional
+Architecture: amd64
+Maintainer: Himanshu Shekhar <https://github.com/himanshub16/21Lane>
+Homepage: https://himanshub16.github.io/21Lane
+Vcs-Browser: https://github.com/himanshub16/21Lane.git
+Description: Peer-to-peer, file sharing tool
+ Utility to share files to your systems, or on a group.
+ Cross-platform, made using Python, PyQt5, pyftpdlib.
+ Find more detail at https://himanshub16.github.io/21Lane/
