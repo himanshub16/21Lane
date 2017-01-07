@@ -10,10 +10,10 @@ For old version, consider [branch v1](https://github.com/himanshub16/21lane/tree
 ## Are there any requirements ?
 No. The application is built to click and run.
 
-## I cannot access my system using IP address.
-Your computer should be accessible by your IP address. 
-This is a problem when you are behind a router, proxy, wifi etc. 
-For systems on same network & behind proxy, make sure `localhost` is not using proxy settings.
+## I cannot access my system using IP address!
+Your computer should be accessible by your IP address.<br> 
+This is a problem when you are behind a router, proxy, wifi etc.<br>
+For systems on same network & behind proxy, make sure `localhost` is not using proxy settings.<br>
 There are some geeky methods like port forwarding, you can go for.
 
 ## What if I don't want to share to other peers ? Any use in that case ?
