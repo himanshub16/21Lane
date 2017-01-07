@@ -15,7 +15,7 @@ from os.path import join as join_path
 from os.path import dirname as get_dirname
 
 import resources_rc
-from form import Ui_mainWindow 
+from window import Ui_mainWindow 
 from PyQt5.QtWidgets import QDialog, QMessageBox, QFileDialog, QTableWidgetItem
 from PyQt5.QtWidgets import QHBoxLayout, QProgressBar, QLabel, QPushButton, QFrame
 from PyQt5.QtWidgets import QMenu, QAction, QSystemTrayIcon, qApp, QMenuBar
