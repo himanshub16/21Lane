@@ -18,7 +18,7 @@ import resources_rc
 from form import Ui_mainWindow 
 from PyQt5.QtWidgets import QDialog, QMessageBox, QFileDialog, QTableWidgetItem
 from PyQt5.QtWidgets import QHBoxLayout, QProgressBar, QLabel, QPushButton, QFrame
-from PyQt5.QtWidgets import QMenu, QAction, QSystemTrayIcon, qApp
+from PyQt5.QtWidgets import QMenu, QAction, QSystemTrayIcon, qApp, QMenuBar
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt 
 
@@ -74,16 +74,27 @@ class GUI(Ui_mainWindow):
         self.userListTable.setColumnHidden(0, True)
         self.tabWidget.setCurrentIndex(0)
         self.urlFrame.setVisible(False)
-        self.downloadsScrollArea.setStyleSheet(" \
-            download_item { \
-                border: 1px solid grey; \
-            } \
-        ")
         self.window.setWindowIcon(QIcon(":/images/favicon.ico"))
         self.window.setWindowTitle("21Lane")
+        self.makeMenuBar()
         self.setupSystemTray()
         self.loadSettings()
         self.window.show()
+
+    
+    def makeMenuBar(self):
+        self.menuBar = QMenuBar(self.window)
+        self.fileMenu = QMenu("File")
+        self.menuBar.addMenu(self.fileMenu)
+        self.exitAction = QAction("Exit", self.window)
+        self.exitAction.triggered.connect(self.closeEvent)
+        self.minimizeToTrayAction = QAction("Minimize to Tray", self.window)
+        self.minimizeToTrayAction.setCheckable(True)
+        self.minimizeToTrayAction.setChecked(True)
+        self.fileMenu.addAction(self.minimizeToTrayAction)
+        self.fileMenu.addAction(self.exitAction)
+        self.window.layout().setMenuBar(self.menuBar)
+
 
 
     def loadSettings(self):
@@ -98,7 +109,6 @@ class GUI(Ui_mainWindow):
         if success:
             self.toggleShare()
             self.tabWidget.setCurrentIndex(1)
-            print ("current index is", self.tabWidget.currentIndex())
             self.reloadUsersBtn.click()
 
 
@@ -108,8 +118,8 @@ class GUI(Ui_mainWindow):
 
 
     def closeEvent(self, event):
-        if not type(event) == bool:
-            self.showDialog(False)
+        if (self.window.sender() == None) and (self.minimizeToTrayAction.isChecked()):
+            self.showWindow(False)
             self.activateAction.setChecked(False)
             event.ignore()
             return
@@ -430,7 +440,7 @@ class GUI(Ui_mainWindow):
         return diui 
 
 
-    def showDialog(self, checked):
+    def showWindow(self, checked):
         self.window.setVisible(checked)
 
 
@@ -438,7 +448,7 @@ class GUI(Ui_mainWindow):
         self.activateAction = QAction("Show", self.window)
         self.activateAction.setCheckable(True)
         self.activateAction.setChecked(True)
-        self.activateAction.triggered.connect(self.showDialog)
+        self.activateAction.triggered.connect(self.showWindow)
         self.quitAction = QAction("Quit", self.window)
         self.quitAction.triggered.connect(self.closeEvent)
         self.trayIconMenu = QMenu(self.window)

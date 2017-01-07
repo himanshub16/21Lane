@@ -445,16 +445,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="trayCB">
-         <property name="text">
-          <string>Minimize to tray on exit</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="Line" name="line_2">
          <property name="frameShadow">
           <enum>QFrame::Plain</enum>
@@ -718,8 +708,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>553</width>
-            <height>390</height>
+            <width>64</width>
+            <height>18</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="downloadsLayout">

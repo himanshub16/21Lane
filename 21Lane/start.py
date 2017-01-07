@@ -9,8 +9,7 @@ if __name__=="__main__":
         (sys.version_info.minor >= 5)):
         print ("Sorry. PyQt5 requires at least Python3.5")
         sys.exit()
-    q = QApplication([])
-    q.setStyle("fusion")
+    q = QApplication(sys.argv)
     window = QWidget()
     print (QApplication.style())
     u = app.GUI(window)
