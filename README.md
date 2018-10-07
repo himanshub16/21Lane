@@ -1,6 +1,6 @@
 ## [21Lane](https://github.com/himanshub16/21lane/)
 
-**This project is no longer maintained.**
+## This project is no longer maintained.
 
 A simple, point-to-point / group file sharing solution.
 For old version, consider [branch v1](https://github.com/himanshub16/21lane/tree/v1), or find older releases [here](https://drive.google.com/open?id=0B7BS3b01XjwCOTlPYk00UE1IQ3c).
